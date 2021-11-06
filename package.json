@@ -1,0 +1,32 @@
+{
+  "name": "tastebase",
+  "version": "0.0.0",
+  "description": "A recipe viewer for me and my friends",
+  "main": "index.js",
+  "scripts": {
+    "build": "node scripts/bundle.script.js",
+    "dev": "node scripts/bundle.script.js --dev",
+    "test": "pico-check ./tests",
+    "test:dev": "pico-check --watch ./tests",
+    "test:build": "node scripts/test.build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stolksdorf/tastebase.git"
+  },
+  "keywords": [],
+  "author": "stolksdorf <scott.tolksdorf@gmail.com> (https://stolksdorf.dev/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stolksdorf/tastebase/issues"
+  },
+  "homepage": "https://github.com/stolksdorf/tastebase#readme",
+  "dependencies": {
+    "livereload": "^0.9.3",
+    "marked": "^3.0.8",
+    "pico-trnp": "^1.0.1"
+  },
+  "devDependencies": {
+    "pico-check": "^2.1.3"
+  }
+}
