@@ -1,6 +1,7 @@
 # tastebase
 A recipe viewer for me and my friends
 
+[View it here](https://stolksdorf.github.io/tastebase/)
 
 
 # Reousrces
