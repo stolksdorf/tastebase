@@ -1,6 +1,6 @@
 const {x, comp, cx, css} = require('../../crux');
 
-global.headtags.base_fonts = `
+global.head.base_fonts = `
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
@@ -59,8 +59,8 @@ module.exports = css`
 
 	main section{
 		position: relative;
-		padding-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
-		padding-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+		margin-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+		margin-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
 
 		background-image: url(${Fibers});
 		filter: sepia(20%);

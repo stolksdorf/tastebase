@@ -1,12 +1,17 @@
-const {x, comp, cx, css, xo} = require('../../crux');
+const {x, comp, cx} = require('../libs/xo.js');
+const css = require('../libs/pico-css.js');
 
-
-const utils = require('../../crux/utils');
 
 
 global.css.recipe_page = css`
 	section.Recipe{
 		padding-top: 2em;
+
+		&.showNotes{
+			.note{
+				display: block !important;
+			}
+		}
 
 		h1{
 			font-size: 3em;
@@ -50,6 +55,8 @@ global.css.recipe_page = css`
 
 		.note{
 			display: none;
+			border: var(--green) 1px solid;
+			border-radius: 3px;
 		}
 
 	}
@@ -140,6 +147,7 @@ const RecipePage = comp(function(recipe){
 	if(!recipe) return x`<section class='Recipe'>Oops, recipe not found</section>`;
 
 	const [servings, setServings] = this.useState(recipe.servings);
+	const [showNotes, setShowNotes] = this.useState(false);
 
 	this.useEffect(()=>{
 		[...document.querySelectorAll('.ingredient')].map((el)=>{
@@ -155,7 +163,7 @@ const RecipePage = comp(function(recipe){
 		ServeringsEmitter.emit('servingsChange', servings)
 	},[servings])
 
-	return x`<section class='Recipe'>
+	return x`<section class=${cx('Recipe', {showNotes})}>
 		<div class='top'>
 			<h1>${recipe.title}</h1>
 			${recipe.desc && x`<blockquote>${recipe.desc}</blockquote>`}
@@ -172,6 +180,11 @@ const RecipePage = comp(function(recipe){
 					${Tidbit('Prep Time', recipe.prep_time)}
 					${Tidbit('Cook Time', recipe.cook_time)}
 					${Tidbit('Edit', 'Link to Github', recipe.github)}
+
+					<label>
+						<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
+						Show Notes
+					</label>
 				</div>
 				<div>
 					${recipe.img && x`<img src=${recipe.img}></img>`}

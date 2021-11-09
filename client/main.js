@@ -1,7 +1,9 @@
-const {x, comp, cx, css} = require('../../crux');
-const utils = require('../../crux/utils');
-global.css.style = require('./style.js');
+const {x, comp, cx} = require('../libs/xo.js');
+const css = require('../libs/pico-css.js');
 
+const utils = require('../libs/utils.js');
+
+global.css.style = require('./style.js');
 
 
 const SearchPage = require('./search.page.js');
@@ -33,8 +35,7 @@ const Main = comp(function({ recipes, chefs, tags, types }){
 		return {page: 'search', val: ''};
 	});
 
-	console.log({chefs, tags, types})
-
+	console.log({chefs, tags, types});
 
 
 	return x`<main>
