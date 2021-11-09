@@ -1,6 +1,12 @@
 const isDev = process.argv.some(v=>v=='--dev');
 const pack = require('./pico-pack');
 
+if(!String.prototype.replaceAll){
+	String.prototype.replaceAll = function(str, newStr){
+		return this.replace(new RegExp(str, 'g'), newStr);
+	};
+}
+
 //TODO: Try ssr
 
 module.exports = (pagePath)=>{
