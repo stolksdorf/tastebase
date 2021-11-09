@@ -4,8 +4,8 @@
   "description": "A recipe viewer for me and my friends",
   "main": "index.js",
   "scripts": {
-    "build": "node scripts/bundle.script.js",
-    "dev": "node scripts/bundle.script.js --dev",
+    "build": "node scripts/build.script.js",
+    "dev": "node scripts/build.script.js --dev",
     "test": "pico-check ./tests",
     "test:dev": "pico-check --watch ./tests",
     "test:build": "node scripts/test.build.js",

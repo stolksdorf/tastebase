@@ -1,6 +1,5 @@
-const {x, comp, cx, css} = require('../../crux');
-
-const utils = require('../../crux/utils');
+const {x, comp, cx} = require('../libs/xo.js');
+const css = require('../libs/pico-css.js');
 
 const Sneakpeek = require('./sneakpeek.js');
 

@@ -1,6 +1,6 @@
 const {x, comp, cx, css} = require('../../crux');
 
-global.headtags.base_fonts = `
+global.head.base_fonts = `
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">

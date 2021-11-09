@@ -1,7 +1,6 @@
-const {x, comp, cx, css, xo} = require('../../crux');
+const {x, comp, cx} = require('../libs/xo.js');
+const css = require('../libs/pico-css.js');
 
-
-const utils = require('../../crux/utils');
 
 
 global.css.recipe_page = css`

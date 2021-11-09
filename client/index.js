@@ -1,15 +1,5 @@
+const BundlePage = require('../libs/page.bundle.js');
 
-
-
-// Place the whole page bundler code here.
-
-//
-
-
-
-
-
-
-
-
-module.exports =
+module.exports = {
+	main : BundlePage('./main.js')
+}

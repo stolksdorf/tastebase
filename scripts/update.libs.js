@@ -11,6 +11,9 @@ const Libs = {
 	'../libs/xo.js'        : '../../xo/xo.js',
 	'../libs/pico-pack.js' : '../../pico-pack/pico-pack.js',
 	'../libs/pico-css.js'  : '../../pico-css/pico-css.js',
+
+	'../libs/utils.js'  : '../../crux/utils.js',
+	'../libs/page.bundle.js'  : '../../crux/page.bundle.js',
 };
 
 Object.entries(Libs).map((files)=>{

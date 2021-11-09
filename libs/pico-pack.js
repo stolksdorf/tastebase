@@ -8,6 +8,21 @@ const baseTransforms = {
 	'*'     : (code, filename)=>`module.exports=\`${code}\`;`
 };
 
+
+
+const Emitter=()=>{
+	let cache={};
+	return {
+		emit : (evt, ...args)=>(cache[evt]||[]).map(fn=>fn(...args)),
+		on : (evt, func)=>{
+			cache[evt]=(cache[evt]||[]).concat(func);
+			return ()=>cache[evt]=cache[evt].filter(x=>x!=func);
+		}
+	};
+};
+
+
+
 const builtins = { console, setTimeout, setInterval, clearInterval, process };
 
 const noop = (x)=>x;
@@ -99,7 +114,7 @@ global.__Modules = global.__Modules||{};
 	return { bundle, modules, export : root.export, global : opts.global }
 };
 
-module.exports = (entryFilePath, opts={})=>{
+const PicoPack = (entryFilePath, opts={})=>{
 	entryFilePath = resolveFrom(entryFilePath, getCaller(opts.callOffset).file);
 
 	opts.transforms = { ...baseTransforms, ...(opts.transforms||{})};
@@ -119,6 +134,7 @@ module.exports = (entryFilePath, opts={})=>{
 			result = picopack(entryFilePath, result.modules, opts);
 			opts.global = result.global;
 			opts.watch(result, changedFilePath);
+			PicoPack.emitter.emit('update', entryFilePath);
 		});
 		Object.values(result.modules).map(mod=>{
 			fs.watch(mod.filepath, ()=>{ decache(mod.id); rebundle(mod.filepath); });
@@ -126,4 +142,8 @@ module.exports = (entryFilePath, opts={})=>{
 		opts.watch(result);
 	};
 	return result;
-}
+};
+
+PicoPack.emitter = Emitter();
+
+module.exports = PicoPack;
