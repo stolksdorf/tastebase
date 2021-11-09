@@ -692,180 +692,6 @@ const wait = async (n,val)=>new Promise((r)=>setTimeout(()=>r(val), n));
 
 module.exports = { qs, cookies, request, useLocalState, wait };
 },deps:{},fn:'../crux/utils.js',dn:'../crux', root:'../tastebase'};
-global.__Modules["-n3qvub"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx, css} = require('../../crux');
-
-global.headtags.base_fonts = `
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
-
-<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
-`;
-
-const Regal = 'https://i.imgur.com/tJlmqZD.png';
-const Fibers = 'https://i.imgur.com/TtlLBDT.png';
-
-module.exports = css`
-
-
-	:root{
-		--yellow : #f0dfaf;
-		--purple : #bfbdd0;
-		--black  : #3f3f3f;
-		--white  : #f0dfaf;
-		--green  : #7f9f7f;
-		--grey   : #4f4f4f;
-		--orange : #dfaf8f;
-		--red    : #cc9393;
-		--blue   : #7cb8bb;
-
-		--text-color   : var(--black);
-		--bg-color     : var(--white);
-		--accent-color : var(--violet);
-
-		--max-page-width  : 65rem;
-		--page-gutter     : 30px;
-		--nav-height      : 50px;
-	}
-	html,body{
-		font-size   : 16px;
-		height      : 100%;
-		margin      : 0px;
-		font-family: 'Crimson Text', serif;
-
-		background-image: url(${Regal});
-	}
-
-	h1,h2,h3,h4,h5{
-		font-family: 'Marck Script';
-		//font-family: 'Homemade Apple', cursive;
-	}
-
-	*{
-		box-sizing: border-box;
-	}
-
-	a{
-		color: var(--blue);
-		&:visited { color: var(--purple); }
-	}
-
-	main section{
-		position: relative;
-		margin-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
-		margin-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
-
-		background-image: url(${Fibers});
-		filter: sepia(20%);
-	}
-
-	nav{
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
-		font-weight: bold;
-		z-index: 1000;
-
-		position: relative;
-		padding-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
-		padding-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
-		height: var(--nav-height);
-		background-color: white;
-		border-bottom: 1px solid black;
-
-		&>a{
-			text-decoration: none;
-			vertical-align: middle;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 2em;
-			max-height: var(--nav-height);
-			color: black;
-			&:visited{ color: black; }
-			&>img{
-				max-height: var(--nav-height);
-			}
-		}
-
-		&>ul{
-			list-style: none;
-			padding: 0;
-			margin: 0;
-			height: var(--nav-height);
-			vertical-align: middle;
-			display: block;
-			&>li{
-				display: inline-block;
-				margin: 0 0.5rem;
-				position: relative;
-				text-align: left;
-				height: var(--nav-height);
-				line-height: var(--nav-height);
-
-				a{
-					color: var(--black);
-					text-decoration: none;
-					display: block;
-					height: 100%;
-					border-bottom: 0px solid var(--blue);
-					&:hover{
-						color: var(--blue);
-						border-bottom: 4px solid var(--blue);
-					}
-				}
-				button{
-					padding: 8px 24px;
-				}
-			}
-		}
-
-		@media only screen and (max-width: 600px){
-			align-items: flex-start;
-			ul{
-				text-align: right;
-				visibility: hidden;
-				height: fit-content;
-			}
-			ul li{
-				display: block;
-				background-color: white;
-				padding: 0px 10px;
-			}
-			ul:hover{
-				visibility: visible;
-			}
-			ul::before{
-				content: '☰';
-				visibility: visible;
-				font-size: 2em;
-			}
-		}
-	}
-
-	button{
-		font-family: monospace;
-		border: 1px solid var(--green);
-		cursor: pointer;
-	}
-
-	input[type='text']{
-		border        : 1px solid var(--yellow);
-		outline       : none;
-		padding       : 0.2em 0.3em;
-		font-family   : monospace;
-		border-radius : 3px;
-
-		&:focus{
-			border-color: var(--green);
-		}
-	}
-
-
-
-`;
-},deps:{"../../crux":"-crhf3n"},fn:'client/style.js',dn:'client', root:'..'};
 global.__Modules["-1egcsq3"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx, css} = require('../../crux');
 
 
@@ -1356,6 +1182,180 @@ const SearchPage = comp(function(allRecipes, initQuery){
 module.exports = SearchPage;
 
 },deps:{"../../crux":"-crhf3n","../../crux/utils":"-1kjn7lp","./sneakpeek.js":"-1egcsq3"},fn:'client/search.page.js',dn:'client', root:'..'};
+global.__Modules["-n3qvub"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx, css} = require('../../crux');
+
+global.headtags.base_fonts = `
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+`;
+
+const Regal = 'https://i.imgur.com/tJlmqZD.png';
+const Fibers = 'https://i.imgur.com/TtlLBDT.png';
+
+module.exports = css`
+
+
+	:root{
+		--yellow : #f0dfaf;
+		--purple : #bfbdd0;
+		--black  : #3f3f3f;
+		--white  : #f0dfaf;
+		--green  : #7f9f7f;
+		--grey   : #4f4f4f;
+		--orange : #dfaf8f;
+		--red    : #cc9393;
+		--blue   : #7cb8bb;
+
+		--text-color   : var(--black);
+		--bg-color     : var(--white);
+		--accent-color : var(--violet);
+
+		--max-page-width  : 65rem;
+		--page-gutter     : 30px;
+		--nav-height      : 50px;
+	}
+	html,body{
+		font-size   : 16px;
+		height      : 100%;
+		margin      : 0px;
+		font-family: 'Crimson Text', serif;
+
+		background-image: url(${Regal});
+	}
+
+	h1,h2,h3,h4,h5{
+		font-family: 'Marck Script';
+		//font-family: 'Homemade Apple', cursive;
+	}
+
+	*{
+		box-sizing: border-box;
+	}
+
+	a{
+		color: var(--blue);
+		&:visited { color: var(--purple); }
+	}
+
+	main section{
+		position: relative;
+		margin-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+		margin-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+
+		background-image: url(${Fibers});
+		filter: sepia(20%);
+	}
+
+	nav{
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		font-weight: bold;
+		z-index: 1000;
+
+		position: relative;
+		padding-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+		padding-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+		height: var(--nav-height);
+		background-color: white;
+		border-bottom: 1px solid black;
+
+		&>a{
+			text-decoration: none;
+			vertical-align: middle;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 2em;
+			max-height: var(--nav-height);
+			color: black;
+			&:visited{ color: black; }
+			&>img{
+				max-height: var(--nav-height);
+			}
+		}
+
+		&>ul{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			height: var(--nav-height);
+			vertical-align: middle;
+			display: block;
+			&>li{
+				display: inline-block;
+				margin: 0 0.5rem;
+				position: relative;
+				text-align: left;
+				height: var(--nav-height);
+				line-height: var(--nav-height);
+
+				a{
+					color: var(--black);
+					text-decoration: none;
+					display: block;
+					height: 100%;
+					border-bottom: 0px solid var(--blue);
+					&:hover{
+						color: var(--blue);
+						border-bottom: 4px solid var(--blue);
+					}
+				}
+				button{
+					padding: 8px 24px;
+				}
+			}
+		}
+
+		@media only screen and (max-width: 600px){
+			align-items: flex-start;
+			ul{
+				text-align: right;
+				visibility: hidden;
+				height: fit-content;
+			}
+			ul li{
+				display: block;
+				background-color: white;
+				padding: 0px 10px;
+			}
+			ul:hover{
+				visibility: visible;
+			}
+			ul::before{
+				content: '☰';
+				visibility: visible;
+				font-size: 2em;
+			}
+		}
+	}
+
+	button{
+		font-family: monospace;
+		border: 1px solid var(--green);
+		cursor: pointer;
+	}
+
+	input[type='text']{
+		border        : 1px solid var(--yellow);
+		outline       : none;
+		padding       : 0.2em 0.3em;
+		font-family   : monospace;
+		border-radius : 3px;
+
+		&:focus{
+			border-color: var(--green);
+		}
+	}
+
+
+
+`;
+},deps:{"../../crux":"-crhf3n"},fn:'client/style.js',dn:'client', root:'..'};
 global.__Modules["1k4rf0b"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx, css} = require('../../crux');
 const utils = require('../../crux/utils');
 global.css.style = require('./style.js');
@@ -1431,5 +1431,5 @@ module.exports = Main;
 		module.exports = req('1k4rf0b');
 	}
 })();</script>
-<script>xo.render(document.body.children[0], window.main({"recipes":{"scoot__golden_milk":{"id":"scoot__golden_milk","github":"https://github.com/stolksdorf/tastebase/recipes/scoot/golden_milk.md","title":"Golden Milk","desc":"A cozy turmeric latte","servings":1,"tags":["turmeric","spice"],"type":"drink","link":false,"chef":"scoot","img":"https://images.media-allrecipes.com/userphotos/960x960/4543554.jpg","cook_time":false,"prep_time":false,"time":{"prep":"1min","cook":"5min"},"content":"<div class='instructions'><ol>\n<li>Gather your spice mix</li>\n</ol>\n<ul>\n<li>@ground tumeric<span class='ingredient' x-qty='0' x-unit='' x-name='1/2 tsp'>1/2 tsp</span></li>\n<li>@ground turmeric<span class='ingredient' x-qty='0' x-unit='' x-name='1/2 tsp'>1/2 tsp</span></li>\n<li>@cinnamon<span class='ingredient' x-qty='0' x-unit='' x-name='1/4 tsp'>1/4 tsp</span></li>\n<li>@ground ginger<span class='ingredient' x-qty='0' x-unit='' x-name='1/8 tsp'>1/8 tsp</span></li>\n<li>@cardamom powder<span class='ingredient' x-qty='0' x-unit='' x-name='1/8 tsp'>1/8 tsp</span></li>\n<li>@black pepper<span class='ingredient' x-qty='0' x-unit='' x-name='pinch'>pinch</span></li>\n<li>@honey<span class='ingredient' x-qty='0' x-unit='' x-name='1 tsp'>1 tsp</span> (for taste)</li>\n</ul>\n<p><span class='ingredient' x-qty='1' x-unit='tsp' x-name='honey'>1 tsp honey</span>\n<span class='ingredient' x-qty='0' x-unit='pinch' x-name='black pepper'>pinch black pepper</span></p>\n<p><span class='ingredient' x-qty='0' x-unit='' x-name='salt'>salt</span></p>\n<ol>\n<li>Heat @milk<span class='ingredient' x-qty='0' x-unit='' x-name='1 cup'>1 cup</span> in smol pot on low-med heat for 5min (until ~70C)</li>\n<li>Mix in your spice mix, stir thoroughly</li>\n<li>Run through a tea strainer to remove the large grains</li>\n<li>Don&#39;t drink the last mouthful, as it will have residue</li>\n</ol>\n<p><em>Spice ratio for making large batches</em></p>\n<p>4 tumeric : 2 cinnamon : 1 ginger : 1 cardamom</p>\n</div>","ingredients":[{"name":"1/2 tsp","qty":0,"unit":"","amount":""},{"name":"1/2 tsp","qty":0,"unit":"","amount":""},{"name":"1/4 tsp","qty":0,"unit":"","amount":""},{"name":"1/8 tsp","qty":0,"unit":"","amount":""},{"name":"1/8 tsp","qty":0,"unit":"","amount":""},{"name":"pinch","qty":0,"unit":"","amount":""},{"name":"1 tsp","qty":0,"unit":"","amount":""},{"name":"honey","qty":1,"unit":"tsp","amount":"1 tsp"},{"name":"black pepper","qty":0,"unit":"pinch","amount":"pinch"},{"name":"salt","qty":0,"unit":"","amount":""},{"name":"1 cup","qty":0,"unit":"","amount":""}]},"scoot__test.recipe":{"id":"scoot__test.recipe","github":"https://github.com/stolksdorf/tastebase/recipes/scoot/test.recipe.md","title":"Test Recipe","desc":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.","servings":3,"tags":["test","fun","simple"],"type":"snack","link":false,"chef":"Unknown","img":"https://www.sbs.com.au/food/sites/sbs.com.au.food/files/bhtv_ep5_shakshuka11_0.jpg","cook_time":false,"prep_time":false,"content":"<div class='instructions'><ol>\n<li>git <span class='ingredient' x-qty='2' x-unit='slices' x-name='white bread'>2 slices white bread</span> 4cups <span class='temperature'>48c  <small>(118.4°F)</small></span>fo</li>\n<li>grab <span class='ingredient' x-qty='0' x-unit='' x-name='jam'>jam</span> and <span class='ingredient' x-qty='0' x-unit='' x-name='peanut butter'>peanut butter</span></li>\n<li>(Optional) Sprinkle <span class='ingredient' x-qty='0.5' x-unit='tsp' x-name='cinnamon'>1/2tsp cinnamon</span> on top\n<span class='note'>1. This instruction should not be shown</li></span>\n<li>Do not use <span class='ingredient' x-qty='1.75' x-unit='cup' x-name='flour'>1 3/4 cups flour</span> or <span class='ingredient' x-qty='0' x-unit='pinch' x-name='pepper'>a pinch pepper</span></li>\n<li>Don&#39;t heat oven to <span class='temperature'>400F  <small>(752.0°C)</small></span>or <span class='temperature'>123c  <small>(253.4°F)</small></span>or <span class='temperature'>30 celsius <small>(86.0°F)</small></span> or <span class='temperature'>45.5°C <small>(113.9°F)</small></span></li>\n<li>Slather and chomp</li>\n</ol>\n<p><span class='note'>\n    This is just some notes</p>\n<p></span></p>\n</div>","ingredients":[{"name":"white bread","qty":2,"unit":"slices","amount":"2 slices"},{"name":"jam","qty":0,"unit":"","amount":""},{"name":"peanut butter","qty":0,"unit":"","amount":""},{"name":"cinnamon","qty":0.5,"unit":"tsp","amount":"1/2tsp"},{"name":"flour","qty":1.75,"unit":"cup","amount":"1 3/4 cups"},{"name":"pepper","qty":0,"unit":"pinch","amount":"a pinch"}]}},"chefs":["scoot","Unknown"],"types":["drink","snack"],"tags":["turmeric","spice","test","fun","simple"]}));</script>
+<script>xo.render(document.body.children[0], window.main({"recipes":{"scoot__golden_milk":{"id":"scoot__golden_milk","github":"https://github.com/stolksdorf/tastebase/recipes/scoot/golden_milk.md","title":"Golden Milk","desc":"A cozy turmeric latte","servings":1,"tags":["turmeric","spice"],"type":"drink","link":false,"chef":"scoot","img":"https://images.media-allrecipes.com/userphotos/960x960/4543554.jpg","cook_time":false,"prep_time":false,"time":{"prep":"1min","cook":"5min"},"content":"<div class='instructions'><ol>\n<li>Gather your spice mix</li>\n</ol>\n<ul>\n<li>@ground tumeric<span class='ingredient' x-qty='0' x-unit='' x-name='1/2 tsp'>1/2 tsp</span></li>\n<li>@ground turmeric<span class='ingredient' x-qty='0' x-unit='' x-name='1/2 tsp'>1/2 tsp</span></li>\n<li>@cinnamon<span class='ingredient' x-qty='0' x-unit='' x-name='1/4 tsp'>1/4 tsp</span></li>\n<li>@ground ginger<span class='ingredient' x-qty='0' x-unit='' x-name='1/8 tsp'>1/8 tsp</span></li>\n<li>@cardamom powder<span class='ingredient' x-qty='0' x-unit='' x-name='1/8 tsp'>1/8 tsp</span></li>\n<li>@black pepper<span class='ingredient' x-qty='0' x-unit='' x-name='pinch'>pinch</span></li>\n<li>@honey<span class='ingredient' x-qty='0' x-unit='' x-name='1 tsp'>1 tsp</span> (for taste)</li>\n</ul>\n<p><span class='ingredient' x-qty='1' x-unit='tsp' x-name='honey'>1 tsp honey</span>\n<span class='ingredient' x-qty='0' x-unit='pinch' x-name='black pepper'>pinch black pepper</span></p>\n<p><span class='ingredient' x-qty='0' x-unit='' x-name='salt'>salt</span></p>\n<ol>\n<li>Heat @milk<span class='ingredient' x-qty='0' x-unit='' x-name='1 cup'>1 cup</span> in smol pot on low-med heat for 5min (until ~70C)</li>\n<li>Mix in your spice mix, stir thoroughly</li>\n<li>Run through a tea strainer to remove the large grains</li>\n<li>Don&#39;t drink the last mouthful, as it will have residue</li>\n</ol>\n<p><em>Spice ratio for making large batches</em></p>\n<p>4 tumeric : 2 cinnamon : 1 ginger : 1 cardamom</p>\n</div>","ingredients":[{"name":"1/2 tsp","qty":0,"unit":"","amount":""},{"name":"1/2 tsp","qty":0,"unit":"","amount":""},{"name":"1/4 tsp","qty":0,"unit":"","amount":""},{"name":"1/8 tsp","qty":0,"unit":"","amount":""},{"name":"1/8 tsp","qty":0,"unit":"","amount":""},{"name":"pinch","qty":0,"unit":"","amount":""},{"name":"1 tsp","qty":0,"unit":"","amount":""},{"name":"honey","qty":1,"unit":"tsp","amount":"1 tsp"},{"name":"black pepper","qty":0,"unit":"pinch","amount":"pinch"},{"name":"salt","qty":0,"unit":"","amount":""},{"name":"1 cup","qty":0,"unit":"","amount":""}]},"scoot__test.recipe":{"id":"scoot__test.recipe","github":"https://github.com/stolksdorf/tastebase/recipes/scoot/test.recipe.md","title":"Test Recipe","desc":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.","servings":3,"tags":["test","fun","simple"],"type":"snack","link":false,"chef":"Unknown","img":"https://www.sbs.com.au/food/sites/sbs.com.au.food/files/bhtv_ep5_shakshuka11_0.jpg","cook_time":"30min","prep_time":"3min","content":"<div class='instructions'><ol>\n<li>git <span class='ingredient' x-qty='2' x-unit='slices' x-name='white bread'>2 slices white bread</span> 4cups <span class='temperature'>48c  <small>(118.4°F)</small></span>fo</li>\n<li>grab <span class='ingredient' x-qty='0' x-unit='' x-name='jam'>jam</span> and <span class='ingredient' x-qty='0' x-unit='' x-name='peanut butter'>peanut butter</span></li>\n<li>(Optional) Sprinkle <span class='ingredient' x-qty='0.5' x-unit='tsp' x-name='cinnamon'>1/2tsp cinnamon</span> on top\n<span class='note'>1. This instruction should not be shown</li></span>\n<li>Do not use <span class='ingredient' x-qty='1.75' x-unit='cup' x-name='flour'>1 3/4 cups flour</span> or <span class='ingredient' x-qty='0' x-unit='pinch' x-name='pepper'>a pinch pepper</span></li>\n<li>Don&#39;t heat oven to <span class='temperature'>400F  <small>(752.0°C)</small></span>or <span class='temperature'>123c  <small>(253.4°F)</small></span>or <span class='temperature'>30 celsius <small>(86.0°F)</small></span> or <span class='temperature'>45.5°C <small>(113.9°F)</small></span></li>\n<li>Slather and chomp</li>\n</ol>\n<p><span class='note'>\n    This is just some notes</p>\n<p></span></p>\n</div>","ingredients":[{"name":"white bread","qty":2,"unit":"slices","amount":"2 slices"},{"name":"jam","qty":0,"unit":"","amount":""},{"name":"peanut butter","qty":0,"unit":"","amount":""},{"name":"cinnamon","qty":0.5,"unit":"tsp","amount":"1/2tsp"},{"name":"flour","qty":1.75,"unit":"cup","amount":"1 3/4 cups"},{"name":"pepper","qty":0,"unit":"pinch","amount":"a pinch"}]}},"chefs":["scoot","Unknown"],"types":["drink","snack"],"tags":["turmeric","spice","test","fun","simple"]}));</script>
 </html>

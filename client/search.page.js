@@ -1,6 +1,5 @@
 const {x, comp, cx, css} = require('../../crux');
 
-
 const utils = require('../../crux/utils');
 
 const Sneakpeek = require('./sneakpeek.js');
@@ -16,6 +15,13 @@ const updateURL = (query)=>{
 
 const has = (str, key)=>(str||"").toLowerCase().indexOf(key) !== -1;
 
+
+
+global.css.search_page = css`
+	.Search{
+
+	}
+`
 
 
 

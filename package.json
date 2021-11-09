@@ -8,7 +8,11 @@
     "dev": "node scripts/bundle.script.js --dev",
     "test": "pico-check ./tests",
     "test:dev": "pico-check --watch ./tests",
-    "test:build": "node scripts/test.build.js"
+    "test:build": "node scripts/test.build.js",
+
+    "libs": "node scripts/update.libs.js",
+    "libs:push": "node scripts/update.libs.js --push",
+    "libs:pull": "node scripts/update.libs.js --pull"
   },
   "repository": {
     "type": "git",

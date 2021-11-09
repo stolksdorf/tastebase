@@ -1,10 +1,33 @@
 # How to create a recipe
 
-
-
-
-
 ### Instructions
+
+1. Create a new folder for yourself
+1. Click into that folder
+1. Click 'Add File'
+1. Name your file `[your_recipe_name].md`. Use only lowercase letters and underscores.
+1. Paste the following into your file
+
+```
+---
+name: Your Recipe Name
+desc: Brief Description
+chef: Your Name
+type: drink
+servings: 1
+img: false       //Optional Image url
+tags:
+	- some
+	- fun
+	- tags
+---
+
+Type out your recipe here....
+
+```
+
+
+
 
 
 ### Ingredients
@@ -26,9 +49,6 @@ servings: 1
 tags:
 	- turmeric
 	- spice
-time:
-	prep: 1min
-	cook: 5min
 
 
 

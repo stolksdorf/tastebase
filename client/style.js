@@ -59,8 +59,8 @@ module.exports = css`
 
 	main section{
 		position: relative;
-		padding-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
-		padding-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+		margin-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
+		margin-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
 
 		background-image: url(${Fibers});
 		filter: sepia(20%);

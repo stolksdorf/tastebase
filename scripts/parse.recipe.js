@@ -15,56 +15,6 @@ const parseMarkdown = (content, additionalInfo = {})=>{
 	return { ...additionalInfo, ...info, content: marked(content) };
 };
 
-/*
-	Instead switch to
-
-	{1cup|flour}
-	{1/2 tsp | cinnamon}
-
-
-
-	- Should normalize unit, into new field
-	- Should be be abel to parse out weird numbers
-
-	{2 slices |white bread}
-	{
-		amount : "2 slices",
-		qty : 2,
-		unit : false,
-		name : "white bread"
-	}
-
-	{pinch of black pepper}
-	{
-		amount : false,
-		qty : false,
-		unit : false,
-		name : "pinch of black pepper"
-	}
-
-	{1/2 tsps | cinnamon}
-	{
-		amount : "1/2 tsp",
-		qty : 0.5,
-		unit : "tsp",
-		name : "cinnamon"
-	}
-*/
-
-//TODO: Replace with the aliases from the units
-// const normalUnits = {
-
-// 	gram : 'g',
-
-// 	milliliter : 'ml',
-
-// 	l : 'liter',
-
-// 	teaspoon : 'tsp',
-
-// 	tablespoon : 'tbsp',
-// }
-
 
 const Units = require('../client/units.js');
 
