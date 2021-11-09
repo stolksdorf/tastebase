@@ -6,13 +6,9 @@ chef: scoot
 type: drink
 servings: 1
 tags:
-	- turmeric
-	- spice
-
-time:
-	prep: 1min
-	cook: 5min
-
+  - turmeric
+  - spice
+  - amazing
 ---
 
 
