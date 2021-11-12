@@ -5,6 +5,8 @@ const pack = require('./pico-pack.js');
 const xo = require('./xo.js');
 
 
+if (!String.prototype.replaceAll) String.prototype.replaceAll = function(str, newStr){ return this.replace(new RegExp(str, 'g'), newStr) };
+
 
 
 
