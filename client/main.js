@@ -3,7 +3,7 @@ const css = require('../libs/pico-css.js');
 
 const utils = require('../libs/utils.js');
 
-global.css.style = require('./style.js');
+require('./style.js');
 
 
 const SearchPage = require('./search.page.js');
@@ -13,7 +13,7 @@ global.css.main_page = css`
 	main{
 		nav{
 			&>a{
-				font-family: 'Marck Script';
+				font-style: italic;
 				color: black;
 				&:visited{ color: black; }
 			}
@@ -43,9 +43,8 @@ const Main = comp(function({ recipes, chefs, tags, types }){
 			<a href='?'>Tastebase</a>
 			<ul>
 				<li><a href='?search='>Search</a></li>
-				<li><a href='?search='>Add Recipe</a></li>
-				<li><a href='?search='>Github</a></li>
-				<li><a href='?search='>About</a></li>
+				<li><a href='https://github.com/stolksdorf/tastebase/tree/master/recipes'>Add Recipe</a></li>
+				<li><a href='https://github.com/stolksdorf/tastebase'>Github</a></li>
 			</ul>
 		</nav>
 

@@ -30,6 +30,7 @@
     "pico-trnp": "^1.0.1"
   },
   "devDependencies": {
+    "live-server": "^1.2.1",
     "pico-check": "^2.1.3"
   }
 }

@@ -41,7 +41,7 @@ const parseIngredients = (recipe)=>{
 		}
 
 		ingredients.push({ name, qty, unit, amount })
-		return `<span class='ingredient' x-qty='${qty}' x-unit='${unit}' x-name='${name}'>${(amount + ' '+ name).trim()}</span>`;
+		return `<span class='ingredient' x-qty='${qty}' x-unit='${unit}' x-name='${name}' x-amount='${amount}'>${(amount + ' '+ name).trim()}</span>`;
 	});
 	content = `<div class='instructions'>${content}</div>`;
 	return {...recipe, ingredients, content};
@@ -51,8 +51,8 @@ const parseTemperatures = (recipe)=>{
 	let content = recipe.content;
 
 	content = content.replace(/(\d*\.?\d+)(c |c$|°c| celsius|f |f$|°f| fahrenheit)/gim, (_,val, unit)=>{
-		if(unit.toLowerCase().indexOf('c') !== -1) return `<span class='temperature'>${_} <small>(${(val*9/5 + 32).toFixed(1)}°F)</small></span>`;
-		if(unit.toLowerCase().indexOf('f') !== -1) return `<span class='temperature'>${_} <small>(${(val*1.8 + 32).toFixed(1)}°C)</small></span>`;
+		if(unit.toLowerCase().indexOf('c') !== -1) return `<span class='temperature'>${val}°C<small>(${(val*9/5 + 32).toFixed(1)}°F)</small></span>`;
+		if(unit.toLowerCase().indexOf('f') !== -1) return `<span class='temperature'>${val}°F<small>(${(val*1.8 + 32).toFixed(1)}°C)</small></span>`;
 	});
 
 	//Find all temperatures and add a small conversion
@@ -89,6 +89,9 @@ const parseRecipe = (markdown, info={})=>{
 		recipe = parseIngredients(recipe);
 		recipe = parseTemperatures(recipe);
 		recipe = parseComments(recipe);
+
+		if(!recipe.tags) recipe.tags=[];
+		if(typeof recipe.tags == 'string') recipe.tags.split(',').map(x=>x.trim());
 
 		return recipe;
 	}catch(err){

@@ -14,6 +14,11 @@ testing the auto-deply
 - https://www.toptal.com/designers/subtlepatterns/regal/
 - https://www.toptal.com/designers/subtlepatterns/symphony/
 
+- IM Fell English (font)
+	- https://www.pablosath.com/archive/2020/puzzle2020.html
+
+
+
 ## TODO
 
 - look at github actions to automatically compile the index html

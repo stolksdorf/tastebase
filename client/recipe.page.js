@@ -6,6 +6,7 @@ const css = require('../libs/pico-css.js');
 global.css.recipe_page = css`
 	section.Recipe{
 		padding-top: 2em;
+		padding-bottom: 8em;
 
 		&.showNotes{
 			.note{
@@ -42,21 +43,85 @@ global.css.recipe_page = css`
 		}
 
 
-		span.ingredient{
-			border: 1px solid var(--white);
-		}
 
 
 		.ingredientControl{
+			font-weight: bold;
+
+			label{
+				margin-left: 0.2em;
+			}
+
+			select{
+				background-color: transparent;
+				font-family: 'IM Fell English', serif;
+				font-size: 0.8em;
+				border-color: transparent;
+				-webkit-appearance: none;
+
+				font-weight: bold;
+
+			}
+
 			&:hover{
-				background-color: red;
+				select{
+					border-color: var(--grey);
+					-webkit-appearance: menulist;
+				}
 			}
 		}
 
 		.note{
 			display: none;
-			border: var(--green) 1px solid;
-			border-radius: 3px;
+			//border: var(--green) 1px solid;
+			//border-radius: 3px;
+			font-style: italic;
+			//border-left: 2px solid black;
+			padding-left: 5px;
+			font-size: 0.8em;
+			color: var(--grey);
+
+		}
+
+		.ingredients{
+			font-size: 1.3em;
+
+			h3{
+				.servings{
+					display: inline-block;
+					font-size: 1.1rem;
+					float: right;
+					span{
+						font-size: 1.5em;
+					}
+				}
+			}
+		}
+
+		.instructions{
+			font-size: 1.3em;
+
+			h3{
+				label{
+					font-size: 1rem;
+					float: right;
+				}
+			}
+
+			li{
+				margin: 0.6em 0em;
+			}
+
+			.temperature{
+				small{
+					display: none;
+				}
+				&:hover{
+					small{
+						display: inherit;
+					}
+				}
+			}
 		}
 
 	}
@@ -110,7 +175,7 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 	}
 
 	return x`<span class='ingredientControl'>
-		${qty && qty}
+		${qty ? qty : ingredient.amount}
 
 		${Units.volume[unit] && x`<select value=${unit} onchange=${(evt)=>setUnit(evt.target.value)}>
 			${Object.keys(Units.volume).map(key=>x`<option value=${key} selected=${key==unit}>${key}</option>`)}
@@ -118,9 +183,9 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 		${Units.weight[unit] && x`<select value=${unit} onchange=${(evt)=>setUnit(evt.target.value)}>
 			${Object.keys(Units.weight).map(key=>x`<option value=${key} selected=${key==unit}>${key}</option>`)}
 		</select>`}
-		${!Units.volume[unit] && !Units.weight[unit] && x`<span>${unit} </span>`}
+		${!Units.volume[unit] && !Units.weight[unit] && qty && x`<span>${unit} </span>`}
 
-		<strong>${ingredient.name}</strong>
+		<label>${ingredient.name}</label>
 	</span>`
 });
 
@@ -154,7 +219,8 @@ const RecipePage = comp(function(recipe){
 			xo.render(el, IngredientControl({
 				name  : el.getAttribute('x-name'),
 				qty   : Number(el.getAttribute('x-qty')),
-				unit  : el.getAttribute('x-unit')
+				unit  : el.getAttribute('x-unit'),
+				amount  : el.getAttribute('x-amount'),
 			}, recipe.servings));
 		});
 	}, []);
@@ -181,10 +247,7 @@ const RecipePage = comp(function(recipe){
 					${Tidbit('Cook Time', recipe.cook_time)}
 					${Tidbit('Edit', 'Link to Github', recipe.github)}
 
-					<label>
-						<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
-						Show Notes
-					</label>
+
 				</div>
 				<div>
 					${recipe.img && x`<img src=${recipe.img}></img>`}
@@ -195,23 +258,42 @@ const RecipePage = comp(function(recipe){
 
 		<hr />
 
-		<h3>Ingredients</h3>
-		<ul>
-			${recipe.ingredients.map((ingredient)=>{
-				return x`<li>${IngredientControl(ingredient, servings)}</li>`;
-			})}
-		</ul>
+		<div class='ingredients'>
+			<h3>
+				Ingredients
+
+				<div class='servings'>
+					<label>Number of Servings:</label>
+					<span>${servings}</span>
+					<button onclick=${()=>setServings(servings+1)}>+</button>
+					<button onclick=${()=>setServings(servings-1)}>-</button>
+				</div>
+			</h3>
+
+			<ul>
+				${recipe.ingredients.map((ingredient)=>{
+					return x`<li>${IngredientControl(ingredient, servings)}</li>`;
+				})}
+			</ul>
+		</div>
 
 		<hr />
 
-		<h3>Instructions</h3>
-		<div class='servings'>
-			<label>Number of Servings:</label>
-			<span>${servings}<span>
-			<button onclick=${()=>setServings(servings+1)}>+</button>
-			<button onclick=${()=>setServings(servings-1)}>-</button>
+		<div class='instructions'>
+			<h3>
+				Instructions
+
+				<label>
+					<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
+					Show Chef Notes
+				</label>
+			</h3>
+
+			${x(recipe.content)}
 		</div>
-		${x(recipe.content)}
+
+
+		<hr />
 	</section>`
 });
 

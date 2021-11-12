@@ -1,20 +1,33 @@
 const css = require('../libs/pico-css');
 
+// global.head.base_fonts = `
+// <link rel="preconnect" href="https://fonts.googleapis.com">
+// <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+// <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+
+// <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
+// <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+// `;
+
 global.head.base_fonts = `
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
-
-<link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 `;
 
-const Regal = 'https://i.imgur.com/tJlmqZD.png';
-const Fibers = 'https://i.imgur.com/TtlLBDT.png';
-
-module.exports = css`
 
 
+
+global.head.font_awesome = `<link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />`;
+
+global.css.assets = `
+:root{
+	--regal : url('${require('./assets/regal.png')}');
+	--fibers : url('${require('./assets/lightpaperfibers.png')}');
+}`;
+
+
+global.css.base_style = css`
 	:root{
 		--yellow : #f0dfaf;
 		--purple : #bfbdd0;
@@ -38,14 +51,17 @@ module.exports = css`
 		font-size   : 16px;
 		height      : 100%;
 		margin      : 0px;
-		font-family: 'Crimson Text', serif;
+		//font-family: 'Crimson Text', serif;
+		font-family: 'IM Fell English', serif;
 
-		background-image: url(${Regal});
+		background-image: var(--regal);
 	}
 
 	h1,h2,h3,h4,h5{
-		font-family: 'Marck Script';
+		//font-family: 'Marck Script';
 		//font-family: 'Homemade Apple', cursive;
+		font-family: 'IM Fell English', serif;
+		font-style: italic;
 	}
 
 	*{
@@ -62,8 +78,11 @@ module.exports = css`
 		margin-right: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
 		margin-left: max(calc((100% - var(--max-page-width))/2), var(--page-gutter));
 
-		background-image: url(${Fibers});
+		background-image: var(--fibers);
 		filter: sepia(20%);
+		padding : 20px;
+
+		box-shadow: 5px 5px 15px 1px rgba(0,0,0,0.48);
 	}
 
 	nav{
@@ -120,6 +139,7 @@ module.exports = css`
 						color: var(--blue);
 						border-bottom: 4px solid var(--blue);
 					}
+					&:visited{ color: var(--black); }
 				}
 				button{
 					padding: 8px 24px;

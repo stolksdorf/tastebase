@@ -1,7 +1,7 @@
-const recipes = require('./parse.recipes.js');
+const {recipes,chefs,types,tags} = require('../recipes');
 
 
 
 
 
-console.log(recipes)
+console.log(recipes['scoot__test.recipe'].ingredients)

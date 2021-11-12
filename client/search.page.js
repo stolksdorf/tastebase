@@ -18,7 +18,35 @@ const has = (str, key)=>(str||"").toLowerCase().indexOf(key) !== -1;
 
 global.css.search_page = css`
 	.Search{
+		min-height: 100vh;
 
+
+		.searchBox{
+			margin: auto;
+			border: 1px solid var(--grey);
+			border-radius: 1em;
+			padding: 0em 1em;
+			background-color: white;
+			width : 70%;
+			font-size: 1.5em;
+			input{
+				border: none;
+				font-family: 'IM Fell English', serif;
+				font-style: italic;
+				font-size: 1.3em;
+			}
+		}
+
+
+
+		.results{
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			&>*{
+				margin-bottom: 1em;
+			}
+		}
 	}
 `
 
@@ -60,9 +88,7 @@ const SearchPage = comp(function(allRecipes, initQuery){
 	const [query, setQuery] = this.useState(initQuery);
 	const [inProgress, setInProgress] = this.useState(false);
 
-
 	const [recipes, setRecipes] = this.useState(()=>filterRecipes(allRecipes, query));
-
 
 
 	this.useEffect(()=>{
@@ -75,15 +101,31 @@ const SearchPage = comp(function(allRecipes, initQuery){
 		}, 150);
 	}, [query])
 
-
+	this.useEffect(()=>{
+		this.el.querySelector('input').focus();
+	},[])
 
 	return x`<section class='Search'>
 
-		<input type='text' value=${query} oninput=${(evt)=>setQuery(evt.target.value)}></input>
+		<div class='top'>
 
-		${inProgress}
+			<div class='searchBox'>
+				<i class='fa fa-search'></i>
+				<input type='text' value=${query} oninput=${(evt)=>setQuery(evt.target.value)} placeholder='Search terms here...'></input>
+			</div>
 
-		${Object.values(recipes).map(Sneakpeek)}
+			<div class='searchTips'>
+				<div class=''>
+					tags, chefs, types, help
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class='results'>
+			${Object.values(recipes).map(Sneakpeek)}
+		</div>
 	</section>`
 });
 
