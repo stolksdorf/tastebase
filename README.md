@@ -5,7 +5,7 @@ A recipe viewer for me and my friends
 
 testing the auto-deply
 
-# Reousrces
+# Resourrces
 
 - https://fonts.google.com/specimen/Marck+Script?category=Handwriting
 
