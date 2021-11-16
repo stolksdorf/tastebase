@@ -2,10 +2,8 @@
 
 Warm, filling, with a little bit of heat.
 
-![](https://optional_img_url.biz)
-
 type: dinner
-servings : 4  /* Tastebase defaults to 2 servings, but you can override it */
+servings : 4  
 
 
 1. In a large, deep skillet, heat {2 tbsp oil}. Add {3 shallots} and {2 chiles} and cook over moderate heat, stirring occasionally, until tender, about 5 minutes.
@@ -16,5 +14,4 @@ servings : 4  /* Tastebase defaults to 2 servings, but you can override it */
 6. Stir in {1 cup of basil}.
 7. Transfer to shallow bowls, garnish with basil and serve.
 
-/* You can also add chef notes in comments */
 
