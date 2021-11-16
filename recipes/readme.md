@@ -5,58 +5,38 @@
 1. Create a new folder for yourself
 1. Click into that folder
 1. Click 'Add File'
-1. Name your file `[your_recipe_name].md`. Use only lowercase letters and underscores.
+1. Name your file `[your_recipe_name].md`. Use only lowercase letters and underscores plz.
 1. Paste the following into your file
 
 ```
----
-name: Your Recipe Name
-desc: Brief Description
-chef: Your Name
-type: drink
-servings: 1
-img: false       //Optional Image url
-tags:
-	- some
-	- fun
-	- tags
----
+# Your Recipe Name
 
-Type out your recipe here....
+Brief Description of your amazing recipe
+
+![](https://optional_img_url.biz)
+
+type: breakfast
+servings : 2  /* Tastebase defaults to 2 servings, but you can override it */
+
+
+1. Grab {1cup of milk} and {43.5 grams oil}
+1. Mix and Season with {oregano}
+1. Set your furance to 2000F and yeet it in, cuz this is trash
+
+/* You can also add chef notes in comments */
 
 ```
-
-
 
 
 
 ### Ingredients
 
-ingredients in your recipe are indicated with surounding `{}`, eg. `{white bread}` or `{can of tomato soup}`. If your ingredient has a quantity and/or unit, use a `|` to separate the quantity/units from the name, eg. `{2 slices | white bread}`, `{1/2tsp|cinnamon}`. This lets TasteBase parse out the quantities in order to automatically scale amounts based on servings, and allow for unit conversions (if possible).
-
-
-
-
-### Metadata
-
-title: Golden Milk
-desc: A cozy turmeric latte
-img: https://images.media-allrecipes.com/userphotos/960x960/4543554.jpg
-chef: scoot
-type: drink
-link: false
-servings: 1
-tags:
-	- turmeric
-	- spice
-
-
-
+Ingredients in your recipe are indicated with surounding `{}`, eg. `{jam}`, `{2 slices of white bread}` or `{3 4/5tsp of truffle oil}`. This lets Tastebase parse out the ingredients, quanitites and units of your recipes to automatically create an ingredient summary, but also allow the user to dynamically scale quantities based on serving size, and also convert between units (if possible).
 
 
 ### Notes
 
-You can also add notes to your recipe. This is useful if it's a work in progress, or you want to make a note of something you'd like to change next time. This syntax is the same as programming style comments; both single line and multiline comments are supportted.
+You can also add notes to your recipe. This is useful if it's a work in progress, or you want to make a note of something you'd like to change next time. This syntax is the same as programming style multiline comments, `/* yo yo yo */`
 
 By default these are hidden, but a user can toggle them on in the UI.
 

@@ -116,7 +116,7 @@ const SearchPage = comp(function(allRecipes, initQuery){
 
 			<div class='searchTips'>
 				<div class=''>
-					tags, chefs, types, help
+					Search is broken... Kinda....
 				</div>
 
 			</div>

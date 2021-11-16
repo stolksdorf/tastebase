@@ -24,7 +24,7 @@ global.css.main_page = css`
 `;
 
 
-const Main = comp(function({ recipes, chefs, tags, types }){
+const Main = comp(function({ recipes, chefs, types }){
 	const [{page, val}] = this.useState(()=>{
 		if(typeof document !== 'undefined'){
 			const params = utils.qs.get(document.location.href);
@@ -34,8 +34,6 @@ const Main = comp(function({ recipes, chefs, tags, types }){
 		}
 		return {page: 'search', val: ''};
 	});
-
-	console.log({chefs, tags, types});
 
 
 	return x`<main>

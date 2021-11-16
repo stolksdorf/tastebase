@@ -48,7 +48,6 @@ const Sneakpeek = (recipe)=>{
 
 		<div><label>Chef:</label> ${Tag(recipe.chef, 'chef')}</div>
 		<div><label>Type:</label> ${Tag(recipe.type, 'type')}</div>
-		<div><label>Tags:</label> ${recipe.tags.map(tag=>Tag(tag, 'tag'))}</div>
 
 
 	</a>`

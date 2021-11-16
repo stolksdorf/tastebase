@@ -1,19 +1,16 @@
 const volume = {
-	cup   : {
-		cup   : 1,
+	cups   : {
+		cups   : 1,
 		ml    : 236.6,
 		tsp   : 48,
 		tbsp  : 16,
-		floz  : 8,
-		pint  : 0.5,
-		quart : 0.25,
 		liter : 0.2366
 	},
 	ml : {
 
 	},
 	tsp   : {
-		cup   : 1,
+		cups   : 1,
 		ml    : 1,
 		tsp   : 1,
 		tbsp  : 1,
@@ -25,38 +22,29 @@ const volume = {
 	tbsp  : {
 
 	},
-	floz    : {
-
-	},
-	pint  : {
-
-	},
-	quart : {
-
-	},
 	liter : {
 
 	},
 };
 const weight = {
-	gram : {
-		gram : 1,
+	grams : {
+		grams : 1,
 		lb : 1,
 		oz : 1
 	},
 	lb : {
-		gram : 1,
+		grams : 1,
 		lb : 1,
 		oz : 1
 	},
 	oz : {
-		gram : 1,
+		grams : 1,
 		lb : 1,
 		oz : 1
 	}
 };
 const useFractions = {
-	cup : true,
+	cups : true,
 	tsp : true,
 	tbsp : true,
 	oz : true,
@@ -64,13 +52,6 @@ const useFractions = {
 	quart : true,
 };
 const alias = {
-	'fl oz'       : 'floz',
-	'fl. oz.'     : 'floz',
-	'oz. fl.'     : 'floz',
-	'fl.oz.'      : 'floz',
-	'oz.fl.'      : 'floz',
-	'fluid ounce' : 'floz',
-	qt            : 'quart',
 	teaspoon      : 'tsp',
 	tablespoon    : 'tbsp',
 	l             : 'liter',
@@ -78,9 +59,18 @@ const alias = {
 	millilitre    : 'ml',
 	milliliter    : 'ml',
 	pound         : 'lb',
-	g             : 'gram',
-	onuce         : 'oz',
+	g             : 'grams',
+	gram          : 'grams',
+	ounce         : 'oz',
+	cup           : 'cups',
+	stick         : 'sticks',
 };
+
+const staples = [
+	'butter',
+	'flour',
+	'eggs'
+];
 
 
 const toFraction = (val)=>{
@@ -98,14 +88,15 @@ const toFraction = (val)=>{
 
 
 
+
 //Take a raw string of quantity and/or unit and returns the normalized unit
 // and numerical quantity, even expressed as fraction
 const parse = (raw)=>{
-	let qty=0, unit;
+	let qty=0, unit, parts=[];
 	raw.split(' ').map(p=>{
 		const [num]= p.match(/\d*\.?\d+/) || [];
 		const [frac] = p.match(/\d+\/\d+/) || [];
-		const [_unit] = p.match(/[a-zA-Z]+/) || [];
+		const [text] = p.match(/[a-zA-Z]+/) || [];
 
 		if(frac){
 			const [a,b] = frac.split('/');
@@ -113,16 +104,18 @@ const parse = (raw)=>{
 		}else if(num){
 			qty += Number(num)
 		}
-		if(_unit){
-			const name = _unit.toLowerCase().replace(/s$/, '');
+		if(text){
+			const name = text.toLowerCase();
 			if(weight[name] || volume[name]){
 				unit = name;
+			}else if(alias[name]){
+				unit = alias[name];
 			}else{
-				unit = alias[_unit.toLowerCase().replace(/s$/, '')] || _unit.toLowerCase();
+				parts.push(text);
 			}
 		}
 	})
-	return {qty, unit};
+	return {qty, unit, name : parts.join(' ')};
 };
 
 // Converts a value from one unit to another, including converting to fraction notation
@@ -130,7 +123,7 @@ const convert = (val, from_unit, to_unit)=>{
 	if(volume[from_unit] && volume[from_unit][to_unit]){
 		val = volume[from_unit][to_unit] * val;
 	}
-	if(weight[from_unit] && weight[from_unit][to_unit]){
+	if(weight[from_unit] && weight[from_unit][to_unit]){ d
 		val = weight[from_unit][to_unit] * val;
 	}
 	if(useFractions[to_unit]) val = toFraction(val);

@@ -5,83 +5,70 @@ const css = require('../libs/pico-css.js');
 
 global.css.recipe_page = css`
 	section.Recipe{
+		position: relative;
 		padding-top: 2em;
 		padding-bottom: 8em;
 
+
+
 		&.showNotes{
-			.note{
+			.chef_note{
 				display: block !important;
 			}
 		}
 
-		h1{
-			font-size: 3em;
-			margin: 0px;
+
+		.controls{
+			position: absolute;
+			top : 30px;
+			right: 10px;
+
+			i.fav{
+				font-size: 2em;
+				cursor: pointer;
+				user-select: none;
+			}
 		}
+
+		.top{
+
+
+
+			h1{
+				font-size: 3em;
+				margin: 0px;
+			}
+
+			blockquote{
+				margin-left: 0px;
+				border-left: 3px solid var(--grey);
+				padding-left: 5px;
+				font-size: 1.3em;
+			}
+
+			.info{
+				label{
+					display: inline-block;
+					font-weight: bold;
+					width : 100px;
+				}
+			}
+
+			img{
+				height : 200px;
+			}
+
+		}
+
+
 		h3{
 			font-size: 1.8em;
 			margin: 0px;
 		}
 
-		blockquote{
-			margin-left: 0px;
-			border-left: 3px solid var(--grey);
-			padding-left: 5px;
-		}
-
-		.info{
-			display: flex;
-			justify-content: space-between;
-			img{
-				width : 200px;
-			}
-			blockquote{
-
-			}
-
-
-		}
 
 
 
-
-		.ingredientControl{
-			font-weight: bold;
-
-			label{
-				margin-left: 0.2em;
-			}
-
-			select{
-				background-color: transparent;
-				font-family: 'IM Fell English', serif;
-				font-size: 0.8em;
-				border-color: transparent;
-				-webkit-appearance: none;
-
-				font-weight: bold;
-
-			}
-
-			&:hover{
-				select{
-					border-color: var(--grey);
-					-webkit-appearance: menulist;
-				}
-			}
-		}
-
-		.note{
-			display: none;
-			//border: var(--green) 1px solid;
-			//border-radius: 3px;
-			font-style: italic;
-			//border-left: 2px solid black;
-			padding-left: 5px;
-			font-size: 0.8em;
-			color: var(--grey);
-
-		}
 
 		.ingredients{
 			font-size: 1.3em;
@@ -112,6 +99,11 @@ global.css.recipe_page = css`
 				margin: 0.6em 0em;
 			}
 
+			label.showChefNotes{
+				cursor: pointer;
+				user-select: none;
+			}
+
 			.temperature{
 				small{
 					display: none;
@@ -122,23 +114,23 @@ global.css.recipe_page = css`
 					}
 				}
 			}
+
+
+
+			.chef_note{
+				display: none;
+				//border: var(--green) 1px solid;
+				//border-radius: 3px;
+				font-style: italic;
+				//border-left: 2px solid black;
+				padding-left: 5px;
+				font-size: 0.8em;
+				color: var(--grey);
+
+			}
 		}
 
 	}
-
-	sup{
-		font-size: 1em;
-		vertical-align: baseline;
-		background-color: var(--white);
-		padding : 1px 3px;
-		margin: 2px 2px;
-		border-radius: 5px;
-		text-decoration: none;
-	}
-	a sup{
-
-	}
-
 `;
 
 
@@ -158,10 +150,38 @@ const Emitter=()=>{
 const Units = require('./units.js');
 
 
+global.css.ingredient_control = css`
+	.ingredientControl{
+		font-weight: bold;
+
+		select{
+			font-family: 'IM Fell English', serif;
+			font-size: 0.79em;
+			font-weight: bold;
+			display: none;
+		}
+
+		span.unit{
+			margin-top: 20px;
+		}
+
+		&:hover{
+			select{
+				display: inherit;
+			}
+			span.unit{
+				display: none;
+			}
+		}
+	}
+`
+
 const IngredientControl = comp(function(ingredient, initServings=1){
 	const [unit, setUnit] = this.useState(ingredient.unit);
-
 	const [servings, setServings] = this.useState(initServings);
+
+	console.log(ingredient)
+
 	if(!this.refs.baseServings) this.refs.baseServings = initServings;
 	this.useEffect(()=>{
 		return ServeringsEmitter.on('servingsChange', (newServings)=>{
@@ -176,6 +196,7 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 
 	return x`<span class='ingredientControl'>
 		${qty ? qty : ingredient.amount}
+		${unit && x`<span class='unit'>${unit}</span>`}
 
 		${Units.volume[unit] && x`<select value=${unit} onchange=${(evt)=>setUnit(evt.target.value)}>
 			${Object.keys(Units.volume).map(key=>x`<option value=${key} selected=${key==unit}>${key}</option>`)}
@@ -183,8 +204,6 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 		${Units.weight[unit] && x`<select value=${unit} onchange=${(evt)=>setUnit(evt.target.value)}>
 			${Object.keys(Units.weight).map(key=>x`<option value=${key} selected=${key==unit}>${key}</option>`)}
 		</select>`}
-		${!Units.volume[unit] && !Units.weight[unit] && qty && x`<span>${unit} </span>`}
-
 		<label>${ingredient.name}</label>
 	</span>`
 });
@@ -208,11 +227,27 @@ const Tidbit = (label, val, link)=>{
 }
 
 
+const toggleFav = (id)=>{
+	hasFav(id)
+		? window.localStorage.removeItem(`fav__${id}`)
+		: window.localStorage.setItem(`fav__${id}`, true);
+	return hasFav(id);
+}
+
+const hasFav = (id)=>{
+	return !!localStorage.getItem(`fav__${id}`);
+}
+
+
 const RecipePage = comp(function(recipe){
 	if(!recipe) return x`<section class='Recipe'>Oops, recipe not found</section>`;
 
+	//console.log(recipe)
+
 	const [servings, setServings] = this.useState(recipe.servings);
 	const [showNotes, setShowNotes] = this.useState(false);
+
+	const [isFav, setIsFav] = this.useState(hasFav(recipe.id));
 
 	this.useEffect(()=>{
 		[...document.querySelectorAll('.ingredient')].map((el)=>{
@@ -220,7 +255,6 @@ const RecipePage = comp(function(recipe){
 				name  : el.getAttribute('x-name'),
 				qty   : Number(el.getAttribute('x-qty')),
 				unit  : el.getAttribute('x-unit'),
-				amount  : el.getAttribute('x-amount'),
 			}, recipe.servings));
 		});
 	}, []);
@@ -230,29 +264,19 @@ const RecipePage = comp(function(recipe){
 	},[servings])
 
 	return x`<section class=${cx('Recipe', {showNotes})}>
+		<div class='controls'>
+			<a href=${recipe.github} target='_blank'>Edit this Recipe <i class='fa fa-pencil'></i></a>
+			<i class=${cx('fav fa fa-fw', {'fa-star': isFav, 'fa-star-o': !isFav})} onclick=${()=>setIsFav(toggleFav(recipe.id))}></i>
+		</div>
+
 		<div class='top'>
 			<h1>${recipe.title}</h1>
-			${recipe.desc && x`<blockquote>${recipe.desc}</blockquote>`}
 			<div class='info'>
-				<div>
-					${Tidbit('Chef', recipe.chef, `?search=chef:${recipe.chef}`)}
-					${Tidbit('Type', recipe.type, `?search=type:${recipe.type}`)}
-					${recipe.tags && recipe.tags.length && x`<div class='field'>
-						<label>Tags:</label>
-						${recipe.tags.map((tag)=>x`<a href=${`?search=${tag}`}><sup>${tag}</sup></a>`)}
-					</div>`}
-				</div>
-				<div>
-					${Tidbit('Prep Time', recipe.prep_time)}
-					${Tidbit('Cook Time', recipe.cook_time)}
-					${Tidbit('Edit', 'Link to Github', recipe.github)}
-
-
-				</div>
-				<div>
-					${recipe.img && x`<img src=${recipe.img}></img>`}
-				</div>
+				<div><label>Chef:</label> <a href=${`?search=chef:${recipe.chef}`}>${recipe.chef}</a></div>
+				<div><label>Recipe Type:</label> <a href=${`?search=type:${recipe.type}`}>${recipe.type}</a></div>
 			</div>
+			${recipe.desc && x`<blockquote>${recipe.desc}</blockquote>`}
+			${recipe.img && x`<img src=${recipe.img}></img>`}
 		</div>
 
 
@@ -283,16 +307,14 @@ const RecipePage = comp(function(recipe){
 			<h3>
 				Instructions
 
-				<label>
+				${recipe.hasNotes && x`<label class='showChefNotes'>
 					<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
 					Show Chef Notes
-				</label>
+				</label>`}
 			</h3>
 
 			${x(recipe.content)}
 		</div>
-
-
 		<hr />
 	</section>`
 });

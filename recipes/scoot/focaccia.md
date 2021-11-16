@@ -1,23 +1,18 @@
----
-title: Focaccia
-desc:
-chef: scoot
-type: bread
-img:
-servings: 4
-tags:
----
+# Focaccia
+
+Type: Bread
+Servings: 4
 
 
 [Ref](https://www.youtube.com/watch?v=NGnMrM9qDtE)
 
 
 1. Dissolve yeast in 1/2cup 40C water for 5min
-2. Add {2.5 cups | water} , {6 cups | flour} + {2tbsp | salt} + spices ({oregano} & {rosemary}) + yeast
+2. Add {2.5 cups water} , {6 cups flour} + {2tbsp salt} + spices ({oregano} & {rosemary}) + yeast
 4. mix slow for 1min, 5min on med-high
 5. Cover and rest for 10min
 6. mix for 15min on med-high (should be elastic)
-7. Lift dough out, {1/4cup | olive oil} in bowl, add dough, and cover
+7. Lift dough out, {1/4cup olive oil} in bowl, add dough, and cover
 8. Let rise for 1.5hr
 9. fold dough. Lift and wiggle, rotate bowl 90deg, do several times
 10. Lightly oil and salt sheet, Spread out on sheet until it springs back
