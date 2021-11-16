@@ -33,6 +33,10 @@ servings : 2  /* Tastebase defaults to 2 servings, but you can override it */
 
 Ingredients in your recipe are indicated with surounding `{}`, eg. `{jam}`, `{2 slices of white bread}` or `{3 4/5tsp of truffle oil}`. This lets Tastebase parse out the ingredients, quanitites and units of your recipes to automatically create an ingredient summary, but also allow the user to dynamically scale quantities based on serving size, and also convert between units (if possible).
 
+### Temperature
+
+Tastebase will automatically detect temperatures for both fahrenheit and celsius and provide conversions to the user for you. 
+
 
 ### Notes
 
