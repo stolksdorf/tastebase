@@ -180,7 +180,6 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 	const [unit, setUnit] = this.useState(ingredient.unit);
 	const [servings, setServings] = this.useState(initServings);
 
-	console.log(ingredient)
 
 	if(!this.refs.baseServings) this.refs.baseServings = initServings;
 	this.useEffect(()=>{

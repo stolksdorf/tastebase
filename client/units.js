@@ -1,55 +1,64 @@
 const volume = {
 	cups   : {
-		cups   : 1,
+		cups  : 1,
 		ml    : 236.6,
 		tsp   : 48,
 		tbsp  : 16,
 		liter : 0.2366
 	},
 	ml : {
-
+		cups  : 0.004227,
+		ml    : 1,
+		tsp   : 0.2029,
+		tbsp  : 0.06763,
+		liter : 0.001,
 	},
 	tsp   : {
-		cups   : 1,
-		ml    : 1,
+		cups  : 0.02083,
+		ml    : 4.929,
 		tsp   : 1,
-		tbsp  : 1,
-		floz  : 1,
-		pint  : 1,
-		quart : 1,
-		liter : 1,
+		tbsp  : 0.3333,
+		liter : 0.004929,
 	},
 	tbsp  : {
-
+		cups  : 0.0625,
+		ml    : 14.79,
+		tsp   : 3,
+		tbsp  : 1,
+		liter : 0.01479,
 	},
 	liter : {
-
+		cups  : 4.227,
+		ml    : 1000,
+		tsp   : 202.9,
+		tbsp  : 67.63,
+		liter : 1,
 	},
 };
 const weight = {
 	grams : {
 		grams : 1,
-		lb : 1,
-		oz : 1
+		lb : 0.002205,
+		oz : 0.03527
 	},
 	lb : {
-		grams : 1,
+		grams : 453.6,
 		lb : 1,
-		oz : 1
+		oz : 16
 	},
 	oz : {
-		grams : 1,
-		lb : 1,
+		grams : 28.35,
+		lb : 0.0625,
 		oz : 1
 	}
 };
 const useFractions = {
 	cups : true,
-	tsp : true,
+	tsp  : true,
 	tbsp : true,
-	oz : true,
-	pint : true,
-	quart : true,
+	oz   : true,
+	//pint : true,
+	//quart : true,
 };
 const alias = {
 	teaspoon      : 'tsp',
@@ -123,7 +132,7 @@ const convert = (val, from_unit, to_unit)=>{
 	if(volume[from_unit] && volume[from_unit][to_unit]){
 		val = volume[from_unit][to_unit] * val;
 	}
-	if(weight[from_unit] && weight[from_unit][to_unit]){ d
+	if(weight[from_unit] && weight[from_unit][to_unit]){
 		val = weight[from_unit][to_unit] * val;
 	}
 	if(useFractions[to_unit]) val = toFraction(val);

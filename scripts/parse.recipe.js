@@ -48,7 +48,7 @@ const parseIngredients = (recipe)=>{
 		text.push(name);
 
 		ingredients.push({ name, qty, unit })
-		return `<span class='ingredient' x-qty='${qty}' x-unit='${unit}' x-name='${name}'>${text.join(' ')}</span>`;
+		return `<span class='ingredient' x-qty='${qty||0}' x-unit='${unit||''}' x-name='${name}'>${text.join(' ')}</span>`;
 	});
 	content = `<div class='instructions'>${content}</div>`;
 	return {...recipe, ingredients, content};
