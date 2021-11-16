@@ -5,7 +5,7 @@ This is how you make tea. I know it's super secret stuff
 ![](https://optional_img_url.biz)
 
 type: beverage
-servings : 1  /* Tastebase defaults to 2 servings, but you can override it */
+servings : 1 
 
 
 1. Boil {1cup of water} in a kettle or pot, but not microwave. This is fancy tea. 
