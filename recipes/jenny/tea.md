@@ -9,7 +9,7 @@ servings : 1
 
 
 1. Boil {1cup of water} in a kettle or pot, but not microwave. This is fancy tea. 
-1. Grab {1 teabag} that requires {1 cup of water}. This could be black or herbal tea. Not green. You'll burn it. Don't burn it.
+1. Grab {1 teabag}. Put it in a mug.
 1. Steep tea for however long you want. Watch the colour. Is it good tea?
 1. Add optional {1splash of milk} after steeping. Not before, after.
 1. Wait for it to cool down.
