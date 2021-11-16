@@ -1,12 +1,16 @@
 # How to create a recipe
 
-### Instructions
+### Getting Started
+1. Send Scott either your Github account name (if you have one) or the email address you'd like to use.
+2. He will add you as a "Contributor" which will let you create and edit files on this repo
+3. You should get an email with confirmation
 
-1. Create a new folder for yourself
-1. Click into that folder
-1. Click 'Add File'
-1. Name your file `[your_recipe_name].md`. Use only lowercase letters and underscores plz.
-1. Paste the following into your file
+### Your First Recipe
+
+1. Make sure you are in the `tastebase/recipes` folder
+1. Click 'Add File' -> 'Create new file'
+2. Name your file: `/[your_name]/my_first_recipe.md`
+3. Paste the following in your file:
 
 ```
 # Your Recipe Name
@@ -27,6 +31,13 @@ servings : 2  /* Tastebase defaults to 2 servings, but you can override it */
 
 ```
 
+4. After you commit your changes, it will take ~1min for it to show up on the site!
+
+
+
+## Recipe Markup
+
+Your recipe will be written in Markdown. The top level header will become your recipe's title, the first paragraph it's description, and the first image will be the display image for your recipe (optional).
 
 
 ### Ingredients
