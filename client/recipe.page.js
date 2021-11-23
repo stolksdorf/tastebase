@@ -241,8 +241,6 @@ const hasFav = (id)=>{
 const RecipePage = comp(function(recipe){
 	if(!recipe) return x`<section class='Recipe'>Oops, recipe not found</section>`;
 
-	//console.log(recipe)
-
 	const [servings, setServings] = this.useState(recipe.servings);
 	const [showNotes, setShowNotes] = this.useState(false);
 
@@ -260,7 +258,11 @@ const RecipePage = comp(function(recipe){
 
 	this.useEffect(()=>{
 		ServeringsEmitter.emit('servingsChange', servings)
-	},[servings])
+	},[servings]);
+
+	this.useEffect(()=>{
+		document.title = `${recipe.title} - Tastebase`;
+	}, []);
 
 	return x`<section class=${cx('Recipe', {showNotes})}>
 		<div class='controls'>

@@ -103,6 +103,8 @@ const SearchPage = comp(function(allRecipes, initQuery){
 
 	this.useEffect(()=>{
 		this.el.querySelector('input').focus();
+		document.title = `Tastebase`;
+
 	},[])
 
 	return x`<section class='Search'>
