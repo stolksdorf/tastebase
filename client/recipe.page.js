@@ -9,31 +9,19 @@ global.css.recipe_page = css`
 		padding-top: 2em;
 		padding-bottom: 8em;
 
-
-
 		&.showNotes{
 			.chef_note{
 				display: block !important;
 			}
 		}
 
-
 		.controls{
 			position: absolute;
 			top : 30px;
 			right: 10px;
-
-			i.fav{
-				font-size: 2em;
-				cursor: pointer;
-				user-select: none;
-			}
 		}
 
 		.top{
-
-
-
 			h1{
 				font-size: 3em;
 				margin: 0px;
@@ -57,18 +45,12 @@ global.css.recipe_page = css`
 			img{
 				height : 200px;
 			}
-
 		}
-
 
 		h3{
 			font-size: 1.8em;
 			margin: 0px;
 		}
-
-
-
-
 
 		.ingredients{
 			font-size: 1.3em;
@@ -85,6 +67,12 @@ global.css.recipe_page = css`
 			}
 		}
 
+	}
+`;
+
+global.css.instruction_section = css`
+
+	section.Recipe{
 		.instructions{
 			font-size: 1.3em;
 
@@ -115,8 +103,6 @@ global.css.recipe_page = css`
 				}
 			}
 
-
-
 			.chef_note{
 				display: none;
 				//border: var(--green) 1px solid;
@@ -128,114 +114,51 @@ global.css.recipe_page = css`
 				color: var(--grey);
 
 			}
-		}
 
-	}
-`;
-
-
-const Emitter=()=>{
-	let cache={};
-	return {
-		emit : (evt, ...args)=>(cache[evt]||[]).map(fn=>fn(...args)),
-		on : (evt, func)=>{
-			cache[evt]=(cache[evt]||[]).concat(func);
-			return ()=>cache[evt]=cache[evt].filter(x=>x!=func);
-		}
-	};
-};
-
-
-
-const Units = require('./units.js');
-
-
-global.css.ingredient_control = css`
-	.ingredientControl{
-		font-weight: bold;
-
-		select{
-			font-family: 'IM Fell English', serif;
-			font-size: 0.79em;
-			font-weight: bold;
-			display: none;
-		}
-
-		span.unit{
-			margin-top: 20px;
-		}
-
-		&:hover{
-			select{
-				display: inherit;
-			}
-			span.unit{
-				display: none;
+			textarea{
+				font-family: inherit;
+				width : 100%;
+				background-color: transparent;
+				//border: none;
+				resize: none;
+				font-size: 1em;
+				min-height: 800px;
 			}
 		}
 	}
 `
 
-const IngredientControl = comp(function(ingredient, initServings=1){
-	const [unit, setUnit] = this.useState(ingredient.unit);
-	const [servings, setServings] = this.useState(initServings);
 
 
-	if(!this.refs.baseServings) this.refs.baseServings = initServings;
-	this.useEffect(()=>{
-		return ServeringsEmitter.on('servingsChange', (newServings)=>{
-			setServings(newServings)
-		})
-	},[]);
+const IngredientControl = require('./ingredient.control.js');
+const ServeringsEmitter = require('./emitter.js');
 
-	let qty = ingredient.qty || '';
-	if(qty){
-		qty = Units.convert(qty * servings/this.refs.baseServings, ingredient.unit, unit) ;
+
+
+global.css.fav_control = css`
+	i.fav{
+		font-size: 2em;
+		cursor: pointer;
+		user-select: none;
+		&.fa-heart{
+			color : red;
+		}
 	}
+`;
+const FavControl = comp(function(id){
+	const hasFav = (id)=>!!localStorage.getItem(`fav__${id}`);
+	const toggleFav = (id)=>{
+		hasFav(id)
+			? window.localStorage.removeItem(`fav__${id}`)
+			: window.localStorage.setItem(`fav__${id}`, true);
+		return hasFav(id);
+	};
 
-	return x`<span class='ingredientControl'>
-		${qty ? qty : ingredient.amount}
-		${unit && x`<span class='unit'>${unit}</span>`}
+	const [isFav, setIsFav] = this.useState(hasFav(id));
 
-		${Units.volume[unit] && x`<select value=${unit} onchange=${(evt)=>setUnit(evt.target.value)}>
-			${Object.keys(Units.volume).map(key=>x`<option value=${key} selected=${key==unit}>${key}</option>`)}
-		</select>`}
-		${Units.weight[unit] && x`<select value=${unit} onchange=${(evt)=>setUnit(evt.target.value)}>
-			${Object.keys(Units.weight).map(key=>x`<option value=${key} selected=${key==unit}>${key}</option>`)}
-		</select>`}
-		<label>${ingredient.name}</label>
-	</span>`
+	return x`<i class=${cx('fav fa fa-fw', {'fa-heart': isFav, 'fa-heart-o': !isFav})} onclick=${()=>setIsFav(toggleFav(id))}></i>`;
 });
 
-
-const ServeringsEmitter = Emitter();
-
-
-const Tidbit = (label, val, link)=>{
-	if(!val) return;
-	if(link){
-		return x`<div class='field'>
-			<label>${label}:</label>
-			<a href=${link}><sup>${val}</sup></a>
-		</div>`
-	}
-	return x`<div class='field'>
-		<label>${label}:</label>
-		<sup>${val}</sup>
-	</div>`
-}
-
-
-const toggleFav = (id)=>{
-	hasFav(id)
-		? window.localStorage.removeItem(`fav__${id}`)
-		: window.localStorage.setItem(`fav__${id}`, true);
-	return hasFav(id);
-}
-
-const hasFav = (id)=>{
-	return !!localStorage.getItem(`fav__${id}`);
-}
 
 
 const RecipePage = comp(function(recipe){
@@ -244,7 +167,8 @@ const RecipePage = comp(function(recipe){
 	const [servings, setServings] = this.useState(recipe.servings);
 	const [showNotes, setShowNotes] = this.useState(false);
 
-	const [isFav, setIsFav] = this.useState(hasFav(recipe.id));
+	const [editMode, setEditMode] = this.useState(true);
+	const [edittedContent, setEdittedContent] = this.useState(recipe.markdown);
 
 	this.useEffect(()=>{
 		[...document.querySelectorAll('.ingredient')].map((el)=>{
@@ -262,12 +186,17 @@ const RecipePage = comp(function(recipe){
 
 	this.useEffect(()=>{
 		document.title = `${recipe.title} - Tastebase`;
+		window.onbeforeunload = (evt)=>{
+			if(recipe.markdown !== edittedContent) evt.returnValue = 'Content Has Changed';
+		};
 	}, []);
 
 	return x`<section class=${cx('Recipe', {showNotes})}>
 		<div class='controls'>
 			<a href=${recipe.github} target='_blank'>Edit this Recipe <i class='fa fa-pencil'></i></a>
-			<i class=${cx('fav fa fa-fw', {'fa-star': isFav, 'fa-star-o': !isFav})} onclick=${()=>setIsFav(toggleFav(recipe.id))}></i>
+			${FavControl(recipe.id)}
+
+
 		</div>
 
 		<div class='top'>
@@ -312,9 +241,12 @@ const RecipePage = comp(function(recipe){
 					<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
 					Show Chef Notes
 				</label>`}
+
+				<i class='fa fa-pencil' onclick=${()=>setEditMode(!editMode)}></i>
 			</h3>
 
-			${x(recipe.content)}
+			${!editMode && x(recipe.content)}
+			${editMode && x`<textarea value=${edittedContent} oninput=${(evt)=>setEdittedContent(evt.target.value)}></textarea>`}
 		</div>
 		<hr />
 	</section>`

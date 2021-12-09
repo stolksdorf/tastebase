@@ -3,6 +3,9 @@ const trnp = require('pico-trnp');
 
 const Units = require('../client/units.js');
 
+//TODO: grab the first open link
+
+
 const parseMarkdown = (content)=>{
 	let info = {};
 
@@ -91,6 +94,8 @@ const parseRecipe = (markdown, info={})=>{
 		return {
 			type     : 'food',
 			servings : 2,
+			desc     : '',
+			markdown,
 			...recipe
 		}
 	}catch(err){

@@ -2,10 +2,8 @@ const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 
 
-const Tag = require('./tag.js');
-
 global.css.sneakpeek = css`
-	.Sneakpeek{
+	.RecipeCard{
 		display: block;
 		border-radius: 10px;
 
@@ -35,23 +33,34 @@ global.css.sneakpeek = css`
 			float: right;
 		}
 
+		i.fa-heart{
+			color: red;
+		}
+
 	}
 
 `;
 
-const Sneakpeek = (recipe)=>{
+const RecipeCard = (recipe)=>{
+	const hasFav = (typeof localStorage !== 'undefined') && !!localStorage.getItem(`fav__${recipe.id}`)
 
 
-	return x`<a href=${`?recipe=${recipe.id}`} class='Sneakpeek'>
+	return x`<a href=${`?recipe=${recipe.id}`} class='RecipeCard'>
 		${recipe.img && x`<img src=${recipe.img}></img>`}
 		<h3>${recipe.title}</h3>
 
-		<div><label>Chef:</label> ${Tag(recipe.chef, 'chef')}</div>
-		<div><label>Type:</label> ${Tag(recipe.type, 'type')}</div>
+		<div>
+			<label>Chef:</label>
+			<span>${recipe.chef}</span>
+		</div>
+		<div>
+			<label>Type:</label>
+			<span>${recipe.type}</span>
+		</div>
 
-
+		${hasFav && x`<i class='fa fa-heart'></i>`}
 	</a>`
 }
 
 
-module.exports = Sneakpeek;
+module.exports = RecipeCard;

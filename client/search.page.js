@@ -1,7 +1,7 @@
 const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 
-const Sneakpeek = require('./sneakpeek.js');
+const RecipeCard = require('./recipe.card.js');
 
 
 const updateURL = (query)=>{
@@ -51,51 +51,72 @@ global.css.search_page = css`
 `
 
 
-
-const filterRecipes = (recipes, query)=>{
-	if(!query.trim()) return Object.values(recipes);
-
-	const parts = query.toLowerCase().split(' ').reduce((acc,part)=>{
-		if(part.indexOf(':')){
-			const [key,val] = part.split(':');
-			acc[key] = val;
+const getQueryObj = (query)=>{
+	let result = { terms : [], keys : {}}
+	query.split(' ').map(part=>{
+		if(part.indexOf(':') !== -1){
+			const [key, val] = part.split(':');
+			result.keys[key] = val;
 		}else{
-			acc.terms.push(part);
+			result.terms.push(part);
 		}
-		return acc;
-	}, {terms:[]});
+	})
+	return result;
+};
 
-
-	console.log(parts)
-	return Object.values(recipes).filter(recipe=>{
-
-		if(parts.type && recipe.type == parts.type) return true;
-		if(parts.chef && recipe.chef == parts.chef) return true;
-
-
-		if(parts.terms.length==0) return false;
-		return parts.terms.every(term=>{
-			if(has(recipe.title, term)) return true;
-			if(has(recipe.desc, term)) return true;
-
-			return false;
+const scoreRecipes = (recipes, terms=[])=>{
+	if(terms.length == 0) return recipes;
+	let result = recipes.map(recipe=>{
+		let score = 0;
+		terms.map(term=>{
+			if(recipe.title.indexOf(term) !== -1) score++;
+			if(recipe.desc.indexOf(term) !== -1) score++;
+			recipe.ingredients.map(({name})=>{
+				if(name.indexOf(term) !== -1) score++;
+			});
 		})
+		return [recipe, score];
 	});
-}
+
+
+	result = result.filter(([recipe, score])=>score>0);
+	return result.sort((a,b)=>{
+		return b[1] - a[1];
+	}).map(([recipe, score])=>recipe);
+};
+
+
+const filterRecipes = (recipes, keys)=>{
+	return recipes.filter(recipe=>{
+		return Object.entries(keys).every(([key,val])=>{
+			return recipe[key] === val;
+		});
+	});
+};
+
 
 
 const SearchPage = comp(function(allRecipes, initQuery){
+	const applyQuery = ()=>{
+		const {terms, keys} = getQueryObj(query);
+		let temp = filterRecipes(allRecipes, keys);
+		return scoreRecipes(temp, terms);
+	}
+
+
 	const [query, setQuery] = this.useState(initQuery);
 	const [inProgress, setInProgress] = this.useState(false);
 
-	const [recipes, setRecipes] = this.useState(()=>filterRecipes(allRecipes, query));
+	const [recipes, setRecipes] = this.useState(applyQuery);
+
+
 
 
 	this.useEffect(()=>{
 		setInProgress(true);
 		clearTimeout(this.refs.timeout);
 		this.refs.timeout = setTimeout(()=>{
-			setRecipes(filterRecipes(allRecipes, query));
+			setRecipes(applyQuery());
 			setInProgress(false);
 			updateURL(query ? `?search=${encodeURI(query)}`: '?');
 		}, 150);
@@ -126,7 +147,7 @@ const SearchPage = comp(function(allRecipes, initQuery){
 		</div>
 
 		<div class='results'>
-			${Object.values(recipes).map(Sneakpeek)}
+			${recipes.map(RecipeCard)}
 		</div>
 	</section>`
 });

@@ -32,7 +32,7 @@ let xo = {ver: '0.4.1', debug : true};
 
 xo.parser = (htmlString, id=false)=>{
 	const body = DP.parseFromString(htmlString, 'text/html').body;
-	if(body.children.length > 1) throw 'Multiple top level elements were returned in blueprint';
+	if(body.children.length > 1) throw `Multiple top level elements were returned in blueprint: \n${htmlString}`;
 	let dom = body.children[0], slots = [];
 	const insertSlots = (el)=>{
 		const containsPlaceholder = el.nodeName == "#text" && el.nodeValue.indexOf(PH) !== -1;

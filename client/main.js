@@ -46,7 +46,7 @@ const Main = comp(function({ recipes, chefs, types }){
 			</ul>
 		</nav>
 
-		${page == 'search' && SearchPage(recipes, val)}
+		${page == 'search' && SearchPage(Object.values(recipes), val)}
 		${page == 'recipe' && RecipePage(recipes[val])}
 
 		<footer></footer>

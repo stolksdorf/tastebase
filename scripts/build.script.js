@@ -4,8 +4,6 @@ const pack = require('../libs/pico-pack');
 const Pages = require('../client/index.js');
 const {recipes,chefs,types,tags} = require('../recipes');
 
-console.log(Object.keys(recipes));
-
 
 const bundle = ()=>{
 	const html = Pages.main({recipes,chefs,types,tags});
