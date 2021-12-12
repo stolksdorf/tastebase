@@ -1,6 +1,7 @@
 const fs = require('fs'), path = require('path');
 
-const parseRecipe = require('../scripts/parse.recipe.js');
+const meta = require('../utils/metadata.recipe.js');
+
 
 let recipes = {};
 
@@ -17,11 +18,15 @@ const parse = (dir, chef=null)=>{
 			if(ext !== '.md') return;
 			if(file.name == 'readme.md') return;
 
+			const text = fs.readFileSync(path.join(dir, file.name), 'utf8');
+			const {content, ...rest} = meta(text);
+
 			recipes[id] = {
 				id,
 				chef,
 				github : `https://github.com/stolksdorf/tastebase/blob/master/${dir.split('\\').join('/')}/${file.name}`,
-				...parseRecipe(fs.readFileSync(path.join(dir, file.name), 'utf8'))
+				content : text,
+				...rest
 			};
 		}catch(err){
 			console.error(err)

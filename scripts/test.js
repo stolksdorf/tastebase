@@ -1,7 +1,6 @@
-const {recipes,chefs,types,tags} = require('../recipes');
+
+const {recipes, chefs, types} = require('./getRecipes.js');
 
 
-
-
-//console.log(recipes)
+console.log({chefs, types})
 console.log(recipes.scoot__test_recipe)

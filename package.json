@@ -2,13 +2,14 @@
   "name": "tastebase",
   "version": "0.0.0",
   "description": "A recipe viewer for me and my friends",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "build": "node scripts/build.script.js",
     "dev": "node scripts/build.script.js --dev",
     "test": "pico-check ./tests",
     "test:dev": "pico-check --watch ./tests",
     "test:build": "node scripts/test.build.js",
+
     "libs": "node scripts/update.libs.js",
     "libs:push": "node scripts/update.libs.js --push",
     "libs:pull": "node scripts/update.libs.js --pull"
@@ -25,9 +26,7 @@
   },
   "homepage": "https://github.com/stolksdorf/tastebase#readme",
   "dependencies": {
-    "livereload": "^0.9.3",
-    "marked": "^3.0.8",
-    "pico-trnp": "^1.0.1"
+    "marked": "^3.0.8"
   },
   "devDependencies": {
     "live-server": "^1.2.1",

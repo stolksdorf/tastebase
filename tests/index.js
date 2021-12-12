@@ -1,4 +1,5 @@
 module.exports = {
-	units : require('./units.test.js'),
-	recipe : require('./recipe.test.js')
+	recipe : require('./recipe.test.js'),
+	metadata : require('./metadata.test.js'),
+	ingredient : require('./ingredient.test.js')
 }
