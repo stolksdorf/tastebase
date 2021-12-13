@@ -12,9 +12,9 @@ const getStaple = (str)=>{
 	return Object.keys(stapleDensity).find(staple=>str.indexOf(staple)!==-1);
 };
 
-const parseIngredient = (str)=>{
+const parseIngredient = (raw)=>{
 	let qty=0, unit='', parts=[], staple='';
-	str.split(' ').map(p=>{
+	raw.split(' ').map(p=>{
 		const [num]= p.match(/\d*\.?\d+/) || [];
 		const [frac] = p.match(/\d+\/\d+/) || [];
 		const [text] = p.match(/[a-zA-Z]+/) || [];
@@ -36,7 +36,7 @@ const parseIngredient = (str)=>{
 			}
 		}
 	})
-	return {qty, unit, staple, name:parts.join(' ')};
+	return {qty, unit, staple, name:parts.join(' '), raw};
 };
 
 const extractIngredients = (str)=>{
@@ -44,13 +44,18 @@ const extractIngredients = (str)=>{
 	let content = str.replace(/{(.+?)}/g, (_,match)=>{
 		const ingredient = parseIngredient(match);
 		ingredients.push(ingredient)
-		return `<span class='ingredient' x-qty='${ingredient.qty}' x-unit='${ingredient.unit}' x-name='${ingredient.name}' x-staple='${ingredient.staple}'>${match}</span>`;
+		return toElement(ingredient);
 	});
 	content = content.trim();
-	return {ingredients, content};
+	return [ingredients, content];
+};
+
+const toElement = ({qty, unit, staple, name, raw})=>{
+	return `<span class='ingredient' x-qty='${qty}' x-unit='${unit}' x-name='${name}' x-staple='${staple}'>${raw}</span>`;
 };
 
 module.exports = {
 	parseIngredient,
 	extractIngredients,
+	toElement,
 }

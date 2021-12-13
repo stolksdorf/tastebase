@@ -18,22 +18,33 @@ global.css.main_page = css`
 				&:visited{ color: black; }
 			}
 		}
-
-
 	}
 `;
 
 
 const Main = comp(function({ recipes, chefs, types }){
-	const [{page, val}] = this.useState(()=>{
-		if(typeof document !== 'undefined'){
-			const params = utils.qs.get(document.location.href);
-			if(params.search) return {page: 'search', val: params.search};
-			if(params.recipe) return {page: 'recipe', val: params.recipe};
-			return {page: 'search', val: ''};
-		}
-		return {page: 'search', val: ''};
-	});
+	// const [{page, val}] = this.useState(()=>{
+	// 	if(typeof document !== 'undefined'){
+	// 		const params = utils.qs.get(document.location.href);
+	// 		if(params.sarch) return {page: 'search', val: params.search};
+	// 		if(params.recipe) return {page: 'recipe', val: params.recipe};
+	// 		return {page: 'search', val: ''};
+	// 	}
+	// 	return {page: 'search', val: ''};
+	// });
+
+	const [page, setPage] = this.useState('');
+
+
+	this.useEffect(()=>{
+		window.onhashchange = ()=>{
+			alert(`hash changed! ${window.location.hash.substr(1)}`);
+		};
+
+		//also set the initial hash fragment here
+	}, [])
+
+
 
 
 	return x`<main>

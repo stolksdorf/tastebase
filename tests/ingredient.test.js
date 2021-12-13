@@ -59,18 +59,18 @@ module.exports = {
 
 	},
 	extract : (t)=>{
-		const res = extractIngredients(`
+		const [ingredients, content] = extractIngredients(`
 1. Heat {1 3/4 cups of whole milk} to 105F. Mix in {2 tsp of yeast}.
 2. Add some {korean bbq sauce}, and {2 dashes MSG}
 `);
 
-		t.is(res.ingredients, [
-			{ qty: 1.75, unit: 'cups', staple: 'milk', name: 'of whole milk' },
-			{ qty: 2, unit: 'tsp', staple: '', name: 'of yeast' },
-			{ qty: 0, unit: '', staple: '', name: 'korean bbq sauce' },
-			{ qty: 2, unit: '', staple: '', name: 'dashes MSG' }
+		t.is(ingredients, [
+			{ qty: 1.75, unit: 'cups', staple: 'milk', name: 'of whole milk', raw: '1 3/4 cups of whole milk' },
+			{ qty: 2, unit: 'tsp', staple: '', name: 'of yeast', raw: '2 tsp of yeast' },
+			{ qty: 0, unit: '', staple: '', name: 'korean bbq sauce', raw: 'korean bbq sauce' },
+			{ qty: 2, unit: '', staple: '', name: 'dashes MSG', raw: '2 dashes MSG' }
 		]);
-		t.is(res.content, `1. Heat <span class='ingredient' x-qty='1.75' x-unit='cups' x-name='of whole milk' x-staple='milk'>1 3/4 cups of whole milk</span> to 105F. Mix in <span class='ingredient' x-qty='2' x-unit='tsp' x-name='of yeast' x-staple=''>2 tsp of yeast</span>.
+		t.is(content, `1. Heat <span class='ingredient' x-qty='1.75' x-unit='cups' x-name='of whole milk' x-staple='milk'>1 3/4 cups of whole milk</span> to 105F. Mix in <span class='ingredient' x-qty='2' x-unit='tsp' x-name='of yeast' x-staple=''>2 tsp of yeast</span>.
 2. Add some <span class='ingredient' x-qty='0' x-unit='' x-name='korean bbq sauce' x-staple=''>korean bbq sauce</span>, and <span class='ingredient' x-qty='2' x-unit='' x-name='dashes MSG' x-staple=''>2 dashes MSG</span>`);
 	},
 

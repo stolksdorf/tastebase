@@ -2,20 +2,15 @@ const isDev = process.argv.some(v=>v=='--dev');
 const pack = require('../libs/pico-pack');
 
 const Pages = require('../client/index.js');
-const {recipes,chefs,types,tags} = require('../recipes');
-
+const {recipes,chefs,types} = require('./getRecipes.js');
 
 const bundle = ()=>{
-	const html = Pages.main({recipes,chefs,types,tags});
-
+	const html = Pages.main({recipes,chefs,types});
 	require('fs').writeFileSync('./index.html', html, 'utf8');
-	console.log('Updated!')
-}
-
+	console.log('Updated!');
+};
 
 bundle();
-
 pack.emitter.on('update', (fp)=>bundle());
-
 
 if(isDev) require('live-server').start();

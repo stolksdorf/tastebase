@@ -2,6 +2,9 @@ const fs = require('fs'), path = require('path');
 
 const meta = require('../utils/metadata.recipe.js');
 
+//TODO: Potentially extract out the ingredient names for better searching using ExtractIngredients
+
+
 
 let recipes = {};
 
