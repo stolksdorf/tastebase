@@ -69,11 +69,11 @@ const scoreRecipes = (recipes, terms=[])=>{
 	let result = recipes.map(recipe=>{
 		let score = 0;
 		terms.map(term=>{
-			if(recipe.title.indexOf(term) !== -1) score++;
-			if(recipe.desc.indexOf(term) !== -1) score++;
-			recipe.ingredients.map(({name})=>{
-				if(name.indexOf(term) !== -1) score++;
-			});
+			if(recipe.title.indexOf(term) !== -1) score +=5;
+			if(recipe.desc.indexOf(term) !== -1) score +=1;
+			// recipe.ingredients.map(({name})=>{
+			// 	if(name.indexOf(term) !== -1) score++;
+			// });
 		})
 		return [recipe, score];
 	});
@@ -118,14 +118,16 @@ const SearchPage = comp(function(allRecipes, initQuery){
 		this.refs.timeout = setTimeout(()=>{
 			setRecipes(applyQuery());
 			setInProgress(false);
-			updateURL(query ? `?search=${encodeURI(query)}`: '?');
+			//updateURL(query ? `?search=${encodeURI(query)}`: '?');
+
+			window.location.hash = `#search=${encodeURI(query)}`;
 		}, 150);
 	}, [query])
 
 	this.useEffect(()=>{
 		this.el.querySelector('input').focus();
 		document.title = `Tastebase`;
-
+		window.scrollTo(0, 0);
 	},[])
 
 	return x`<section class='Search'>

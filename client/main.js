@@ -1,8 +1,6 @@
 const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 
-const utils = require('../libs/utils.js');
-
 require('./style.js');
 
 
@@ -23,42 +21,33 @@ global.css.main_page = css`
 
 
 const Main = comp(function({ recipes, chefs, types }){
-	// const [{page, val}] = this.useState(()=>{
-	// 	if(typeof document !== 'undefined'){
-	// 		const params = utils.qs.get(document.location.href);
-	// 		if(params.sarch) return {page: 'search', val: params.search};
-	// 		if(params.recipe) return {page: 'recipe', val: params.recipe};
-	// 		return {page: 'search', val: ''};
-	// 	}
-	// 	return {page: 'search', val: ''};
-	// });
-
 	const [page, setPage] = this.useState('');
+	const [param, setParam] = this.useState('');
 
+
+	const updatePage = ()=>{
+		const [page, param] = window.location.hash.substr(1).split('=');
+		setPage(page || 'search');
+		setParam(decodeURIComponent(param || ''));
+	}
 
 	this.useEffect(()=>{
-		window.onhashchange = ()=>{
-			alert(`hash changed! ${window.location.hash.substr(1)}`);
-		};
-
-		//also set the initial hash fragment here
+		window.onhashchange = updatePage;
+		updatePage();
 	}, [])
-
-
-
 
 	return x`<main>
 		<nav>
-			<a href='?'>Tastebase</a>
+			<a href='#'>Tastebase</a>
 			<ul>
-				<li><a href='?search='>Search</a></li>
+				<li><a href='#search='>Search</a></li>
 				<li><a href='https://github.com/stolksdorf/tastebase/tree/master/recipes'>Add Recipe</a></li>
 				<li><a href='https://github.com/stolksdorf/tastebase'>Github</a></li>
 			</ul>
 		</nav>
 
-		${page == 'search' && SearchPage(Object.values(recipes), val)}
-		${page == 'recipe' && RecipePage(recipes[val])}
+		${page == 'search' && SearchPage(Object.values(recipes), param)}
+		${page == 'recipe' && RecipePage(recipes[param])}
 
 		<footer></footer>
 	</main>`;

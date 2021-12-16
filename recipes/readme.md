@@ -15,19 +15,21 @@
 ```
 # Your Recipe Name
 
-Brief Description of your amazing recipe
+> Brief Description of your amazing recipe
 
-![](https://optional_img_url.biz)
+type     : food
+servings : 2
+img      :
 
-type: breakfast
-servings : 2  /* Tastebase defaults to 2 servings, but you can override it */
 
-
-1. Grab {1cup of milk} and {43.5 grams oil}
+1. Grab {1 cup of milk} and {43.5 grams oil}
 1. Mix and Season with {oregano}
 1. Set your furance to 2000F and yeet it in, cuz this is trash
 
-/* You can also add chef notes in comments */
+### The sauce
+
+You can also create multiple sections, with separate ingredient lists too, with {90lb of saffron}
+
 
 ```
 
@@ -37,12 +39,14 @@ servings : 2  /* Tastebase defaults to 2 servings, but you can override it */
 
 ## Recipe Markup
 
-Your recipe will be written in Markdown. The top level header will become your recipe's title, the first paragraph it's description, and the first image will be the display image for your recipe (optional).
+Your recipe will be written in [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet). The top level header will become your recipe's title, the first paragraph it's description, and the first image will be the display image for your recipe (optional).
 
 
 ### Ingredients
 
-Ingredients in your recipe are indicated with surounding `{}`, eg. `{jam}`, `{2 slices of white bread}` or `{3 4/5tsp of truffle oil}`. This lets Tastebase parse out the ingredients, quanitites and units of your recipes to automatically create an ingredient summary, but also allow the user to dynamically scale quantities based on serving size, and also convert between units (if possible).
+Ingredients in your recipe are indicated with surounding `{}`, eg. `{jam}`, `{2 slices of white bread}` or `{3 4/5tsp of truffle oil}`.
+
+This lets Tastebase parse out the ingredients, quanitites, and units of your recipes to automatically create an ingredient summary, but also allow the user to dynamically scale quantities based on serving size, and also convert between units (if possible).
 
 ### Temperature
 

@@ -17,16 +17,18 @@ const convert = (ingredient, toUnit, multiplier=1)=>{
 	let result = ingredient.qty * multiplier;
 	let fromUnit = ingredient.unit;
 
-	if(units[fromUnit][toUnit]){
+	if(units[fromUnit] && units[fromUnit][toUnit]){
 		result = units[fromUnit][toUnit] * result;
 	}else if(ingredient.staple){
 		let density = stapleDensity[ingredient.staple];
 
 		if(volumeUnits[fromUnit]){
+			//volume -> ml -> g -> weight
 			result = volumeUnits[fromUnit]['ml'] * result * 1/density;
 			result = weightUnits['grams'][toUnit] * result;
 		}
 		if(weightUnits[fromUnit]){
+			//weight -> g -> ml -> volume
 			result = weightUnits[fromUnit]['grams'] * result * density;
 			result = volumeUnits['ml'][toUnit] * result;
 		}
@@ -34,9 +36,9 @@ const convert = (ingredient, toUnit, multiplier=1)=>{
 
 	if(useFraction[toUnit]) return toFraction(result);
 
-	let places = 10;
-	if(result < 15) places = 100;
-	if(result < 1) places = 1000;
+	let places = 1;
+	if(result < 10) places = 10;
+	if(result < 1) places = 100;
 	return Math.round(result * places)/places;
 };
 

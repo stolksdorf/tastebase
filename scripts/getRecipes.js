@@ -4,8 +4,6 @@ const meta = require('../utils/metadata.recipe.js');
 
 //TODO: Potentially extract out the ingredient names for better searching using ExtractIngredients
 
-
-
 let recipes = {};
 
 const parse = (dir, chef=null)=>{

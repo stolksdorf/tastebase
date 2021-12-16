@@ -78,7 +78,7 @@ module.exports = {
 		basic : (t)=>{
 			t.is(convert(parseIngredient(`3 cups of milk`), 'tbsp'), 48);
 			t.is(convert(parseIngredient(`45.3g of almonds`), 'lb'), 0.1);
-			t.is(convert(parseIngredient(`45.33456g of almonds`), 'grams'), 45.3);
+			t.is(convert(parseIngredient(`45.33456g of almonds`), 'grams'), 45);
 		},
 		fractions : (t)=>{
 			t.is(convert(parseIngredient(`0.75 cups of water`), 'cups'), '¾');
@@ -89,9 +89,9 @@ module.exports = {
 			t.is(convert(parseIngredient(`1/2 stick of butter`), 'tbsp'), '4');
 		},
 		dynamic_rounding : (t)=>{
-			t.is(convert(parseIngredient(`0.33456g of saffron`), 'grams'), 0.335);
-			t.is(convert(parseIngredient(`1.2567lb of flour`), 'lb'), 1.26);
-			t.is(convert(parseIngredient(`45.33456g of almonds`), 'grams'), 45.3);
+			t.is(convert(parseIngredient(`0.33456g of saffron`), 'grams'), 0.33);
+			t.is(convert(parseIngredient(`1.2567lb of flour`), 'lb'), 1.3);
+			t.is(convert(parseIngredient(`45.33456g of almonds`), 'grams'), 45);
 			t.is(convert(parseIngredient(`3.0004 grams of milk`), 'grams'), 3);
 		}
 	}

@@ -31,7 +31,7 @@ const toHTML = (text)=>{
 	if(ingredients.length){
 		let pos = result.search(/<\/h\d>/);
 		pos = (pos===-1) ? 0 : pos + 6;
-		const ingredientList = `<h5>Ingredients</h5>\n<ul>${ingredients.map(i=>`<li>${toElement(i)}</li>`)}</ul>\n`;
+		const ingredientList = `<ul class='ingredientList'>${ingredients.map(i=>`<li>${toElement(i)}</li>`).join('\n')}</ul>\n`;
 		result = result.slice(0,pos) + ingredientList + result.slice(pos);
 	}
 	return result;

@@ -2,6 +2,8 @@ const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 
 
+const parseRecipe = require('../utils/parse.recipe.js');
+
 
 global.css.recipe_page = css`
 	section.Recipe{
@@ -161,41 +163,66 @@ const FavControl = comp(function(id){
 
 
 
-const RecipePage = comp(function(recipe){
-	if(!recipe) return x`<section class='Recipe'>Oops, recipe not found</section>`;
+const RecipePage = comp(function(initRecipe){
+	if(!initRecipe) return x`<section class='Recipe'><div class='notFound'>Oops, recipe not found</div></section>`;
+
+
+	const [content, setContent] = this.useState(initRecipe.content);
+
+	const getRecipe = ()=>{
+		const {id, github, chef} = initRecipe;
+		return {id, github, chef, ...parseRecipe(content)};
+	};
+
+	const [recipe, setRecipe] = this.useState(getRecipe);
 
 	const [servings, setServings] = this.useState(recipe.servings);
 	const [showNotes, setShowNotes] = this.useState(false);
 
-	const [editMode, setEditMode] = this.useState(true);
-	const [edittedContent, setEdittedContent] = this.useState(recipe.markdown);
+	const [editMode, setEditMode] = this.useState(false);
 
-	this.useEffect(()=>{
+
+	const applyEditChanges = ()=>{
+		setRecipe(getRecipe());
+		setEditMode(false);
+		setTimeout(createIngredientControls, 5);
+	};
+
+	const createIngredientControls = ()=>{
 		[...document.querySelectorAll('.ingredient')].map((el)=>{
 			xo.render(el, IngredientControl({
 				name  : el.getAttribute('x-name'),
 				qty   : Number(el.getAttribute('x-qty')),
 				unit  : el.getAttribute('x-unit'),
+				staple  : el.getAttribute('x-staple'),
 			}, recipe.servings));
 		});
-	}, []);
+	};
 
-	this.useEffect(()=>{
-		ServeringsEmitter.emit('servingsChange', servings)
-	},[servings]);
+
+
+	this.useEffect(()=>{ ServeringsEmitter.emit('servingsChange', servings) },[servings]);
 
 	this.useEffect(()=>{
 		document.title = `${recipe.title} - Tastebase`;
+		window.scrollTo(0, 0);
 		window.onbeforeunload = (evt)=>{
-			if(recipe.markdown !== edittedContent) evt.returnValue = 'Content Has Changed';
+			if(initRecipe.content !== content){
+				evt.preventDefault();
+				evt.returnValue = 'test';
+
+				return confirm("You have made changes to this form. Do you want to continue without saving these changes?");
+			}
 		};
+
+		createIngredientControls();
 	}, []);
+
 
 	return x`<section class=${cx('Recipe', {showNotes})}>
 		<div class='controls'>
 			<a href=${recipe.github} target='_blank'>Edit this Recipe <i class='fa fa-pencil'></i></a>
 			${FavControl(recipe.id)}
-
 
 		</div>
 
@@ -212,41 +239,31 @@ const RecipePage = comp(function(recipe){
 
 		<hr />
 
-		<div class='ingredients'>
-			<h3>
-				Ingredients
-
-				<div class='servings'>
-					<label>Number of Servings:</label>
-					<span>${servings}</span>
-					<button onclick=${()=>setServings(servings+1)}>+</button>
-					<button onclick=${()=>setServings(servings-1)}>-</button>
-				</div>
-			</h3>
-
-			<ul>
-				${recipe.ingredients.map((ingredient)=>{
-					return x`<li>${IngredientControl(ingredient, servings)}</li>`;
-				})}
-			</ul>
+		<div class='servings'>
+			<label>Number of Servings:</label>
+			<span>${servings}</span>
+			<button onclick=${()=>setServings(servings+1)}>+</button>
+			<button onclick=${()=>setServings(servings-1)}>-</button>
 		</div>
+
+		${recipe.hasChefNotes && x`<label class='showChefNotes'>
+			<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
+			Show Chef Notes
+		</label>`}
+
+		${!editMode && x`<i class='fa fa-pencil' onclick=${()=>setEditMode(true)}></i>`}
+		${editMode && x`<i class='fa fa-times' onclick=${()=>applyEditChanges()}></i>`}
+
+
+
 
 		<hr />
 
 		<div class='instructions'>
-			<h3>
-				Instructions
 
-				${recipe.hasNotes && x`<label class='showChefNotes'>
-					<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
-					Show Chef Notes
-				</label>`}
+			${editMode && x`<textarea value=${content} oninput=${(evt)=>setContent(evt.target.value)}></textarea>`}
+			${!editMode && x(`<div>${recipe.html}</div>`)}
 
-				<i class='fa fa-pencil' onclick=${()=>setEditMode(!editMode)}></i>
-			</h3>
-
-			${!editMode && x(recipe.content)}
-			${editMode && x`<textarea value=${edittedContent} oninput=${(evt)=>setEdittedContent(evt.target.value)}></textarea>`}
 		</div>
 		<hr />
 	</section>`

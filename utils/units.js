@@ -104,6 +104,14 @@ const useFraction = {
 	sticks : true,
 };
 
+const getCompatibleUnits = ({staple, unit})=>{
+	const volume = Object.keys(volumeUnits), weight = Object.keys(weightUnits);
+	if(staple) return volume.concat(weight);
+	if(volumeUnits[unit]) return volume;
+	if(weightUnits[unit]) return weight;
+	return [];
+};
+
 module.exports = {
 	units : {...weightUnits, ...volumeUnits},
 	volumeUnits,
@@ -111,4 +119,5 @@ module.exports = {
 	stapleDensity,
 	aliases,
 	useFraction,
+	getCompatibleUnits
 }

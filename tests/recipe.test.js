@@ -30,17 +30,4 @@ Some notes here
 
 		console.log(res)
 	},
-
-	temperature : {
-
-	},
-
-	//header
-	//img
-	//desc
-
-
-	//detect has comments
-
-
 }

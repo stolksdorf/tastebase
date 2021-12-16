@@ -21,9 +21,9 @@ const parseIngredient = (raw)=>{
 
 		if(frac){
 			const [a,b] = frac.split('/');
-			qty += Number(a)/Number(b)
+			qty += Number(a)/Number(b);
 		}else if(num){
-			qty += Number(num)
+			qty += Number(num);
 		}
 		if(text){
 			let _unit = getUnit(text);
