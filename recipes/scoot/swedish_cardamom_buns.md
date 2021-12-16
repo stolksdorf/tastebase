@@ -1,5 +1,6 @@
 # Swedish Cardamom Buns
 
+servings: 20
 
 ### Dough
 

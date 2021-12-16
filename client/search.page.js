@@ -128,7 +128,7 @@ const SearchPage = comp(function(allRecipes, initQuery){
 		this.el.querySelector('input').focus();
 		document.title = `Tastebase`;
 		window.scrollTo(0, 0);
-	},[])
+	},[]);
 
 	return x`<section class='Search'>
 

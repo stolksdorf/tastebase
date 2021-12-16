@@ -7,6 +7,8 @@ require('./style.js');
 const SearchPage = require('./search.page.js');
 const RecipePage = require('./recipe.page.js');
 
+const ConversionPage = require('./pages/conversion.page.js');
+
 global.css.main_page = css`
 	main{
 		nav{
@@ -41,6 +43,7 @@ const Main = comp(function({ recipes, chefs, types }){
 			<a href='#'>Tastebase</a>
 			<ul>
 				<li><a href='#search='>Search</a></li>
+				<li><a href='#conversion'>Convert</a></li>
 				<li><a href='https://github.com/stolksdorf/tastebase/tree/master/recipes'>Add Recipe</a></li>
 				<li><a href='https://github.com/stolksdorf/tastebase'>Github</a></li>
 			</ul>
@@ -48,6 +51,7 @@ const Main = comp(function({ recipes, chefs, types }){
 
 		${page == 'search' && SearchPage(Object.values(recipes), param)}
 		${page == 'recipe' && RecipePage(recipes[param])}
+		${page == 'conversion' && ConversionPage()}
 
 		<footer></footer>
 	</main>`;
