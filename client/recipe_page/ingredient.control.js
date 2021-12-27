@@ -1,10 +1,10 @@
-const {x, comp, cx} = require('../libs/xo.js');
-const css = require('../libs/pico-css.js');
+const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
 
-const ServeringsEmitter = require('./emitter.js');
+const ServeringsEmitter = require('../emitter.js')();
 
-const {getCompatibleUnits} = require('../utils/units.js');
-const convert = require('../utils/convert.units.js');
+const {getCompatibleUnits} = require('../../utils/units.js');
+const convert = require('../../utils/convert.units.js');
 
 global.css.ingredient_control = css`
 	.ingredientControl{

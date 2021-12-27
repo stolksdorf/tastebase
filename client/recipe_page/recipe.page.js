@@ -1,8 +1,8 @@
-const {x, comp, cx} = require('../libs/xo.js');
-const css = require('../libs/pico-css.js');
+const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
 
 
-const parseRecipe = require('../utils/parse.recipe.js');
+const parseRecipe = require('../../utils/parse.recipe.js');
 
 
 global.css.recipe_page = css`
@@ -133,7 +133,7 @@ global.css.instruction_section = css`
 
 
 const IngredientControl = require('./ingredient.control.js');
-const ServeringsEmitter = require('./emitter.js');
+const ServeringsEmitter = require('../emitter.js')();
 
 
 

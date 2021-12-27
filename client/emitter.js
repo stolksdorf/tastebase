@@ -11,4 +11,4 @@ const Emitter=()=>{
 };
 
 
-module.exports = Emitter();
+module.exports = Emitter;

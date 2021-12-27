@@ -4,10 +4,9 @@ const css = require('../libs/pico-css.js');
 require('./style.js');
 
 
-const SearchPage = require('./search.page.js');
-const RecipePage = require('./recipe.page.js');
-
-const ConversionPage = require('./pages/conversion.page.js');
+const SearchPage = require('./search_page/search.page.js');
+const RecipePage = require('./recipe_page/recipe.page.js');
+const ConversionPage = require('./conversion_page/conversion.page.js');
 
 global.css.main_page = css`
 	main{
@@ -20,6 +19,28 @@ global.css.main_page = css`
 		}
 	}
 `;
+
+const Account = require('./account.js');
+
+const accountItem = comp(function(){
+	const name = Account.useAccount(this);
+
+	const logout = ()=>{
+		if(confirm('Sure, you want to logout?')) Account.logout();
+	};
+
+	if(!name) return x`<a onclick=${Account.login}>Login</a>`;
+	return x`<a href=${`#search=chef:${name}`}>
+		${name}
+		<i class='fa fa-times' onclick=${logout}></i>
+	</a>`; //TODO: this should link to a search page with only your chef
+});
+
+const addRecipeItem = comp(function(){
+	const name = Account.useAccount(this);
+	if(!name) return x`<a href='https://github.com/stolksdorf/tastebase/tree/master/recipes' target='_blank'>Add Recipe</a>`;
+	return x`<a href=${`https://github.com/stolksdorf/tastebase/new/master/recipes/${name}`} target='_blank'>Add Recipe</a>`;
+})
 
 
 const Main = comp(function({ recipes, chefs, types }){
@@ -36,16 +57,17 @@ const Main = comp(function({ recipes, chefs, types }){
 	this.useEffect(()=>{
 		window.onhashchange = updatePage;
 		updatePage();
-	}, [])
+	}, []);
 
 	return x`<main>
 		<nav>
 			<a href='#'>Tastebase</a>
 			<ul>
-				<li><a href='#search='>Search</a></li>
+				<li><a href='#search'>Search</a></li>
 				<li><a href='#conversion'>Convert</a></li>
-				<li><a href='https://github.com/stolksdorf/tastebase/tree/master/recipes'>Add Recipe</a></li>
+				<li>${addRecipeItem()}</li>
 				<li><a href='https://github.com/stolksdorf/tastebase'>Github</a></li>
+				<li>${accountItem()}</li>
 			</ul>
 		</nav>
 
