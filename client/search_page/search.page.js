@@ -3,6 +3,7 @@ const {x, comp, cx} = require('../../libs/xo.js');
 const css = require('../../libs/pico-css.js');
 
 const RecipeCard = require('./recipe.card.js');
+const FilterRecipes = require('./filter.recipes.js');
 
 
 // const updateURL = (query)=>{
@@ -13,7 +14,7 @@ const RecipeCard = require('./recipe.card.js');
 // 	//window.location.search = encodeURI(query);
 // };
 
-const has = (str, key)=>(str||"").toLowerCase().indexOf(key) !== -1;
+//const has = (str, key)=>(str||"").toLowerCase().indexOf(key) !== -1;
 
 
 
@@ -44,8 +45,13 @@ global.css.search_page = css`
 			display: flex;
 			justify-content: space-around;
 			flex-wrap: wrap;
-			&>*{
-				margin-bottom: 1em;
+			.RecipeCard + .RecipeCard{
+				//border-color:red;
+			}
+
+			.RecipeCard{
+				min-width : 300px;
+				width     : 50%;
 			}
 		}
 	}
@@ -94,7 +100,7 @@ global.css.search_page = css`
 // };
 
 
-const FilterRecipes = require('./filter.recipes.js');
+
 
 
 

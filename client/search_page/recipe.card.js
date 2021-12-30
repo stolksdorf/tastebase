@@ -5,41 +5,54 @@ const css = require('../../libs/pico-css.js');
 global.css.sneakpeek = css`
 	.RecipeCard{
 		display: block;
-		border-radius: 10px;
-
-		background-color: white;
+		position: relative;
 		text-decoration: none;
 		color: black;
-		&:visited{ color: inherit; }
+		&:visited{
+			color: inherit;
+		}
 
-		box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-		transition: box-shadow 0.3s ease-in-out;
+		&:hover{
+			background-color: #f0dfaf;
+		}
 
-		border: 1px solid var(--grey);
-		border-radius: 15px;
+		border: 5px dashed #68401f;
+		margin-right: -5px;
+		margin-bottom: -5px;
+
 		min-width: 300px;
 		padding: 15px;
 
-		&:hover{
-			box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-		}
+
 
 		h3{
-			margin-top: 0px;
+			margin: 0px;
+			font-size: 2em;
+		}
+		p{
+			margin: 5px 0px;
 		}
 
 		img{
-			width : 80px;
-			float: right;
+			max-height : 100%;
+			max-width : 120px;
+			position: absolute;
+			top : 0px;
+			right: 0px;
 		}
 
-		i.fa-heart{
-			color: red;
+		.FavControl{
+			position: absolute;
+			top : 10px;
+			right : 10px;
+			font-size: 1.2em;
 		}
 
 	}
-
 `;
+
+
+const {FavControl} = require('../fav.js');
 
 const RecipeCard = (recipe)=>{
 	const hasFav = (typeof localStorage !== 'undefined') && !!localStorage.getItem(`fav__${recipe.id}`)
@@ -48,17 +61,10 @@ const RecipeCard = (recipe)=>{
 	return x`<a href=${`#recipe=${recipe.id}`} class='RecipeCard'>
 		${recipe.img && x`<img src=${recipe.img}></img>`}
 		<h3>${recipe.title}</h3>
+		<small>${recipe.chef} - ${recipe.type}</small>
 
-		<div>
-			<label>Chef:</label>
-			<span>${recipe.chef}</span>
-		</div>
-		<div>
-			<label>Type:</label>
-			<span>${recipe.type}</span>
-		</div>
-
-		${hasFav && x`<i class='fa fa-heart'></i>`}
+		${recipe.desc && x`<p>${recipe.desc}</p>`}
+		${FavControl(recipe.id)}
 	</a>`
 }
 
