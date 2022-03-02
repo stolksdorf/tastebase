@@ -1,5 +1,7 @@
 # Preserved lemon
 
+type: experiment
+
 ref: https://www.foodnetwork.com/recipes/alton-brown/quick-preserved-lemons-7423982
 
 1. Trim the ends off the lemons. Slice each lemon into 8 wedges, removing any seeds as you go. Reserve as much of the juice as possible.

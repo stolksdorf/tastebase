@@ -1,6 +1,10 @@
 # Swedish Cardamom Buns
 
+type: dessert
 servings: 20
+
+Sweet and savoury buns with the foral taste of cardamom.
+
 
 ### Dough
 

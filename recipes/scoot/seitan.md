@@ -1,11 +1,10 @@
-
 # Seitan
+
 
 Vegetarian Chicken
 
-
-
-[ref](https://www.youtube.com/watch?v=yY2YN6krVtk)
+type: experiment
+ref : https://www.youtube.com/watch?v=yY2YN6krVtk
 
 
 

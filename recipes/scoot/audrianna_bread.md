@@ -1,7 +1,9 @@
 # Audrianna bread
 
 servings: 1
-type: baked
+type: bread
+
+Audrianna's simple bread recipe.
 
 
 1. Start prepping {1/4 cup of oatmeal} with boiling water

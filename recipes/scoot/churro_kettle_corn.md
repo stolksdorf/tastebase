@@ -3,7 +3,7 @@
 type: snack
 ref : https://www.bingingwithbabish.com/recipes/kettle-corn-community
 
-this is a test
+Cinnamon and sweet popcorn.
 
 
 1. Add the {3tbsp oil} and cinnamon sticks to a large stockpot. 

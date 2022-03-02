@@ -1,5 +1,6 @@
 # Cauliflower Soup
 
+type: dinner
 img: https://rainbowplantlife.com/wp-content/uploads/2021/01/Instant-Pot-Cauliflower-Soup-macro-1-of-1-scaled.jpg
 ref: https://rainbowplantlife.com/instant-pot-cauliflower-soup/
 

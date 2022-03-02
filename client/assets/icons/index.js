@@ -8,6 +8,7 @@ module.exports = {
 	dessert : require('./cupcake.svg'),
 	drink : require('./drink.svg'),
 	snack : require('./pizza.svg'),
+	experiment : require('./chef_hat.svg'),
 
 	//grill : require('./grill.svg'),
 	//cheese : require('./cheese.svg'),

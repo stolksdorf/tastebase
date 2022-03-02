@@ -1,7 +1,10 @@
-# Chickpea Cookie Dough
+# Chickpea Cookie Bites
 
 type: snack
-servings: 1
+servings: 12
+
+A "healthy" snack that uses chickpeas instead of flour as the base.
+
 
 1. Drain {1 can of chickpeas} into a blender
 1. Mix in
@@ -13,3 +16,4 @@ servings: 1
   - {1 tbsp cinnamon}
 1. Blend together, you may need to scrape down the sides
 1. Add {chocolate chips}
+1. Roll into bite sized balls, sprinkle with salt and freeze

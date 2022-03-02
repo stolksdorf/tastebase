@@ -1,7 +1,10 @@
 # Vegan Brisket
 
+Experiments in making vegan meat.
 
-[ref](https://www.youtube.com/watch?v=B4UuP0heR8w)
+
+type: experiment
+ref: https://www.youtube.com/watch?v=B4UuP0heR8w
 
 
 

@@ -1,7 +1,10 @@
 # Basic Bread
 
+type: bread
 servings: 1
 ref: https://www.tasteofhome.com/recipes/basic-homemade-bread/
+
+Just a stupidly simple bread recipes that works.
 
 
 1. Warm {1 cup of water} to 35C and mix in {1 packet of yeast}. /* Needed to add ~1/4 cup more of water */

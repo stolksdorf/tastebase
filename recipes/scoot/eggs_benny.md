@@ -1,16 +1,17 @@
-# Eggs Benny any% glitchless speedrun
+# Eggs Benny any% speedrun
 
 My summary of Alex's speedrun of Eggs benny
 
 type: breakfast
 servings: 1
+ref: https://www.youtube.com/watch?v=LqHqX8xfYCs
 
-[Ref](https://www.youtube.com/watch?v=LqHqX8xfYCs)
+
 
 ### Hollendaise Sauce
 
 0. Melt {2tbsp butter} in microwave 50 sec in lightly covered container (less if not cold butter)
-1. Add an {1 egg yolk}, {pinch of salt} (and paprike/cayenne), and {1/2 tsp lemon juice} to blender (small magic bullet)
+1. Add an {1 egg yolk}, {pinch of salt} (and paprike/cayenne), and {1/2 tsp lemon juice} to blender
 2. Mix in melted butter and run for 10sec
 
 /*
