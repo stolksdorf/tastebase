@@ -1,12 +1,12 @@
-const marked = require('marked'); //TODO: replace with own lib
+const md = require('../libs/pico-md.js');
 
 
 const {extractIngredients, toElement} = require('./parse.ingredient.js');
-const meta = require('./metadata.recipe.js');
+const extractMetadata = require('./metadata.recipe.js');
 
 
 const convertTemperatures = (text)=>{
-	return text.replace(/(\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)/img, (_,val, unit)=>{
+	return text.replace(/(-?\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)(?=\W|$)/img, (_,val, unit)=>{
 		if(unit.toLowerCase().indexOf('c') !== -1) return `<span class='temperature'><span>${val}°C</span><small>(${(val*9/5 + 32).toFixed(1)}°F)</small></span>`;
 		if(unit.toLowerCase().indexOf('f') !== -1) return `<span class='temperature'><span>${val}°F</span><small>(${(val*1.8 + 32).toFixed(1)}°C)</small></span>`;
 	});
@@ -26,7 +26,8 @@ const toHTML = (text)=>{
 
 	result = convertTemperatures(content);
 	result = convertComments(result);
-	result = marked(result);
+	//result = marked(result);
+	result = md(result, {allowHTML:true});
 
 	if(ingredients.length){
 		let pos = result.search(/<\/h\d>/);
@@ -43,7 +44,7 @@ const splitOnHeaders = (text)=>{
 }
 
 const parseRecipe = (raw)=>{
-	let {content, ...info} = meta(raw);
+	let {content, ...info} = extractMetadata(raw);
 	let html = splitOnHeaders(content).map(toHTML).join('\n\n');
 
 	return {

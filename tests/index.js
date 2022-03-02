@@ -1,5 +1,6 @@
 module.exports = {
-	_recipe : require('./recipe.test.js'),
+	$recipe : require('./recipe.test.js'),
 	metadata : require('./metadata.test.js'),
-	ingredient : require('./ingredient.test.js')
+	ingredient : require('./ingredient.test.js'),
+	temperature : require('./temperature.test.js')
 }

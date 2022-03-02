@@ -106,7 +106,7 @@ const useFraction = {
 
 const getCompatibleUnits = ({staple, unit})=>{
 	const volume = Object.keys(volumeUnits), weight = Object.keys(weightUnits);
-	if(staple) return volume.concat(weight);
+	if(staple) return [...volume, ...weight];
 	if(volumeUnits[unit]) return volume;
 	if(weightUnits[unit]) return weight;
 	return [];

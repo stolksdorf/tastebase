@@ -1,8 +1,9 @@
 # Churro Kettle Corn
 
 type: snack
+ref : https://www.bingingwithbabish.com/recipes/kettle-corn-community
 
-[ref](https://www.bingingwithbabish.com/recipes/kettle-corn-community)
+this is a test
 
 
 1. Add the {3tbsp oil} and cinnamon sticks to a large stockpot. 
