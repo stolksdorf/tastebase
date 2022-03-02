@@ -133,33 +133,37 @@ global.css.instruction_section = css`
 
 
 const IngredientControl = require('./ingredient.control.js');
-const ServeringsEmitter = require('../emitter.js')();
+const ServingsEmitter = require('../servings.emitter.js');
 
 
 
-global.css.fav_control = css`
-	i.fav{
-		font-size: 2em;
-		cursor: pointer;
-		user-select: none;
-		&.fa-heart{
-			color : red;
-		}
-	}
-`;
-const FavControl = comp(function(id){
-	const hasFav = (id)=>!!localStorage.getItem(`fav__${id}`);
-	const toggleFav = (id)=>{
-		hasFav(id)
-			? window.localStorage.removeItem(`fav__${id}`)
-			: window.localStorage.setItem(`fav__${id}`, true);
-		return hasFav(id);
-	};
+//TODO: replace with fav control.js
 
-	const [isFav, setIsFav] = this.useState(hasFav(id));
+// global.css.fav_control = css`
+// 	i.fav{
+// 		font-size: 2em;
+// 		cursor: pointer;
+// 		user-select: none;
+// 		&.fa-heart{
+// 			color : red;
+// 		}
+// 	}
+// `;
+// const FavControl = comp(function(id){
+// 	const hasFav = (id)=>!!localStorage.getItem(`fav__${id}`);
+// 	const toggleFav = (id)=>{
+// 		hasFav(id)
+// 			? window.localStorage.removeItem(`fav__${id}`)
+// 			: window.localStorage.setItem(`fav__${id}`, true);
+// 		return hasFav(id);
+// 	};
 
-	return x`<i class=${cx('fav fa fa-fw', {'fa-heart': isFav, 'fa-heart-o': !isFav})} onclick=${()=>setIsFav(toggleFav(id))}></i>`;
-});
+// 	const [isFav, setIsFav] = this.useState(hasFav(id));
+
+// 	return x`<i class=${cx('fav fa fa-fw', {'fa-heart': isFav, 'fa-heart-o': !isFav})} onclick=${()=>setIsFav(toggleFav(id))}></i>`;
+// });
+
+const FavControl = require('../fav.js').FavControl;
 
 
 
@@ -201,7 +205,10 @@ const RecipePage = comp(function(initRecipe){
 
 
 
-	this.useEffect(()=>{ ServeringsEmitter.emit('servingsChange', servings) },[servings]);
+	this.useEffect(()=>{
+		console.log('RUNNING')
+		ServingsEmitter.emit('servingsChange', servings)
+	},[servings]);
 
 	this.useEffect(()=>{
 		document.title = `${recipe.title} - Tastebase`;

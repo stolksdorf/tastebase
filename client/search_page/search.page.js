@@ -45,6 +45,7 @@ global.css.search_page = css`
 			display: flex;
 			justify-content: space-around;
 			flex-wrap: wrap;
+			gap : 10px;
 			.RecipeCard + .RecipeCard{
 				//border-color:red;
 			}
@@ -101,6 +102,10 @@ global.css.search_page = css`
 
 
 
+const SearchControl = ()=>{
+
+}
+
 
 
 
@@ -108,6 +113,8 @@ const SearchPage = comp(function(allRecipes, initQuery){
 	const applyQuery = ()=>{
 		return FilterRecipes(allRecipes, query);
 	}
+
+	console.log(allRecipes)
 
 
 	const [query, setQuery] = this.useState('');

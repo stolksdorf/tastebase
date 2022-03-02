@@ -1,7 +1,7 @@
 const parseVal = (str)=>{
 	if(str==='true')  return true;
 	if(str==='false') return false;
-	if(/^(-?[\d|_]+(\.[\d|_]+)?)$/.test(str)) return Number(str.replace('_',''));
+	if(/^(-?[\d|_]+(\.[\d|_]+)?)\s*$/.test(str)) return Number(str.replace('_',''));
 	return str;
 };
 

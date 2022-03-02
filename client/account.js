@@ -1,4 +1,4 @@
-const emitter = require('./emitter')();
+const emitter = require('../libs/emitter')();
 const KEY = 'tb-account';
 
 const login = ()=>{

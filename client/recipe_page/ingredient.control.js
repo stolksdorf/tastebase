@@ -1,7 +1,7 @@
 const {x, comp, cx} = require('../../libs/xo.js');
 const css = require('../../libs/pico-css.js');
 
-const ServeringsEmitter = require('../emitter.js')();
+const ServeringsEmitter = require('../servings.emitter.js');
 
 const {getCompatibleUnits} = require('../../utils/units.js');
 const convert = require('../../utils/convert.units.js');
@@ -38,6 +38,11 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 
 	if(!this.refs.baseServings) this.refs.baseServings = initServings;
 	this.useEffect(()=>ServeringsEmitter.on('servingsChange', setServings),[]);
+	this.useEffect(()=>ServeringsEmitter.on('servingsChange', ()=>{
+		console.log('oh hello')
+	}),[]);
+
+	console.log({servings})
 
 	const qty = convert(ingredient, unit, servings/this.refs.baseServings);
 	return x`<span class='ingredientControl'>

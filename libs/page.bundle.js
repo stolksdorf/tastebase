@@ -1,5 +1,3 @@
-//TOOD: move this whole thing to 'crux''
-
 const isDev = process.argv.some(v=>v=='--dev');
 const pack = require('./pico-pack.js');
 const xo = require('./xo.js');
@@ -26,7 +24,8 @@ module.exports = (pagePath)=>{
 		watch,
 		global : { head : {}, css : {}},
 		transforms:{
-			'.png' : Base64Transform
+			'.png' : Base64Transform,
+			'.svg' : Base64Transform
 		}
 	});
 	return (...args)=>{
