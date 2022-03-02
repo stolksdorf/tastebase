@@ -27,6 +27,7 @@ const parse = (dir, chef=null)=>{
 				chef,
 				github : `https://github.com/stolksdorf/tastebase/blob/master/${dir.split('\\').join('/')}/${file.name}`,
 				content : text,
+				//TODO: maybe add grab ingredients to search on
 				...rest
 			};
 		}catch(err){

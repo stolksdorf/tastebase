@@ -216,21 +216,6 @@ input[type='text']:focus{
 .Search{
 	min-height:100vh;
 }
-.Search .searchBox{
-	margin:auto;
-	border:1px solid var(--grey);
-	border-radius:1em;
-	padding:0em 1em;
-	background-color:white;
-	width:70%;
-	font-size:1.5em;
-}
-.Search .searchBox input{
-	border:none;
-	font-family:'IM Fell English', serif;
-	font-style:italic;
-	font-size:1.3em;
-}
 .Search .results{
 	display:flex;
 	justify-content:space-around;
@@ -240,6 +225,46 @@ input[type='text']:focus{
 .Search .results .RecipeCard{
 	min-width:300px;
 	width:50%;
+}
+.SearchControl{
+	display:flex;
+}
+.SearchControl .searchBox{
+	margin:auto;
+	border:1px solid var(--grey);
+	border-radius:1em;
+	padding:0em 1em;
+	background-color:white;
+	width:70%;
+	font-size:1.5em;
+}
+.SearchControl .searchBox input{
+	border:none;
+	font-family:'IM Fell English', serif;
+	font-style:italic;
+	font-size:1.3em;
+	width:100%;
+}
+.SearchControl .typeSelector{
+	width:300px;
+}
+.SearchControl .typeSelector .type{
+	cursor:pointer;
+	font-size:1.1em;
+	display:inline-block;
+	opacity:0.4;
+	border-radius:1em;
+	border:1px solid black;
+	padding:5px 10px;
+}
+.SearchControl .typeSelector .type img{
+	height:1em;
+	vertical-align:middle;
+	margin-right:0.25em;
+}
+.SearchControl .typeSelector .type.selected{
+	background-color:#f0dfaf7a;
+	opacity:1;
 }
 section.Recipe{
 	position:relative;
@@ -297,9 +322,13 @@ section.Recipe .instructions h3 label{
 section.Recipe .instructions li{
 	margin:0.6em 0em;
 }
-section.Recipe .instructions label.showChefNotes{
-	cursor:pointer;
-	user-select:none;
+section.Recipe .instructions ul.ingredientList{
+	margin-left:15px;
+	border-left:2px solid #cf664063;
+}
+section.Recipe .instructions ul.ingredientList li{
+	font-size:0.8em;
+	margin:5px;
 }
 section.Recipe .instructions .temperature small{
 	display:none;
@@ -628,7 +657,7 @@ const render = (obj, node)=>{
 		Object.keys(node.children).map(key=>{
 			if(!undef(obj[key])) return;
 			unmount(node.children[key]);
-			node.children[key].el.remove();
+			if(node.children[key]?.el) node.children[key].el.remove();
 			Array.isArray(node.children) ? node.children.splice(key, 1) : delete node.children[key];
 		});
 
@@ -1159,248 +1188,6 @@ const RecipeCard = (recipe)=>{
 
 module.exports = RecipeCard;
 },deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps","../fav.js":"-1lcvatb"},fn:'client/search_page/recipe.card.js',dn:'client/search_page', root:'../..'};
-global.__Modules["1c66qm"]={func:function(module, exports, global, __filename, __dirname, __root, require){
-
-const getQueryObj = (query)=>{
-	let result = { terms : [], filters : {}}
-	query.split(' ').map(part=>{
-		let [key, val] = part.split(':');
-		if(!val) return result.terms.push(part);
-		if(!key) return result.filters[val] = true;
-		result.filters[key] = val;
-	})
-	return result;
-};
-
-const scoreRecipes = (recipes, terms=[])=>{
-	if(terms.length == 0) return recipes;
-	return recipes.map(recipe=>{
-		recipe.score = 0;
-		terms.map(term=>{
-			if(recipe.title.indexOf(term) !== -1) recipe.score +=5;
-			if(recipe.desc.indexOf(term) !== -1) recipe.score +=1;
-			// recipe.ingredients.map(({name})=>{
-			// 	if(name.indexOf(term) !== -1) recipe.score++;
-			// });
-		})
-		return recipe;
-	});
-};
-
-const filterRecipes = (recipes, filters)=>{
-	if(!Object.keys(filters).length) return recipes;
-	return recipes.filter(recipe=>{
-		return Object.entries(filters).every(([key,val])=>{
-			return recipe[key] === val;
-		});
-	});
-};
-
-//Maybe add a sort option if scores are equal
-const sortRecipes = (recipes)=>{
-	return recipes
-		//.filter(({score})=>score>0)
-		.sort((a,b)=>b.score - a.score);
-};
-
-module.exports = (recipes, query)=>{
-	const {terms, filters} = getQueryObj(query);
-
-	let result = recipes;
-	result = filterRecipes(result, filters);
-	result = scoreRecipes(result, terms);
-	result = sortRecipes(result);
-
-	return result;
-}
-},deps:{},fn:'client/search_page/filter.recipes.js',dn:'client/search_page', root:'../..'};
-global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
-const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-const RecipeCard = require('./recipe.card.js');
-const FilterRecipes = require('./filter.recipes.js');
-
-
-// const updateURL = (query)=>{
-// 	if(history.pushState) {
-// 		var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query
-// 		window.history.pushState({path:newurl},'',newurl);
-// 	}
-// 	//window.location.search = encodeURI(query);
-// };
-
-//const has = (str, key)=>(str||"").toLowerCase().indexOf(key) !== -1;
-
-
-
-global.css.search_page = css`
-	.Search{
-		min-height: 100vh;
-
-
-		.searchBox{
-			margin: auto;
-			border: 1px solid var(--grey);
-			border-radius: 1em;
-			padding: 0em 1em;
-			background-color: white;
-			width : 70%;
-			font-size: 1.5em;
-			input{
-				border: none;
-				font-family: 'IM Fell English', serif;
-				font-style: italic;
-				font-size: 1.3em;
-			}
-		}
-
-
-
-		.results{
-			display: flex;
-			justify-content: space-around;
-			flex-wrap: wrap;
-			gap : 10px;
-			.RecipeCard + .RecipeCard{
-				//border-color:red;
-			}
-
-			.RecipeCard{
-				min-width : 300px;
-				width     : 50%;
-			}
-		}
-	}
-`
-
-
-// const getQueryObj = (query)=>{
-// 	let result = { terms : [], filters : {}}
-// 	query.split(' ').map(part=>{
-// 		let [key, val] = part.split(':');
-// 		if(!val) return result.terms.push(part);
-// 		if(!key) return result.filters[val] = true;
-// 		result.filters[key] = val;
-// 	})
-// 	return result;
-// };
-
-// const scoreRecipes = (recipes, terms=[])=>{
-// 	if(terms.length == 0) return recipes;
-// 	let result = recipes.map(recipe=>{
-// 		let score = 0;
-// 		terms.map(term=>{
-// 			if(recipe.title.indexOf(term) !== -1) score +=5;
-// 			if(recipe.desc.indexOf(term) !== -1) score +=1;
-// 			// recipe.ingredients.map(({name})=>{
-// 			// 	if(name.indexOf(term) !== -1) score++;
-// 			// });
-// 		})
-// 		return [recipe, score];
-// 	});
-
-
-// 	result = result.filter(([recipe, score])=>score>0);
-// 	return result.sort((a,b)=>{
-// 		return b[1] - a[1];
-// 	}).map(([recipe, score])=>recipe);
-// };
-
-
-// const filterRecipes = (recipes, keys)=>{
-// 	return recipes.filter(recipe=>{
-// 		return Object.entries(keys).every(([key,val])=>{
-// 			return recipe[key] === val;
-// 		});
-// 	});
-// };
-
-
-
-const SearchControl = ()=>{
-
-}
-
-
-
-
-const SearchPage = comp(function(allRecipes, initQuery){
-	const applyQuery = ()=>{
-		return FilterRecipes(allRecipes, query);
-	}
-
-	console.log(allRecipes)
-
-
-	const [query, setQuery] = this.useState('');
-	const [inProgress, setInProgress] = this.useState(false);
-
-	const [recipes, setRecipes] = this.useState(applyQuery);
-
-
-
-
-	this.useEffect(()=>{
-		setInProgress(true);
-		clearTimeout(this.refs.timeout);
-		this.refs.timeout = setTimeout(()=>{
-			setRecipes(applyQuery());
-			setInProgress(false);
-			//updateURL(query ? `?search=${encodeURI(query)}`: '?');
-
-			window.location.hash = `#search=${encodeURI(query)}`;
-		}, 150);
-	}, [query])
-
-	this.useEffect(()=>{
-		//this.el.querySelector('input').focus();
-		document.title = `Tastebase - Search`;
-		window.scrollTo(0, 0);
-	},[]);
-
-	this.useEffect(()=>setQuery(initQuery),[initQuery]);
-
-	return x`<section class='Search'>
-
-		<div class='top'>
-
-			<div class='searchBox'>
-				<i class='fa fa-search'></i>
-				<input type='text' value=${query} oninput=${(evt)=>setQuery(evt.target.value)} placeholder='Search terms here...'></input>
-			</div>
-
-			<div class='controls'>
-				<label>
-					<input type='checkbox'></input>
-					Only yours
-				</label>
-
-				<label>
-					<input type='checkbox'></input>
-					Only Favs
-				</label>
-
-			</div>
-
-			<div class='searchTips'>
-				<div class=''>
-					Search is broken... Kinda....
-				</div>
-
-			</div>
-
-		</div>
-
-		<div class='results'>
-			${recipes.map(RecipeCard)}
-		</div>
-	</section>`
-});
-
-module.exports = SearchPage;
-
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./filter.recipes.js":"1c66qm"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
 global.__Modules["nhahfu"]={func:function(module, exports, global, __filename, __dirname, __root, require){const metaParse = (str)=>{
 	let result = {}, lastKey;
 	const get = (str)=>{
@@ -1806,6 +1593,8 @@ module.exports = (raw)=>{
 		content = content.substring(recipeStart).trim();
 	}
 
+	metadata.type = metadata.type.toLowerCase();
+
 	return {...metadata, content};
 }
 },deps:{},fn:'utils/metadata.recipe.js',dn:'utils', root:'..'};
@@ -1831,23 +1620,22 @@ const convertComments = (text)=>{
 	return text;
 };
 
-const toHTML = (text)=>{
-	let result = '';
-	let [ingredients, content] = extractIngredients(text);
+// const toHTML = (text)=>{
+// 	let result = '';
+// 	let [ingredients, content] = extractIngredients(text);
 
-	result = convertTemperatures(content);
-	result = convertComments(result);
-	//result = marked(result);
-	result = md(result, {allowHTML:true});
+// 	result = convertTemperatures(content);
+// 	result = convertComments(result);
+// 	result = md(result, {allowHTML:true});
 
-	if(ingredients.length){
-		let pos = result.search(/<\/h\d>/);
-		pos = (pos===-1) ? 0 : pos + 6;
-		const ingredientList = `<ul class='ingredientList'>${ingredients.map(i=>`<li>${toElement(i)}</li>`).join('\n')}</ul>\n`;
-		result = result.slice(0,pos) + ingredientList + result.slice(pos);
-	}
-	return result;
-};
+// 	if(ingredients.length){
+// 		let pos = result.search(/<\/h\d>/);
+// 		pos = (pos===-1) ? 0 : pos + 6;
+// 		const ingredientList = `<ul class='ingredientList'>${ingredients.map(i=>`<li>${toElement(i)}</li>`).join('\n')}</ul>\n`;
+// 		result = result.slice(0,pos) + ingredientList + result.slice(pos);
+// 	}
+// 	return result;
+// };
 
 const splitOnHeaders = (text)=>{
 	let [first, ...rest] = text.split(/^#/m);
@@ -1856,10 +1644,31 @@ const splitOnHeaders = (text)=>{
 
 const parseRecipe = (raw)=>{
 	let {content, ...info} = extractMetadata(raw);
-	let html = splitOnHeaders(content).map(toHTML).join('\n\n');
+	//let allIngredients = [];
+
+	let html = splitOnHeaders(content).map((section)=>{
+
+		let result = '';
+		let [ingredients, content] = extractIngredients(section);
+
+		//allIngredients = allIngredients.concat(ingredients);
+
+		result = convertTemperatures(content);
+		result = convertComments(result);
+		result = md(result, {allowHTML:true});
+
+		if(ingredients.length){
+			let pos = result.search(/<\/h\d>/);
+			pos = (pos===-1) ? 0 : pos + 6;
+			const ingredientList = `<ul class='ingredientList'>${ingredients.map(i=>`<li>${toElement(i)}</li>`).join('\n')}</ul>\n`;
+			result = result.slice(0,pos) + ingredientList + result.slice(pos);
+		}
+		return result;
+	}).join('\n\n');
 
 	return {
 		...info,
+		//ingredients : allIngredients,
 		hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
 		html
 	}
@@ -1868,6 +1677,23 @@ const parseRecipe = (raw)=>{
 module.exports = parseRecipe;
 
 },deps:{"../libs/pico-md.js":"nhahfu","./parse.ingredient.js":"1i32h7a","./metadata.recipe.js":"-fhm08"},fn:'utils/parse.recipe.js',dn:'utils', root:'..'};
+global.__Modules["-1vuptfe"]={func:function(module, exports, global, __filename, __dirname, __root, require){const Emitter=()=>{
+	let cache={};
+	return {
+		emit : (evt, ...args)=>{
+			(cache[evt]||[]).map(fn=>fn(...args));
+		},
+		on : (evt, func)=>{
+			cache[evt]=(cache[evt]||[]).concat(func);
+			return ()=>cache[evt]=cache[evt].filter(x=>x!=func);
+		}
+	};
+};
+
+module.exports = Emitter;
+},deps:{},fn:'libs/emitter.js',dn:'libs', root:'..'};
+global.__Modules["-1fvb86o"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports = require('../libs/emitter.js')();
+},deps:{"../libs/emitter.js":"-1vuptfe"},fn:'client/servings.emitter.js',dn:'client', root:'..'};
 global.__Modules["4rq84c"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {units, stapleDensity, volumeUnits, weightUnits, useFraction} = require('./units.js');
 
 const toFraction = (val)=>{
@@ -1915,136 +1741,6 @@ const convert = (ingredient, toUnit, multiplier=1)=>{
 
 module.exports = convert;
 },deps:{"./units.js":"17f12jj"},fn:'utils/convert.units.js',dn:'utils', root:'..'};
-global.__Modules["ksc8r0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-
-const {getCompatibleUnits} = require('../../utils/units.js');
-const convert = require('../../utils/convert.units.js');
-const {parseIngredient} = require('../../utils/parse.ingredient.js');
-
-global.css.conversion_page = css`
-	.ConversionPage{
-		min-height: 500px;
-		.searchBox{
-			text-align: center;
-
-			input{
-				text-align: left;
-				font-size: 3em;
-				border: none;
-				font-family: inherit;
-				color: #854E3A;
-				background-color: transparent;
-				border-left: 3px solid #854E3A;
-			}
-		}
-
-		.results{
-			margin: 0 auto;
-			max-width: 500px;
-			font-size: 2em;
-			ul{
-				//font-size: 2em;
-			}
-			.temperature{
-
-			}
-		}
-
-	}
-`;
-
-
-
-const ConversionPage = comp(function(){
-
-	const [query, setQuery] = this.useState('');
-
-
-	this.useEffect(()=>{
-		this.el.querySelector('input').focus();
-		document.title = `Convert Units - Tastebase`;
-		window.scrollTo(0, 0);
-	},[]);
-
-
-
-	const tryIngredientUnits = (str)=>{
-		const ingredient = parseIngredient(query);
-		if(!ingredient.unit) return [];
-		return getCompatibleUnits(ingredient).map(unit=>{
-			return `${convert(ingredient, unit)} ${unit}`;
-		});
-	};
-
-	const tryTemperature = (str)=>{
-		const res = (/(\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)/img).exec(str);
-		if(!res) return;
-		let [_,val,unit] = res;
-		unit = unit.toLowerCase();
-
-
-		if(unit.includes('f')) return (val*1.8 + 32).toFixed(1) +'°C';
-		if(unit.includes('c')) return (val*1.8 + 32).toFixed(1) +'°F';
-	}
-
-	const units = tryIngredientUnits(query);
-
-	const temperature = tryTemperature(query);
-
-
-
-
-
-
-	return x`<section class='ConversionPage'>
-		<h2>Ye Olde Conversion Tool</h2>
-
-		<div class='searchBox'>
-			<input type='text'
-				value=${query}
-				oninput=${(evt)=>setQuery(evt.target.value)}
-				placeholder='3 1/4 cups of butter, 45C, ...'></input>
-		</div>
-
-		<hr>
-
-		<div class='results'>
-
-			${units.length!==0 && x`<ul>
-				${units.map(unit=>x`<li><strong>${unit}<strong></li>`)}
-				</ul>`
-			}
-
-			${!!temperature && x`<div class='temperature'>${temperature}</div>`}
-
-		</div>
-
-	</section>`
-});
-
-
-
-module.exports = ConversionPage;
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c","../../utils/parse.ingredient.js":"1i32h7a"},fn:'client/conversion_page/conversion.page.js',dn:'client/conversion_page', root:'../..'};
-global.__Modules["-1vuptfe"]={func:function(module, exports, global, __filename, __dirname, __root, require){const Emitter=()=>{
-	let cache={};
-	return {
-		emit : (evt, ...args)=>{
-			(cache[evt]||[]).map(fn=>fn(...args));
-		},
-		on : (evt, func)=>{
-			cache[evt]=(cache[evt]||[]).concat(func);
-			return ()=>cache[evt]=cache[evt].filter(x=>x!=func);
-		}
-	};
-};
-
-module.exports = Emitter;
-},deps:{},fn:'libs/emitter.js',dn:'libs', root:'..'};
-global.__Modules["-1fvb86o"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports = require('../libs/emitter.js')();
-},deps:{"../libs/emitter.js":"-1vuptfe"},fn:'client/servings.emitter.js',dn:'client', root:'..'};
 global.__Modules["fn4mc7"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
 const css = require('../../libs/pico-css.js');
 
@@ -2085,11 +1781,6 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 
 	if(!this.refs.baseServings) this.refs.baseServings = initServings;
 	this.useEffect(()=>ServeringsEmitter.on('servingsChange', setServings),[]);
-	this.useEffect(()=>ServeringsEmitter.on('servingsChange', ()=>{
-		console.log('oh hello')
-	}),[]);
-
-	console.log({servings})
 
 	const qty = convert(ingredient, unit, servings/this.refs.baseServings);
 	return x`<span class='ingredientControl'>
@@ -2182,58 +1873,61 @@ global.css.recipe_page = css`
 
 global.css.instruction_section = css`
 
-	section.Recipe{
-		.instructions{
-			font-size: 1.3em;
+	section.Recipe .instructions{
+		font-size: 1.3em;
 
-			h3{
-				label{
-					font-size: 1rem;
-					float: right;
-				}
+		h3{
+			label{
+				font-size: 1rem;
+				float: right;
 			}
+		}
 
+		li{
+			margin: 0.6em 0em;
+		}
+
+		ul.ingredientList{
+			margin-left : 15px;
+			border-left : 2px solid #cf664063;
 			li{
-				margin: 0.6em 0em;
-			}
-
-			label.showChefNotes{
-				cursor: pointer;
-				user-select: none;
-			}
-
-			.temperature{
-				small{
-					display: none;
-				}
-				&:hover{
-					small{
-						display: inherit;
-					}
-				}
-			}
-
-			.chef_note{
-				display: none;
-				//border: var(--green) 1px solid;
-				//border-radius: 3px;
-				font-style: italic;
-				//border-left: 2px solid black;
-				padding-left: 5px;
 				font-size: 0.8em;
-				color: var(--grey);
-
+				margin: 5px;
 			}
+		}
 
-			textarea{
-				font-family: inherit;
-				width : 100%;
-				background-color: transparent;
-				//border: none;
-				resize: none;
-				font-size: 1em;
-				min-height: 800px;
+
+		.temperature{
+			small{
+				display: none;
 			}
+			&:hover{
+				small{
+					display: inherit;
+				}
+			}
+		}
+
+		.chef_note{
+			display: none;
+			//border: var(--green) 1px solid;
+			//border-radius: 3px;
+			font-style: italic;
+			//border-left: 2px solid black;
+			padding-left: 5px;
+			font-size: 0.8em;
+			color: var(--grey);
+
+		}
+
+		textarea{
+			font-family: inherit;
+			width : 100%;
+			background-color: transparent;
+			//border: none;
+			resize: none;
+			font-size: 1em;
+			min-height: 800px;
 		}
 	}
 `
@@ -2387,6 +2081,119 @@ const RecipePage = comp(function(initRecipe){
 module.exports = RecipePage;
 
 },deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/parse.recipe.js":"-153mfgm","./ingredient.control.js":"fn4mc7","../servings.emitter.js":"-1fvb86o","../fav.js":"-1lcvatb"},fn:'client/recipe_page/recipe.page.js',dn:'client/recipe_page', root:'../..'};
+global.__Modules["ksc8r0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+
+const {getCompatibleUnits} = require('../../utils/units.js');
+const convert = require('../../utils/convert.units.js');
+const {parseIngredient} = require('../../utils/parse.ingredient.js');
+
+global.css.conversion_page = css`
+	.ConversionPage{
+		min-height: 500px;
+		.searchBox{
+			text-align: center;
+
+			input{
+				text-align: left;
+				font-size: 3em;
+				border: none;
+				font-family: inherit;
+				color: #854E3A;
+				background-color: transparent;
+				border-left: 3px solid #854E3A;
+			}
+		}
+
+		.results{
+			margin: 0 auto;
+			max-width: 500px;
+			font-size: 2em;
+			ul{
+				//font-size: 2em;
+			}
+			.temperature{
+
+			}
+		}
+
+	}
+`;
+
+
+
+const ConversionPage = comp(function(){
+
+	const [query, setQuery] = this.useState('');
+
+
+	this.useEffect(()=>{
+		this.el.querySelector('input').focus();
+		document.title = `Convert Units - Tastebase`;
+		window.scrollTo(0, 0);
+	},[]);
+
+
+
+	const tryIngredientUnits = (str)=>{
+		const ingredient = parseIngredient(query);
+		if(!ingredient.unit) return [];
+		return getCompatibleUnits(ingredient).map(unit=>{
+			return `${convert(ingredient, unit)} ${unit}`;
+		});
+	};
+
+	const tryTemperature = (str)=>{
+		const res = (/(\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)/img).exec(str);
+		if(!res) return;
+		let [_,val,unit] = res;
+		unit = unit.toLowerCase();
+
+
+		if(unit.includes('f')) return (val*1.8 + 32).toFixed(1) +'°C';
+		if(unit.includes('c')) return (val*1.8 + 32).toFixed(1) +'°F';
+	}
+
+	const units = tryIngredientUnits(query);
+
+	const temperature = tryTemperature(query);
+
+
+
+
+
+
+	return x`<section class='ConversionPage'>
+		<h2>Ye Olde Conversion Tool</h2>
+
+		<div class='searchBox'>
+			<input type='text'
+				value=${query}
+				oninput=${(evt)=>setQuery(evt.target.value)}
+				placeholder='3 1/4 cups of butter, 45C, ...'></input>
+		</div>
+
+		<hr>
+
+		<div class='results'>
+
+			${units.length!==0 && x`<ul>
+				${units.map(unit=>x`<li><strong>${unit}<strong></li>`)}
+				</ul>`
+			}
+
+			${!!temperature && x`<div class='temperature'>${temperature}</div>`}
+
+		</div>
+
+	</section>`
+});
+
+
+
+module.exports = ConversionPage;
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c","../../utils/parse.ingredient.js":"1i32h7a"},fn:'client/conversion_page/conversion.page.js',dn:'client/conversion_page', root:'../..'};
 global.__Modules["18609dp"]={func:function(module, exports, global, __filename, __dirname, __root, require){const emitter = require('../libs/emitter')();
 const KEY = 'tb-account';
 
@@ -2424,6 +2231,251 @@ module.exports = {
 	emitter
 };
 },deps:{"../libs/emitter":"-1vuptfe"},fn:'client/account.js',dn:'client', root:'..'};
+global.__Modules["qumug0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+
+
+const useLocalState = (scope, key, init)=>{
+	const [val, setVal] = scope.useState(()=>{
+		try{ return JSON.parse(window.localStorage.getItem(key)) ?? init;
+		}catch(err){ return init; }
+	});
+	return [val, (newVal)=>{
+		try{ window.localStorage.setItem(key, JSON.stringify(newVal)); } catch (err){}
+		setVal(newVal);
+	}];
+};
+
+
+global.css.search_control = css`
+	.SearchControl{
+
+		display: flex;
+
+		.searchBox{
+
+			margin: auto;
+			border: 1px solid var(--grey);
+			border-radius: 1em;
+			padding: 0em 1em;
+			background-color: white;
+			width : 70%;
+			font-size: 1.5em;
+			input{
+				border: none;
+				font-family: 'IM Fell English', serif;
+				font-style: italic;
+				font-size: 1.3em;
+				width : 100%;
+			}
+		}
+
+		.typeSelector{
+			width : 300px;
+			.type{
+				cursor: pointer;
+				font-size: 1.1em;
+				display: inline-block;
+				opacity : 0.4;
+
+				border-radius: 1em;
+
+				border: 1px solid black;
+				padding : 5px 10px;
+
+				img{
+					height : 1em;
+					vertical-align: middle;
+					margin-right : 0.25em;
+				}
+
+				&.selected{
+					background-color: #f0dfaf7a;
+					opacity : 1;
+				}
+			}
+
+		}
+
+	}
+`;
+
+const Icons = require('../assets/icons');
+const Types = Object.keys(Icons);
+
+const SearchControl = comp(function(onUpdate){
+	let [filterTypes, setFilterTypes] = useLocalState(this, 'search-types', []);
+	let [search, setSearch] = useLocalState(this, 'search-query', '');
+
+
+	const update = ()=>{
+		onUpdate({
+			terms : search.toLowerCase().split(' ').filter(x=>!!x),
+			types : [...filterTypes],
+			//onlyFav : false,
+			//chef : 'All'
+		})
+	}
+
+	const handleText = (newSearch)=>{
+		clearTimeout(this.refs.searchTimer);
+		search = newSearch;
+		setSearch(newSearch);
+		this.refs.searchTimer = setTimeout(update, 200);
+	};
+
+
+	const toggle = (type)=>{
+		if(filterTypes.includes(type)){
+			filterTypes = filterTypes.filter(x=>x!==type);
+		}else{
+			filterTypes = filterTypes.concat(type);
+		}
+		setFilterTypes(filterTypes);
+		update();
+	};
+
+	this.useEffect(()=>update(), []);
+
+
+	return x`<div class='SearchControl'>
+
+		<div class='searchBox'>
+			<input
+				placeholder='Search...'
+				type='text'
+				oninput=${(evt)=>handleText(evt.target.value)}
+				value=${search}></input>
+		</div>
+
+
+		<div class='typeSelector'>
+			${Types.map(type=>{
+				return x`<div
+					onclick=${()=>toggle(type)}
+					class=${cx('type', {selected : filterTypes.includes(type)})}>
+
+					<img src=${Icons[type]}></img>
+					${type}
+				</div>`;
+			})}
+		</div>
+
+	</div>`;
+});
+
+
+module.exports = SearchControl;
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps"},fn:'client/search_page/search.control.js',dn:'client/search_page', root:'../..'};
+global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
+const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+const RecipeCard = require('./recipe.card.js');
+
+
+
+global.css.search_page = css`
+	.Search{
+		min-height: 100vh;
+
+		.results{
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			gap : 10px;
+			.RecipeCard + .RecipeCard{
+				//border-color:red;
+			}
+
+			.RecipeCard{
+				min-width : 300px;
+				width     : 50%;
+			}
+		}
+	}
+`
+
+const SearchControl = require('./search.control.js');
+
+
+const FilterRecipes = (recipes, {terms, types})=>{
+	let result = [...recipes];
+
+	if(types.length !== 0){
+		result = result.filter(recipe=>{
+			return types.includes(recipe.type);
+		});
+	}
+
+	if(terms.length !== 0){
+		result = result.filter(recipe=>{
+			return terms.every(term=>{
+				if(recipe.title.toLowerCase().indexOf(term) !== -1) return true;
+				if(recipe.desc.toLowerCase().indexOf(term) !== -1) return true;
+
+				//TODO: add ingredient level search
+
+				//if(recipe.content.toLowerCase().indexOf(term) !== -1) return true;
+
+				return false;
+			})
+		});
+	}
+
+	return result;
+};
+
+
+function shuffle(arr){
+	let res = [], array = [...arr];
+	while(array.length !== 0){
+		const idx = Math.floor(Math.random()*array.length);
+		res.push(array.splice(idx, 1)[0]);
+	}
+	return res;
+};
+
+
+
+const SearchPage = comp(function(allRecipes){
+
+	const [recipes, setRecipes] = this.useState(allRecipes);
+
+
+	this.useEffect(()=>{
+		document.title = `Tastebase - Search`;
+		window.scrollTo(0, 0);
+	},[]);
+
+
+	const handleSearch = (queryObj)=>{
+		setRecipes(FilterRecipes(allRecipes, queryObj))
+	};
+
+	const shuffleRecipes = ()=>{
+		console.log({recipes});
+		console.log(shuffle(recipes))
+		setRecipes(shuffle(recipes));
+	}
+
+	return x`<section class='Search'>
+
+		<div class='top'>
+			${SearchControl(handleSearch)}
+			<button onclick=${()=>shuffleRecipes()}>Shuffle</button>
+		</div>
+
+		<div class='results'>
+			${Object.fromEntries(recipes.map(recipe=>[recipe.id, RecipeCard(recipe)]))}
+		</div>
+	</section>`
+});
+
+module.exports = SearchPage;
+
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./search.control.js":"qumug0"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
 global.__Modules["1k4rf0b"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 
@@ -2473,14 +2525,14 @@ const Main = comp(function({ recipes, chefs, types }){
 	const [page, setPage] = this.useState('');
 	const [param, setParam] = this.useState('');
 
-
 	const updatePage = ()=>{
 		const [page, param] = window.location.hash.substr(1).split('=');
 		setPage(page || 'search');
-		setParam(decodeURIComponent(param || ''));
+			setParam(decodeURIComponent(param || ''));
 	}
 
 	this.useEffect(()=>{
+		console.log({recipes})
 		window.onhashchange = updatePage;
 		updatePage();
 	}, []);
@@ -2497,7 +2549,7 @@ const Main = comp(function({ recipes, chefs, types }){
 			</ul>
 		</nav>
 
-		${page == 'search' && SearchPage(Object.values(recipes), param)}
+		${page == 'search' && SearchPage(Object.values(recipes), param, types, chefs)}
 		${page == 'recipe' && RecipePage(recipes[param])}
 		${page == 'conversion' && ConversionPage()}
 
@@ -2523,5 +2575,5 @@ module.exports = Main;
 		module.exports = req('1k4rf0b');
 	}
 })();</script>
-<script>xo.render(document.body.children[0], window.main({"recipes":{"jenny__tea":{"id":"jenny__tea","chef":"jenny","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/jenny/tea.md","content":"# Tea\n\nThis is how you make tea. I know it's super secret stuff\n\n![](https://optional_img_url.biz)\n\ntype: beverage\nservings : 1 \n\n\n1. Boil {1cup of water} in a kettle or pot, but not microwave. This is fancy tea. \n1. Grab {1 teabag}. Put it in a mug.\n1. Steep tea for however long you want. Watch the colour. Is it good tea?\n1. Add optional {1splash of milk} after steeping. Not before, after.\n1. Wait for it to cool down.\n1. Forget about it.\n1. Reheat or repeat.\n\n/* You never remember tea the first time you make it. */\n","servings":1,"desc":"This is how you make tea. I know it's super secret stuff\n\n![](https://optional_img_url.biz)","type":"beverage","title":"Tea"},"katie__coconut chicken stew":{"id":"katie__coconut chicken stew","chef":"katie","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/katie/coconut chicken stew.md","content":"# Spicy coconut chicken stew\n\nWarm, filling, with a little bit of heat.\n\ntype: dinner\nservings : 4  \n\n\n1. In a large, deep skillet, heat {2 tbsp oil}. Add {3 shallots} and {2 chiles} and cook over moderate heat, stirring occasionally, until tender, about 5 minutes.\n2. Add {1 can coconut milk}, {1/2 cup stock} and {1/4 cup lime juice} and bring to a simmer.\n3. Season the broth generously with {salt} and {pepper}.\n4. Stir in {1 lb rotisserie chicken} and {1 cup corn kernals} and cook until hot, 3 to 5 minutes.\n5. Stir in {3 cups spinach} and simmer until just wilted.\n6. Stir in {1 cup of basil}.\n7. Transfer to shallow bowls, garnish with basil and serve.\n\n\n","servings":4,"desc":"Warm, filling, with a little bit of heat.","type":"dinner","title":"Spicy coconut chicken stew"},"scoot__audrianna_bread":{"id":"scoot__audrianna_bread","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/audrianna_bread.md","content":"# Audrianna bread\n\nservings: 1\ntype: baked\n\n\n1. Start prepping {1/4 cup of oatmeal} with boiling water\n1. Add {yeast} and {some sugar} to {1/2 cup of water} at 38C. Wait until foamy\n1. In mixing bowl add {2 cups of flour}, {1 tsp of salt}, {1 tbsp of brown sugar}, the oatmeal, the yeast.\n1. Mix and add water until smooth dough. Cover and let rise for ~1hr\n1. Punch down and move to bread tin. Cover and let rise for ~1hr\n1. Bake at 350F for 20min\n\n\n\n/*\nOriginal\n\n\nThis recipe will make 2 loaves:\n\n1.5 c water\n3 T oil\n1.5 T molasses\n1.5 T sugar\n2.25 t salt\n.5 c cooked oatmeal\n4.5 c flour\n1 T yeast (heaping)\n\nIn the bread machine, I add the ingredients in that order, press the “dough” button, and in 2 hours it dings :)\n\nWhen I made this bread at camp, I would proof the yeast in a bowl of lukewarm water + sugar. Mix the oatmeal, salt, oil, and  molasses…then add yeast mixture…. in large  bowl and mix with with dough hook; gradually add in flour until dough pulls away from bowl. (At camp, I always needed more flour than was called for). Plop out onto floured surface and knead briefly. Put all into a bowl rubbed with oil. Cover with cloth and let rise til double in size (20-60 min depending on how warm the room is).\n\nPunch down and plop onto flour covered surface. Knead briefly. Cut into 2. Put each into greased bread tins. Cover with towel and let rise until doubled.\n\nBake 350 for 20 minutes until golden.\n\nEnjoy!\n\nAdditional notes: We always used the leftover oatmeal from breakfast. When I do this at home, I cook up a batch of oatmeal, then scoop by 1/2 cupfuls into a muffin tin and freeze. I then store the frozen “pucks” and thaw individually as needed.\n\n*/","servings":1,"desc":"","type":"baked","title":"Audrianna bread"},"scoot__basic_bread":{"id":"scoot__basic_bread","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/basic_bread.md","content":"# Basic Bread\n\nservings: 1\nref: https://www.tasteofhome.com/recipes/basic-homemade-bread/\n\n\n1. Warm {1 cup of water} to 35C and mix in {1 packet of yeast}. /* Needed to add ~1/4 cup more of water */\n1. Mix {4 cups of flour} and {2 tsp of salt}, then add yeast mixture once foamy (~5min) and {3 tbsp of metled butter}\n1. Mix/knead for 5min\n1. Add some olive oil to bowl and lift ut dough so it's covered in the oil. Cover bowl and let rise for ~2hrs\n1. Preheat oven to 375F.","servings":1,"desc":"","type":"food","title":"Basic Bread","ref":"https://www.tasteofhome.com/recipes/basic-homemade-bread/"},"scoot__basic_loaf":{"id":"scoot__basic_loaf","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/basic_loaf.md","content":"# Basic Loaf\n\nservings: 1\nref: https://www.tasteofhome.com/recipes/basic-homemade-bread/\n\n\n1. Warm {1 cup of water} to 35C and mix in {1 packet of yeast} and {1 tbsp of sugar}\n1. Mix {2.5 cups of flour}, {1 tsp of salt}, and a {splash of milk}\n1. Mix in yeast mixture and knead until slightly sticky\n1. Let proof for 40-80min, or until doule in size\n1. Heat oven to 350F, while preheating move dough to bread pan and let rise on the oven.\n1. Should rise until near top of bread pan. Brush top with some milk and butter\n1. Bake for 30-40min\n","servings":1,"desc":"","type":"food","title":"Basic Loaf","ref":"https://www.tasteofhome.com/recipes/basic-homemade-bread/"},"scoot__cauliflower_soup":{"id":"scoot__cauliflower_soup","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cauliflower_soup.md","content":"# Cauliflower Soup\n\nimg: https://rainbowplantlife.com/wp-content/uploads/2021/01/Instant-Pot-Cauliflower-Soup-macro-1-of-1-scaled.jpg\nref: https://rainbowplantlife.com/instant-pot-cauliflower-soup/\n\n\n> This Creamy Cauliflower Soup is unbelievably creamy yet dairy-free and vegan, thanks to cashews and cannellini beans. It's easy and quick to make, freezes great, and is satisfying enough for a main meal. The perfect healthy weeknight dinner!\n\n\n1. Pour boiling water over the {1 cup of raw cashews} to cover and let rest for 15 minutes. Drain and rinse before using.\n1. Make the bouquet garni. Use kitchen twine to tie up the {thyme sprigs}, {rosemary sprigs}, and {bay leaf}. And chop the {head of cauliflower} into small florets.\n1. Add {1 large chopped yellow onion} to dutch oven with olive oil. Brown, then add {4 cloves of minced garlic}, cook for another 2-3min\n1. Pour in {5 cups of broth}, scrape the bottom. Add in the cashews, cauliflower, {2 cans of cannellini beans}, {5 tbsp of nutrional yeast}, and salt and pepper. Gently tuck the bouquet garni into the broth.\n1. Bring the soup to a boil. Then reduce the heat to maintain a rapid simmer and cook for 15-30 minutes, or until the cauliflower is tender and soft.\n1. Remove the bouquet garni and transfer the soup to a stand blender (you will need to do this in two batches). Blend until smooth, thick, and creamy.\n1. Taste for salt and pepper and adjust accordingly. Transfer the soup to bowls, and before serving, {optional lemon zest} on top, add a scattering of {chili flakes}\n","servings":2,"desc":"This Creamy Cauliflower Soup is unbelievably creamy yet dairy-free and vegan, thanks to cashews and cannellini beans. It's easy and quick to make, freezes great, and is satisfying enough for a main meal. The perfect healthy weeknight dinner!","type":"food","title":"Cauliflower Soup","img":"https://rainbowplantlife.com/wp-content/uploads/2021/01/Instant-Pot-Cauliflower-Soup-macro-1-of-1-scaled.jpg","ref":"https://rainbowplantlife.com/instant-pot-cauliflower-soup/"},"scoot__cauliflower_wings":{"id":"scoot__cauliflower_wings","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cauliflower_wings.md","content":"# Cauliflower Wings\n\n\n\n\n1. Mix {1/2 cup milk}, {1/2 cup water}, {3/4 cup all-purpose flour}, {2 tsp. garlic powder}, {1 tsp. onion powder}, {1 tsp. smoked paprika} into a large bowl\n1. Coat cauliwflower, and cover in {Panko bread crumbs}\n1. Cook at 350 degrees for 15 minutes.","servings":2,"desc":"","type":"food","title":"Cauliflower Wings"},"scoot__chickpea_cookie_dough":{"id":"scoot__chickpea_cookie_dough","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/chickpea_cookie_dough.md","content":"# Chickpea Cookie Dough\n\ntype: snack\nservings: 1\n\n1. Drain {1 can of chickpeas} into a blender\n1. Mix in\n  - {2 tbsp maple sryup}\n  - {1 tbsp vanilla}\n  - {1 tbsp peanut butter}\n  - {1 scoop protein powder}\n  - {pinch of salt}\n  - {1 tbsp cinnamon}\n1. Blend together, you may need to scrape down the sides\n1. Add {chocolate chips}","servings":1,"desc":"","type":"snack","title":"Chickpea Cookie Dough"},"scoot__churro_kettle_corn":{"id":"scoot__churro_kettle_corn","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/churro_kettle_corn.md","content":"# Churro Kettle Corn\n\ntype: snack\nref : https://www.bingingwithbabish.com/recipes/kettle-corn-community\n\nthis is a test\n\n\n1. Add the {3tbsp oil} and cinnamon sticks to a large stockpot. \n1. Begin heating the oil over low heat. Let the oil infuse for 5 minutes.\n1. Carefully remove the cinnamon sticks. \n1. Increase the heat to medium-high and allow the oil to heat for 1 minute.\n1. Add 2 or 3 kernels to the oil and once they pop, add all the remaining {1/3cup kernels}.\n1. While gently shaking the pot with one hand, slowly stream in the {1/4cup sugar}.\n1. Cover the pot with a lid and continuously shake the pot until all of the kernels have popped.\n1. Transfer the kettle corn to a large rimmed baking sheet. Spread the popcorn out to ensure the kettle corn doesn’t clump together. Season with salt to taste. \n1. Serve immediately. \n","servings":2,"desc":"this is a test","type":"snack","title":"Churro Kettle Corn","ref":"https://www.bingingwithbabish.com/recipes/kettle-corn-community"},"scoot__cookie_dough":{"id":"scoot__cookie_dough","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cookie_dough.md","content":"# Raw Cookie Dough\n\n> By heat treating the flour, you can make edible raw cookie dough!\n\ntype: snack\nservings: 2\n\nimg: https://www.benjerry.com/files/live/sites/systemsite/files/flavors/recipes/edible-cookie-dough/Beauty%20Reshoot/DRV_EdibleCookieDough_BeautyShot_BNJ2106-15_7465_779x400_AR.jpg\nRef : https://www.benjerry.com/flavors/recipes/edible-cookie-dough\n\n1. Melt {8tbsp butter} (~45sec in microwave)\n2. stand mixer beat together the butter and {1cup of brown sugar} until light and fluffy.\n3. heat treat the {1 cup of flour} (~35sec in microwave).\n\t- Use an instant-read thermometer to ensure that the flour reaches 74C throughout.\n5. Add the {1tsp vanilla}, {2tbsp heavy cream}, and {1/2tsp salt}, flour and mix to incorporate.\n6. Fold in the {1/2cup of chocolate chips}.\n7. Spread out on parchment paper, score it into squares, sprinkle with salt\n8. Freeze, then pop off parchment and store in tupperware\n\n","servings":2,"desc":"By heat treating the flour, you can make edible raw cookie dough!","type":"snack","title":"Raw Cookie Dough","img":"https://www.benjerry.com/files/live/sites/systemsite/files/flavors/recipes/edible-cookie-dough/Beauty%20Reshoot/DRV_EdibleCookieDough_BeautyShot_BNJ2106-15_7465_779x400_AR.jpg","ref":"https://www.benjerry.com/flavors/recipes/edible-cookie-dough"},"scoot__creme_brulee":{"id":"scoot__creme_brulee","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/creme_brulee.md","content":"# Creme Brulee\n\n> 3 ingredient creme brulee using ice cream\n\nref: https://tasty.co/recipe/3-ingredient-creme-brulee\n\n\n\n1. Preheat the oven to 325˚F (160˚C).\n1. Microwave the {1 cups of ice cream} for 30 to 40 seconds or until completely melted. Allow to cool for 5 minutes.\n1. Add the {1 egg} into the melted ice cream and whisk well.\n1. Pour the mixture into a ramekin. Place the ramekin in a pan. Pour hot water into the pan to come roughly halfway up the sides of the ramekin.\n1. Bake for 50 minutes. The crème brûlée should be set, but still a little jiggly in the middle.\n1. Remove the ramekins from the roasting pan, allow to cool to room temperature, cover with plastic wrap and refrigerate for at least 2 hours, and up to 3 days.\n\n\n1. Heat {2 tbsp sugar} over medium low heat until it turns into a thick liquid, then quickly pour over the ramekins before it hardens","servings":2,"desc":"3 ingredient creme brulee using ice cream","type":"food","title":"Creme Brulee","ref":"https://tasty.co/recipe/3-ingredient-creme-brulee"},"scoot__curry":{"id":"scoot__curry","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/curry.md","content":"# curry\n\n1. Heat oil in pot add {3 tbsp of curry paste} (green - mild, red - medium, yellow - spicy)\n1. After a minute, add chopped veggies: {onion}, {peas}, {carrots}, {potatoes}\n1. Season with pepper and salt, and optionally {1/2 tbsp of Garam Masala}\n1. Once soft (~5min), add {1 can of chickpeas} and {1 can of coconut milk}\n1. Reduce heat once simmering, cook until reduced and thick (~20min), stir occasionally\n1. Prep {1 cup of rice}\n1. Serve with {naan}","servings":2,"desc":"","type":"food","title":"curry"},"scoot__eggs_benny":{"id":"scoot__eggs_benny","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/eggs_benny.md","content":"# Eggs Benny any% glitchless speedrun\n\nMy summary of Alex's speedrun of Eggs benny\n\ntype: breakfast\nservings: 1\n\n[Ref](https://www.youtube.com/watch?v=LqHqX8xfYCs)\n\n### Hollendaise Sauce\n\n0. Melt {2tbsp butter} in microwave 50 sec in lightly covered container (less if not cold butter)\n1. Add an {1 egg yolk}, {pinch of salt} (and paprike/cayenne), and {1/2 tsp lemon juice} to blender (small magic bullet)\n2. Mix in melted butter and run for 10sec\n\n/*\n- Use immersion blender\n- Cook final mixutre in 15sec interval, with whisking inbetween until the right consistency\n*/\n\n\n### Poached Egg\n\n0. Add enough water to submerge an egg and a splash of {white vinegar} into a jar (use same butter jar from sauce)\n1. Crack {1 egg} into jar\n2. Microwave for 70 seconds (will vary on microwave, plz test)\n3. Pour out over a slotted spoon to catch egg\n\n\nServe the poached egg on toast with hollandiase, topped with a pinch of {paprika}\n\n\n","servings":1,"desc":"My summary of Alex's speedrun of Eggs benny\n\n\n\n\n[Ref](https://www.youtube.com/watch?v=LqHqX8xfYCs)","type":"breakfast","title":"Eggs Benny any% glitchless speedrun"},"scoot__fake_fake_crab":{"id":"scoot__fake_fake_crab","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/fake_fake_crab.md","content":"# Fake Fake Crab\n\n1. Grate {firm tofu}\n1. Mix with {kewpie mayo}, {siracha}, and {crushed seaweed}","servings":2,"desc":"","type":"food","title":"Fake Fake Crab"},"scoot__focaccia":{"id":"scoot__focaccia","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/focaccia.md","content":"# Focaccia\n\nType: Bread\nServings: 4\n\n\n[Ref](https://www.youtube.com/watch?v=NGnMrM9qDtE)\n\n\n1. Dissolve yeast in 1/2cup 40C water for 5min\n2. Add {2.5 cups water} , {6 cups flour} + {2tbsp salt} + spices ({oregano} & {rosemary}) + yeast\n4. mix slow for 1min, 5min on med-high\n5. Cover and rest for 10min\n6. mix for 15min on med-high (should be elastic)\n7. Lift dough out, {1/4cup olive oil} in bowl, add dough, and cover\n8. Let rise for 1.5hr\n9. fold dough. Lift and wiggle, rotate bowl 90deg, do several times\n10. Lightly oil and salt sheet, Spread out on sheet until it springs back\n11. Mix {garlic} and {rosemary} into oil (~1/3-1/2 cup) in a bowl\n12. Cover and rest until it reaches the top of the pan (~45min)\n13. Oven at 450F\n14. Dimple dough with fingers\n15. Drizzle oil + salt on top (should be mostly covered)\n16. Place on bottom rack of oven for 25min\n17. Move to top rack for 5min\n18. Let cool for 10min, cut into pieces with scissors\n","servings":4,"desc":"[Ref](https://www.youtube.com/watch?v=NGnMrM9qDtE)","type":"Bread","title":"Focaccia"},"scoot__french_toast_bites":{"id":"scoot__french_toast_bites","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/french_toast_bites.md","content":"# French Toast Bites\n\nThese little bites get evenly crispy, and much easier to dip in maple syrup\n\n\ntype: breakfast\n\n\n![](https://1.bp.blogspot.com/-DA_lwtmbuYw/XAmGR83uhiI/AAAAAAAAe6M/vRx8pcygHvUIWWIyCmJRNPk-63hZiydaACLcBGAs/s1600/Cinnamon-French-Toast-Bites-in-process-4.jpg)\n\n\n1. Whisk {1 egg}, {1/4 cup milk}, {vanilla}, {pinch of salt}, and {cinnamon} until smooth\n2. Cut {2 slices of bread} into 16 pieces each slice.\n3. Dump bread into mixture and toss until coated evenly. Should use up nearly all of the mixture.\n4. Heat pan to med. Add butter.\n5. Fry bread pieces, wait until one side has crisped up before flipping. Toss occasionally until golden brown on each side","servings":2,"desc":"These little bites get evenly crispy, and much easier to dip in maple syrup\n\n\n\n\n\n![](https://1.bp.blogspot.com/-DA_lwtmbuYw/XAmGR83uhiI/AAAAAAAAe6M/vRx8pcygHvUIWWIyCmJRNPk-63hZiydaACLcBGAs/s1600/Cinnamon-French-Toast-Bites-in-process-4.jpg)","type":"breakfast","title":"French Toast Bites"},"scoot__ginger_beer":{"id":"scoot__ginger_beer","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/ginger_beer.md","content":"# Ginger Beer\n\ntype: drink\n\n\nhttps://www.mountainfeed.com/blogs/learn/27592385-the-ginger-bug-easily-make-your-own-ginger-beer\n","servings":2,"desc":"","type":"drink","title":"Ginger Beer","https":"//www.mountainfeed.com/blogs/learn/27592385-the-ginger-bug-easily-make-your-own-ginger-beer"},"scoot__korean_tacos":{"id":"scoot__korean_tacos","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/korean_tacos.md","content":"# Korean Tacos\n\ntype: dinner\n\n\n1. {1cup TVP} + water + {korean spice}. Soak ~10min\n2. {1cup rice} + {1.5cups water}. Bring to boil, then simmer on low for 18min\n3. shred {2 carrots} and thinly slice {1/3 cucumber} into half moons\n4. Soak in {white wine vinegar} + {tblsp of sugar} + {pinch of salt} until coated\n5. Cook {1 chopped onion} in pan + {seasame oil} + {korean spice} + {gochujang paste} until soft\n6. Add tvp and brown\n7. Mix {1/2cup of mayo} + splash of water + spoonful of gochujang paste. Mix well, add paste until desired spiciness\n8. Drain carrots + cucumbers \n9. Serve!","servings":2,"desc":"","type":"dinner","title":"Korean Tacos"},"scoot__miso_soup":{"id":"scoot__miso_soup","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/miso_soup.md","content":"# Miso Soup\n\nref: https://www.allrecipes.com/recipe/13107/miso-soup/\n\n1. In a medium saucepan over medium-high heat, combine {1/2 tsp dashi} and {1 cups of water}; bring to a boil.\n1. Reduce heat to medium, and whisk in the {3/4 tbsp of miso paste}. Stir in diced and pressed tofu.\n1. Cut {1 stalk of green onions} into little rings, and add them to the soup. Simmer gently for 2 to 3 minutes before serving.\n","servings":2,"desc":"","type":"food","title":"Miso Soup","ref":"https://www.allrecipes.com/recipe/13107/miso-soup/"},"scoot__pancakes":{"id":"scoot__pancakes","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/pancakes.md","content":"# Pancakes\n\n","servings":2,"desc":"","type":"food","title":"Pancakes"},"scoot__popcorn":{"id":"scoot__popcorn","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/popcorn.md","content":"# Popcorn\n\n\n1. {1/3 cup of coconut oil} into pot on med heat with a few kernals\n1. Add {1/2 cup of kernals} and {1 tsp of Flavocol} once they have popped, lower heat a bit\n1. Keep moving until the popping slows down\n1. Top with a small sprinkling of Flavocol on top","servings":2,"desc":"","type":"food","title":"Popcorn"},"scoot__preserved_lemon":{"id":"scoot__preserved_lemon","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/preserved_lemon.md","content":"# Preserved lemon\n\nref: https://www.foodnetwork.com/recipes/alton-brown/quick-preserved-lemons-7423982\n\n1. Trim the ends off the lemons. Slice each lemon into 8 wedges, removing any seeds as you go. Reserve as much of the juice as possible.\n1. Layer the lemon wedges in a wide-mouthed 16-ounce canning jar, covering each layer with salt. Pack the jar as tightly as possible, pressing down to release the lemons' juice as you go and leaving about 1/4 inch of headspace in the jar.\n1. Cover the wedges with the reserved lemon juice from the cutting board and the ends. If your lemons do not release a significant amount of juice, top off the jar with the juice of another lemon.\n1. Stash in the refrigerator for 4 days, then flip the jar over and age another 4 days before sampling. The peel should be nice and soft. Rinse before using.","servings":2,"desc":"","type":"food","title":"Preserved lemon","ref":"https://www.foodnetwork.com/recipes/alton-brown/quick-preserved-lemons-7423982"},"scoot__quick_risotto":{"id":"scoot__quick_risotto","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/quick_risotto.md","content":"# Quick Rosotto\n\n1. add {meat} to high-walled pan, high heat\n2. Once brown, add {minced garlic} and {onions}\n3. add {1 cup of Arborio rice}, mix\n4. after a min, add {2 cups of chicken stock} \n5. Bring to simmer and reduce heat, cook for 12min\n6. Mix in peas + other veg. Cook for 5 min\n7. Remove from heat. Mix in parm cheese + sour cream/cream cheese + 1tblsp butter\n8. Season with salt + pepper\n","servings":2,"desc":"","type":"food","title":"Quick Rosotto"},"scoot__seitan":{"id":"scoot__seitan","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/seitan.md","content":"\n# Seitan\n\nVegetarian Chicken\n\n\n\n[ref](https://www.youtube.com/watch?v=yY2YN6krVtk)\n\n\n\n1. {4 cups of flour} and {2 cups of water}\n2. Knead for 5-10min, go for soft and sticky\n3. Rest for 2hrs dough in bowl covered in water\n4. drain and replace with cleanw ater\n5. Massage and squeezedough while in the water for 3-5min\n6. Wash again with clean water, massage (Dough should look like it's falling apart)\n7. Do 4 more washes (for a total of 6 washes) \n8. Cover and rest for 10min\n9. Create broth to simmer dough in. {4 cups of water} {1tbsp of garlic powder} {1tbsp of garlic powder} {2tsp of paprika} {veg bullion} {3tbsp of soy sauce}\n10. Heat til boiling\n11. Flatten dough, cut into 3 strips connected at the top, then braid tightly\n12. Stretch into a rope, then tie multiple knots in the rope\n13. Simmer in broth for an hour, halfway through flip the dough\n14. You can chill over night in fridge covered in broth (optional)\n\n","servings":2,"desc":"Vegetarian Chicken\n\n\n\n[ref](https://www.youtube.com/watch?v=yY2YN6krVtk)","type":"food","title":"Seitan"},"scoot__swedish_cardamom_buns":{"id":"scoot__swedish_cardamom_buns","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/swedish_cardamom_buns.md","content":"# Swedish Cardamom Buns\n\nservings: 20\n\n### Dough\n\n1. Heat {1 3/4 cups of water} to 35C (~45sec in microwave). Mix in {2 tsp of yeast} and {sugar}. Wait until foamy\n1. Mix Dry into stand mixer: {4 cups of flour}, {1/3 cup of sugar}, {1 tsp of salt}, {1/2 cup of softened butter}, {1 tbsp of ground cardamom}\n1. Pour in the yeast-milk mixture. Mix on low speed until a dough forms. Add flour until it's just sticky to the touch.\n1. Cover and let rise for about an hour.\n\n\n### Filling\n/* 1. Mix together {1 tbsp of ground cardamom}, {100g of sugar}, {100g of softened butter} */\n\n1. Mix together {1 tbsp of ground cardamom}, {1/2 cup of sugar}, {1/2 cup of softened butter}\n\n\n### Buns\n1. Roll out dough into a 1ft x 2ft rectangle\n1. Spread thin layer of filling over dough\n1. Fold in half to cover the filling\n1. Prepare 2 baking sheets with parchment paper\n1. Cut ~16 thin strips about 1-2cm thick. Twist and roll strips around three fingers, rotating until it forms a nest/bun. Place on baking sheet\n1. Cover and let rise while oven pre-heats\n\n### Baking\n1. Preheat oven to 425F\n1. Bake buns for 15-20min. Should be golden on top, brown on bottom. Internal temp should be 200F\n1. (Optional) While baking, make glaze: 3tbsp of water}, {3tbsp of sugar}, {1/4tsp of vanilla extract}\n1. Brush buns with glaze right out of the oven. Dust buns with some ground cardamom, cinnamon, and salt to stick to the glaze.\n","servings":20,"desc":"","type":"food","title":"Swedish Cardamom Buns"},"scoot__vegan_brisket":{"id":"scoot__vegan_brisket","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/vegan_brisket.md","content":"# Vegan Brisket\n\n\n[ref](https://www.youtube.com/watch?v=B4UuP0heR8w)\n\n\n\n1 cup marsala wine\n¼ cup (60ml) soy sauce or tamari \n¼ cup (60ml) maple syrup\n2 tbsp sriracha\n3½ cups (870ml) low sodium vegetable stock\n1 small can of tomato paste, about ¼ cup (4 tbsp)\n3+ tbsp olive oil\n\nWhisk all above ingredients well.\n\nIn separate bowl mix the dry batch:\n\nDry Mixture\n\n2¼ cups (280g) vital wheat gluten flour\n¾ cup (95g) chickpea flour\n2 tbsp chili powder\n1 tbsp paprika\n1½ tsp cumin\n2 tbsp onion granules\n2 tbsp garlic granules\n1 tbsp salt\n\n---\n\n1. Prepare baking dish by coating lightly with oil. Set aside. Preheat oven to 375 degrees fahrenheit.\n\n2. Hand mix the wet and dry batches separately. Combine dry mixture with half of wet mixture.  Mix until combined completely. Knead for 3 minutes until all is mixed thoroughly and the dough has an elastic texture.\n\n3. Form into a rough oval shape and place in baking dish. Lightly coat the raw seitan with oil. \n\n4. Add rest of braising liquid around the casserole dish, pouring over raw seitan. \n\n5. Place in oven and bake for about 25 minutes. \n\n6. At the 25 minute mark, flip loaf over. Place back in oven for another 20 minutes. If you will be putting this on the grill, be sure to fire-up the grill. Prepare this BBQ sauce (https://wickedhealthyfood.com/2020/04...)  while your seitan is cooking. \n\n7. Remove the seitan a few minutes before its done and baste the seitan with some of the remaining liquid in the dish. Place back in oven for another 5-10 minutes. The liquid should be almost evaporated and thickened. Remove from oven and leave to cool for a few minutes. \n\n8. Once the seitan is cooled, it's time to finish it on the grill. Be sure the grill is blazing hot and on high heat. In a casserole dish, or the same that the seitan was baked in, cover it with BBQ sauce being sure it coats all sides well. \n\n9. Place on the grill and allow to brill for about 8 minutes on each side to create the killer char that will make this finish dish. \n\n10. While this is grilling, gather all the fixin's to complete your BBQ board, or BBQ sandwich. Fresh sliced pickles, sliced raw white onion, Texas toast, extra BBQ sauce and of course a toll of paper towels. \n\n 11. After flipping brisket and getting some great char on both sides, remove from grill. Its time to assemble. \n","servings":2,"desc":"[ref](https://www.youtube.com/watch?v=B4UuP0heR8w)\n\n\n\n1 cup marsala wine\n¼ cup (60ml) soy sauce or tamari \n¼ cup (60ml) maple syrup\n2 tbsp sriracha\n3½ cups (870ml) low sodium vegetable stock\n1 small can of tomato paste, about ¼ cup (4 tbsp)\n3+ tbsp olive oil\n\nWhisk all above ingredients well.\n\nIn separate bowl mix the dry batch:\n\nDry Mixture\n\n2¼ cups (280g) vital wheat gluten flour\n¾ cup (95g) chickpea flour\n2 tbsp chili powder\n1 tbsp paprika\n1½ tsp cumin\n2 tbsp onion granules\n2 tbsp garlic granules\n1 tbsp salt\n\n---","type":"food","title":"Vegan Brisket"}},"chefs":["jenny","katie","scoot"],"types":["beverage","dinner","baked","food","snack","breakfast","Bread","drink"]}));</script>
+<script>xo.render(document.body.children[0], window.main({"recipes":{"jenny__tea":{"id":"jenny__tea","chef":"jenny","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/jenny/tea.md","content":"# Tea\n\nThis is how you make tea. I know it's super secret stuff\n\n![](https://optional_img_url.biz)\n\ntype: beverage\nservings : 1 \n\n\n1. Boil {1cup of water} in a kettle or pot, but not microwave. This is fancy tea. \n1. Grab {1 teabag}. Put it in a mug.\n1. Steep tea for however long you want. Watch the colour. Is it good tea?\n1. Add optional {1splash of milk} after steeping. Not before, after.\n1. Wait for it to cool down.\n1. Forget about it.\n1. Reheat or repeat.\n\n/* You never remember tea the first time you make it. */\n","servings":1,"desc":"This is how you make tea. I know it's super secret stuff\n\n![](https://optional_img_url.biz)","type":"beverage","title":"Tea"},"katie__coconut chicken stew":{"id":"katie__coconut chicken stew","chef":"katie","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/katie/coconut chicken stew.md","content":"# Spicy coconut chicken stew\n\nWarm, filling, with a little bit of heat.\n\ntype: dinner\nservings : 4  \n\n\n1. In a large, deep skillet, heat {2 tbsp oil}. Add {3 shallots} and {2 chiles} and cook over moderate heat, stirring occasionally, until tender, about 5 minutes.\n2. Add {1 can coconut milk}, {1/2 cup stock} and {1/4 cup lime juice} and bring to a simmer.\n3. Season the broth generously with {salt} and {pepper}.\n4. Stir in {1 lb rotisserie chicken} and {1 cup corn kernals} and cook until hot, 3 to 5 minutes.\n5. Stir in {3 cups spinach} and simmer until just wilted.\n6. Stir in {1 cup of basil}.\n7. Transfer to shallow bowls, garnish with basil and serve.\n\n\n","servings":4,"desc":"Warm, filling, with a little bit of heat.","type":"dinner","title":"Spicy coconut chicken stew"},"scoot__audrianna_bread":{"id":"scoot__audrianna_bread","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/audrianna_bread.md","content":"# Audrianna bread\n\nservings: 1\ntype: baked\n\n\n1. Start prepping {1/4 cup of oatmeal} with boiling water\n1. Add {yeast} and {some sugar} to {1/2 cup of water} at 38C. Wait until foamy\n1. In mixing bowl add {2 cups of flour}, {1 tsp of salt}, {1 tbsp of brown sugar}, the oatmeal, the yeast.\n1. Mix and add water until smooth dough. Cover and let rise for ~1hr\n1. Punch down and move to bread tin. Cover and let rise for ~1hr\n1. Bake at 350F for 20min\n\n\n\n/*\nOriginal\n\n\nThis recipe will make 2 loaves:\n\n1.5 c water\n3 T oil\n1.5 T molasses\n1.5 T sugar\n2.25 t salt\n.5 c cooked oatmeal\n4.5 c flour\n1 T yeast (heaping)\n\nIn the bread machine, I add the ingredients in that order, press the “dough” button, and in 2 hours it dings :)\n\nWhen I made this bread at camp, I would proof the yeast in a bowl of lukewarm water + sugar. Mix the oatmeal, salt, oil, and  molasses…then add yeast mixture…. in large  bowl and mix with with dough hook; gradually add in flour until dough pulls away from bowl. (At camp, I always needed more flour than was called for). Plop out onto floured surface and knead briefly. Put all into a bowl rubbed with oil. Cover with cloth and let rise til double in size (20-60 min depending on how warm the room is).\n\nPunch down and plop onto flour covered surface. Knead briefly. Cut into 2. Put each into greased bread tins. Cover with towel and let rise until doubled.\n\nBake 350 for 20 minutes until golden.\n\nEnjoy!\n\nAdditional notes: We always used the leftover oatmeal from breakfast. When I do this at home, I cook up a batch of oatmeal, then scoop by 1/2 cupfuls into a muffin tin and freeze. I then store the frozen “pucks” and thaw individually as needed.\n\n*/","servings":1,"desc":"","type":"baked","title":"Audrianna bread"},"scoot__basic_bread":{"id":"scoot__basic_bread","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/basic_bread.md","content":"# Basic Bread\n\nservings: 1\nref: https://www.tasteofhome.com/recipes/basic-homemade-bread/\n\n\n1. Warm {1 cup of water} to 35C and mix in {1 packet of yeast}. /* Needed to add ~1/4 cup more of water */\n1. Mix {4 cups of flour} and {2 tsp of salt}, then add yeast mixture once foamy (~5min) and {3 tbsp of metled butter}\n1. Mix/knead for 5min\n1. Add some olive oil to bowl and lift ut dough so it's covered in the oil. Cover bowl and let rise for ~2hrs\n1. Preheat oven to 375F.","servings":1,"desc":"","type":"food","title":"Basic Bread","ref":"https://www.tasteofhome.com/recipes/basic-homemade-bread/"},"scoot__basic_loaf":{"id":"scoot__basic_loaf","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/basic_loaf.md","content":"# Basic Loaf\n\nservings: 1\nref: https://www.tasteofhome.com/recipes/basic-homemade-bread/\n\n\n1. Warm {1 cup of water} to 35C and mix in {1 packet of yeast} and {1 tbsp of sugar}\n1. Mix {2.5 cups of flour}, {1 tsp of salt}, and a {splash of milk}\n1. Mix in yeast mixture and knead until slightly sticky\n1. Let proof for 40-80min, or until doule in size\n1. Heat oven to 350F, while preheating move dough to bread pan and let rise on the oven.\n1. Should rise until near top of bread pan. Brush top with some milk and butter\n1. Bake for 30-40min\n","servings":1,"desc":"","type":"food","title":"Basic Loaf","ref":"https://www.tasteofhome.com/recipes/basic-homemade-bread/"},"scoot__cauliflower_soup":{"id":"scoot__cauliflower_soup","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cauliflower_soup.md","content":"# Cauliflower Soup\n\nimg: https://rainbowplantlife.com/wp-content/uploads/2021/01/Instant-Pot-Cauliflower-Soup-macro-1-of-1-scaled.jpg\nref: https://rainbowplantlife.com/instant-pot-cauliflower-soup/\n\n\n> This Creamy Cauliflower Soup is unbelievably creamy yet dairy-free and vegan, thanks to cashews and cannellini beans. It's easy and quick to make, freezes great, and is satisfying enough for a main meal. The perfect healthy weeknight dinner!\n\n\n1. Pour boiling water over the {1 cup of raw cashews} to cover and let rest for 15 minutes. Drain and rinse before using.\n1. Make the bouquet garni. Use kitchen twine to tie up the {thyme sprigs}, {rosemary sprigs}, and {bay leaf}. And chop the {head of cauliflower} into small florets.\n1. Add {1 large chopped yellow onion} to dutch oven with olive oil. Brown, then add {4 cloves of minced garlic}, cook for another 2-3min\n1. Pour in {5 cups of broth}, scrape the bottom. Add in the cashews, cauliflower, {2 cans of cannellini beans}, {5 tbsp of nutrional yeast}, and salt and pepper. Gently tuck the bouquet garni into the broth.\n1. Bring the soup to a boil. Then reduce the heat to maintain a rapid simmer and cook for 15-30 minutes, or until the cauliflower is tender and soft.\n1. Remove the bouquet garni and transfer the soup to a stand blender (you will need to do this in two batches). Blend until smooth, thick, and creamy.\n1. Taste for salt and pepper and adjust accordingly. Transfer the soup to bowls, and before serving, {optional lemon zest} on top, add a scattering of {chili flakes}\n","servings":2,"desc":"This Creamy Cauliflower Soup is unbelievably creamy yet dairy-free and vegan, thanks to cashews and cannellini beans. It's easy and quick to make, freezes great, and is satisfying enough for a main meal. The perfect healthy weeknight dinner!","type":"food","title":"Cauliflower Soup","img":"https://rainbowplantlife.com/wp-content/uploads/2021/01/Instant-Pot-Cauliflower-Soup-macro-1-of-1-scaled.jpg","ref":"https://rainbowplantlife.com/instant-pot-cauliflower-soup/"},"scoot__cauliflower_wings":{"id":"scoot__cauliflower_wings","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cauliflower_wings.md","content":"# Cauliflower Wings\n\n\n\n\n1. Mix {1/2 cup milk}, {1/2 cup water}, {3/4 cup all-purpose flour}, {2 tsp. garlic powder}, {1 tsp. onion powder}, {1 tsp. smoked paprika} into a large bowl\n1. Coat cauliwflower, and cover in {Panko bread crumbs}\n1. Cook at 350 degrees for 15 minutes.","servings":2,"desc":"","type":"food","title":"Cauliflower Wings"},"scoot__chickpea_cookie_dough":{"id":"scoot__chickpea_cookie_dough","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/chickpea_cookie_dough.md","content":"# Chickpea Cookie Dough\n\ntype: snack\nservings: 1\n\n1. Drain {1 can of chickpeas} into a blender\n1. Mix in\n  - {2 tbsp maple sryup}\n  - {1 tbsp vanilla}\n  - {1 tbsp peanut butter}\n  - {1 scoop protein powder}\n  - {pinch of salt}\n  - {1 tbsp cinnamon}\n1. Blend together, you may need to scrape down the sides\n1. Add {chocolate chips}","servings":1,"desc":"","type":"snack","title":"Chickpea Cookie Dough"},"scoot__churro_kettle_corn":{"id":"scoot__churro_kettle_corn","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/churro_kettle_corn.md","content":"# Churro Kettle Corn\n\ntype: snack\nref : https://www.bingingwithbabish.com/recipes/kettle-corn-community\n\nthis is a test\n\n\n1. Add the {3tbsp oil} and cinnamon sticks to a large stockpot. \n1. Begin heating the oil over low heat. Let the oil infuse for 5 minutes.\n1. Carefully remove the cinnamon sticks. \n1. Increase the heat to medium-high and allow the oil to heat for 1 minute.\n1. Add 2 or 3 kernels to the oil and once they pop, add all the remaining {1/3cup kernels}.\n1. While gently shaking the pot with one hand, slowly stream in the {1/4cup sugar}.\n1. Cover the pot with a lid and continuously shake the pot until all of the kernels have popped.\n1. Transfer the kettle corn to a large rimmed baking sheet. Spread the popcorn out to ensure the kettle corn doesn’t clump together. Season with salt to taste. \n1. Serve immediately. \n","servings":2,"desc":"this is a test","type":"snack","title":"Churro Kettle Corn","ref":"https://www.bingingwithbabish.com/recipes/kettle-corn-community"},"scoot__cookie_dough":{"id":"scoot__cookie_dough","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cookie_dough.md","content":"# Raw Cookie Dough\n\n> By heat treating the flour, you can make edible raw cookie dough!\n\ntype: snack\nservings: 2\n\nimg: https://www.benjerry.com/files/live/sites/systemsite/files/flavors/recipes/edible-cookie-dough/Beauty%20Reshoot/DRV_EdibleCookieDough_BeautyShot_BNJ2106-15_7465_779x400_AR.jpg\nRef : https://www.benjerry.com/flavors/recipes/edible-cookie-dough\n\n1. Melt {8tbsp butter} (~45sec in microwave)\n2. stand mixer beat together the butter and {1cup of brown sugar} until light and fluffy.\n3. heat treat the {1 cup of flour} (~35sec in microwave).\n\t- Use an instant-read thermometer to ensure that the flour reaches 74C throughout.\n5. Add the {1tsp vanilla}, {2tbsp heavy cream}, and {1/2tsp salt}, flour and mix to incorporate.\n6. Fold in the {1/2cup of chocolate chips}.\n7. Spread out on parchment paper, score it into squares, sprinkle with salt\n8. Freeze, then pop off parchment and store in tupperware\n\n","servings":2,"desc":"By heat treating the flour, you can make edible raw cookie dough!","type":"snack","title":"Raw Cookie Dough","img":"https://www.benjerry.com/files/live/sites/systemsite/files/flavors/recipes/edible-cookie-dough/Beauty%20Reshoot/DRV_EdibleCookieDough_BeautyShot_BNJ2106-15_7465_779x400_AR.jpg","ref":"https://www.benjerry.com/flavors/recipes/edible-cookie-dough"},"scoot__creme_brulee":{"id":"scoot__creme_brulee","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/creme_brulee.md","content":"# Creme Brulee\n\n> 3 ingredient creme brulee using ice cream\n\nref: https://tasty.co/recipe/3-ingredient-creme-brulee\n\n\n\n1. Preheat the oven to 325˚F (160˚C).\n1. Microwave the {1 cups of ice cream} for 30 to 40 seconds or until completely melted. Allow to cool for 5 minutes.\n1. Add the {1 egg} into the melted ice cream and whisk well.\n1. Pour the mixture into a ramekin. Place the ramekin in a pan. Pour hot water into the pan to come roughly halfway up the sides of the ramekin.\n1. Bake for 50 minutes. The crème brûlée should be set, but still a little jiggly in the middle.\n1. Remove the ramekins from the roasting pan, allow to cool to room temperature, cover with plastic wrap and refrigerate for at least 2 hours, and up to 3 days.\n\n\n1. Heat {2 tbsp sugar} over medium low heat until it turns into a thick liquid, then quickly pour over the ramekins before it hardens","servings":2,"desc":"3 ingredient creme brulee using ice cream","type":"food","title":"Creme Brulee","ref":"https://tasty.co/recipe/3-ingredient-creme-brulee"},"scoot__curry":{"id":"scoot__curry","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/curry.md","content":"# curry\n\n1. Heat oil in pot add {3 tbsp of curry paste} (green - mild, red - medium, yellow - spicy)\n1. After a minute, add chopped veggies: {onion}, {peas}, {carrots}, {potatoes}\n1. Season with pepper and salt, and optionally {1/2 tbsp of Garam Masala}\n1. Once soft (~5min), add {1 can of chickpeas} and {1 can of coconut milk}\n1. Reduce heat once simmering, cook until reduced and thick (~20min), stir occasionally\n1. Prep {1 cup of rice}\n1. Serve with {naan}","servings":2,"desc":"","type":"food","title":"curry"},"scoot__eggs_benny":{"id":"scoot__eggs_benny","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/eggs_benny.md","content":"# Eggs Benny any% glitchless speedrun\n\nMy summary of Alex's speedrun of Eggs benny\n\ntype: breakfast\nservings: 1\n\n[Ref](https://www.youtube.com/watch?v=LqHqX8xfYCs)\n\n### Hollendaise Sauce\n\n0. Melt {2tbsp butter} in microwave 50 sec in lightly covered container (less if not cold butter)\n1. Add an {1 egg yolk}, {pinch of salt} (and paprike/cayenne), and {1/2 tsp lemon juice} to blender (small magic bullet)\n2. Mix in melted butter and run for 10sec\n\n/*\n- Use immersion blender\n- Cook final mixutre in 15sec interval, with whisking inbetween until the right consistency\n*/\n\n\n### Poached Egg\n\n0. Add enough water to submerge an egg and a splash of {white vinegar} into a jar (use same butter jar from sauce)\n1. Crack {1 egg} into jar\n2. Microwave for 70 seconds (will vary on microwave, plz test)\n3. Pour out over a slotted spoon to catch egg\n\n\nServe the poached egg on toast with hollandiase, topped with a pinch of {paprika}\n\n\n","servings":1,"desc":"My summary of Alex's speedrun of Eggs benny\n\n\n\n\n[Ref](https://www.youtube.com/watch?v=LqHqX8xfYCs)","type":"breakfast","title":"Eggs Benny any% glitchless speedrun"},"scoot__fake_fake_crab":{"id":"scoot__fake_fake_crab","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/fake_fake_crab.md","content":"# Fake Fake Crab\n\n1. Grate {firm tofu}\n1. Mix with {kewpie mayo}, {siracha}, and {crushed seaweed}","servings":2,"desc":"","type":"food","title":"Fake Fake Crab"},"scoot__focaccia":{"id":"scoot__focaccia","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/focaccia.md","content":"# Focaccia\n\nType: Bread\nServings: 4\n\n\n[Ref](https://www.youtube.com/watch?v=NGnMrM9qDtE)\n\n\n1. Dissolve yeast in 1/2cup 40C water for 5min\n2. Add {2.5 cups water} , {6 cups flour} + {2tbsp salt} + spices ({oregano} & {rosemary}) + yeast\n4. mix slow for 1min, 5min on med-high\n5. Cover and rest for 10min\n6. mix for 15min on med-high (should be elastic)\n7. Lift dough out, {1/4cup olive oil} in bowl, add dough, and cover\n8. Let rise for 1.5hr\n9. fold dough. Lift and wiggle, rotate bowl 90deg, do several times\n10. Lightly oil and salt sheet, Spread out on sheet until it springs back\n11. Mix {garlic} and {rosemary} into oil (~1/3-1/2 cup) in a bowl\n12. Cover and rest until it reaches the top of the pan (~45min)\n13. Oven at 450F\n14. Dimple dough with fingers\n15. Drizzle oil + salt on top (should be mostly covered)\n16. Place on bottom rack of oven for 25min\n17. Move to top rack for 5min\n18. Let cool for 10min, cut into pieces with scissors\n","servings":4,"desc":"[Ref](https://www.youtube.com/watch?v=NGnMrM9qDtE)","type":"bread","title":"Focaccia"},"scoot__french_toast_bites":{"id":"scoot__french_toast_bites","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/french_toast_bites.md","content":"# French Toast Bites\n\nThese little bites get evenly crispy, and much easier to dip in maple syrup\n\n\ntype: breakfast\n\n\n![](https://1.bp.blogspot.com/-DA_lwtmbuYw/XAmGR83uhiI/AAAAAAAAe6M/vRx8pcygHvUIWWIyCmJRNPk-63hZiydaACLcBGAs/s1600/Cinnamon-French-Toast-Bites-in-process-4.jpg)\n\n\n1. Whisk {1 egg}, {1/4 cup milk}, {vanilla}, {pinch of salt}, and {cinnamon} until smooth\n2. Cut {2 slices of bread} into 16 pieces each slice.\n3. Dump bread into mixture and toss until coated evenly. Should use up nearly all of the mixture.\n4. Heat pan to med. Add butter.\n5. Fry bread pieces, wait until one side has crisped up before flipping. Toss occasionally until golden brown on each side","servings":2,"desc":"These little bites get evenly crispy, and much easier to dip in maple syrup\n\n\n\n\n\n![](https://1.bp.blogspot.com/-DA_lwtmbuYw/XAmGR83uhiI/AAAAAAAAe6M/vRx8pcygHvUIWWIyCmJRNPk-63hZiydaACLcBGAs/s1600/Cinnamon-French-Toast-Bites-in-process-4.jpg)","type":"breakfast","title":"French Toast Bites"},"scoot__ginger_beer":{"id":"scoot__ginger_beer","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/ginger_beer.md","content":"# Ginger Beer\n\ntype: drink\n\n\nhttps://www.mountainfeed.com/blogs/learn/27592385-the-ginger-bug-easily-make-your-own-ginger-beer\n","servings":2,"desc":"","type":"drink","title":"Ginger Beer","https":"//www.mountainfeed.com/blogs/learn/27592385-the-ginger-bug-easily-make-your-own-ginger-beer"},"scoot__korean_tacos":{"id":"scoot__korean_tacos","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/korean_tacos.md","content":"# Korean Tacos\n\ntype: dinner\n\n\n1. {1cup TVP} + water + {korean spice}. Soak ~10min\n2. {1cup rice} + {1.5cups water}. Bring to boil, then simmer on low for 18min\n3. shred {2 carrots} and thinly slice {1/3 cucumber} into half moons\n4. Soak in {white wine vinegar} + {tblsp of sugar} + {pinch of salt} until coated\n5. Cook {1 chopped onion} in pan + {seasame oil} + {korean spice} + {gochujang paste} until soft\n6. Add tvp and brown\n7. Mix {1/2cup of mayo} + splash of water + spoonful of gochujang paste. Mix well, add paste until desired spiciness\n8. Drain carrots + cucumbers \n9. Serve!","servings":2,"desc":"","type":"dinner","title":"Korean Tacos"},"scoot__miso_soup":{"id":"scoot__miso_soup","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/miso_soup.md","content":"# Miso Soup\n\nref: https://www.allrecipes.com/recipe/13107/miso-soup/\n\n1. In a medium saucepan over medium-high heat, combine {1/2 tsp dashi} and {1 cups of water}; bring to a boil.\n1. Reduce heat to medium, and whisk in the {3/4 tbsp of miso paste}. Stir in diced and pressed tofu.\n1. Cut {1 stalk of green onions} into little rings, and add them to the soup. Simmer gently for 2 to 3 minutes before serving.\n","servings":2,"desc":"","type":"food","title":"Miso Soup","ref":"https://www.allrecipes.com/recipe/13107/miso-soup/"},"scoot__pancakes":{"id":"scoot__pancakes","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/pancakes.md","content":"# Pancakes\n\n","servings":2,"desc":"","type":"food","title":"Pancakes"},"scoot__popcorn":{"id":"scoot__popcorn","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/popcorn.md","content":"# Popcorn\n\n\n1. {1/3 cup of coconut oil} into pot on med heat with a few kernals\n1. Add {1/2 cup of kernals} and {1 tsp of Flavocol} once they have popped, lower heat a bit\n1. Keep moving until the popping slows down\n1. Top with a small sprinkling of Flavocol on top","servings":2,"desc":"","type":"food","title":"Popcorn"},"scoot__preserved_lemon":{"id":"scoot__preserved_lemon","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/preserved_lemon.md","content":"# Preserved lemon\n\nref: https://www.foodnetwork.com/recipes/alton-brown/quick-preserved-lemons-7423982\n\n1. Trim the ends off the lemons. Slice each lemon into 8 wedges, removing any seeds as you go. Reserve as much of the juice as possible.\n1. Layer the lemon wedges in a wide-mouthed 16-ounce canning jar, covering each layer with salt. Pack the jar as tightly as possible, pressing down to release the lemons' juice as you go and leaving about 1/4 inch of headspace in the jar.\n1. Cover the wedges with the reserved lemon juice from the cutting board and the ends. If your lemons do not release a significant amount of juice, top off the jar with the juice of another lemon.\n1. Stash in the refrigerator for 4 days, then flip the jar over and age another 4 days before sampling. The peel should be nice and soft. Rinse before using.","servings":2,"desc":"","type":"food","title":"Preserved lemon","ref":"https://www.foodnetwork.com/recipes/alton-brown/quick-preserved-lemons-7423982"},"scoot__quick_risotto":{"id":"scoot__quick_risotto","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/quick_risotto.md","content":"# Quick Rosotto\n\n1. add {meat} to high-walled pan, high heat\n2. Once brown, add {minced garlic} and {onions}\n3. add {1 cup of Arborio rice}, mix\n4. after a min, add {2 cups of chicken stock} \n5. Bring to simmer and reduce heat, cook for 12min\n6. Mix in peas + other veg. Cook for 5 min\n7. Remove from heat. Mix in parm cheese + sour cream/cream cheese + 1tblsp butter\n8. Season with salt + pepper\n","servings":2,"desc":"","type":"food","title":"Quick Rosotto"},"scoot__seitan":{"id":"scoot__seitan","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/seitan.md","content":"\n# Seitan\n\nVegetarian Chicken\n\n\n\n[ref](https://www.youtube.com/watch?v=yY2YN6krVtk)\n\n\n\n1. {4 cups of flour} and {2 cups of water}\n2. Knead for 5-10min, go for soft and sticky\n3. Rest for 2hrs dough in bowl covered in water\n4. drain and replace with cleanw ater\n5. Massage and squeezedough while in the water for 3-5min\n6. Wash again with clean water, massage (Dough should look like it's falling apart)\n7. Do 4 more washes (for a total of 6 washes) \n8. Cover and rest for 10min\n9. Create broth to simmer dough in. {4 cups of water} {1tbsp of garlic powder} {1tbsp of garlic powder} {2tsp of paprika} {veg bullion} {3tbsp of soy sauce}\n10. Heat til boiling\n11. Flatten dough, cut into 3 strips connected at the top, then braid tightly\n12. Stretch into a rope, then tie multiple knots in the rope\n13. Simmer in broth for an hour, halfway through flip the dough\n14. You can chill over night in fridge covered in broth (optional)\n\n","servings":2,"desc":"Vegetarian Chicken\n\n\n\n[ref](https://www.youtube.com/watch?v=yY2YN6krVtk)","type":"food","title":"Seitan"},"scoot__swedish_cardamom_buns":{"id":"scoot__swedish_cardamom_buns","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/swedish_cardamom_buns.md","content":"# Swedish Cardamom Buns\n\nservings: 20\n\n### Dough\n\n1. Heat {1 3/4 cups of water} to 35C (~45sec in microwave). Mix in {2 tsp of yeast} and {sugar}. Wait until foamy\n1. Mix Dry into stand mixer: {4 cups of flour}, {1/3 cup of sugar}, {1 tsp of salt}, {1/2 cup of softened butter}, {1 tbsp of ground cardamom}\n1. Pour in the yeast-milk mixture. Mix on low speed until a dough forms. Add flour until it's just sticky to the touch.\n1. Cover and let rise for about an hour.\n\n\n### Filling\n/* 1. Mix together {1 tbsp of ground cardamom}, {100g of sugar}, {100g of softened butter} */\n\n1. Mix together {1 tbsp of ground cardamom}, {1/2 cup of sugar}, {1/2 cup of softened butter}\n\n\n### Buns\n1. Roll out dough into a 1ft x 2ft rectangle\n1. Spread thin layer of filling over dough\n1. Fold in half to cover the filling\n1. Prepare 2 baking sheets with parchment paper\n1. Cut ~16 thin strips about 1-2cm thick. Twist and roll strips around three fingers, rotating until it forms a nest/bun. Place on baking sheet\n1. Cover and let rise while oven pre-heats\n\n### Baking\n1. Preheat oven to 425F\n1. Bake buns for 15-20min. Should be golden on top, brown on bottom. Internal temp should be 200F\n1. (Optional) While baking, make glaze: 3tbsp of water}, {3tbsp of sugar}, {1/4tsp of vanilla extract}\n1. Brush buns with glaze right out of the oven. Dust buns with some ground cardamom, cinnamon, and salt to stick to the glaze.\n","servings":20,"desc":"","type":"food","title":"Swedish Cardamom Buns"},"scoot__vegan_brisket":{"id":"scoot__vegan_brisket","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/vegan_brisket.md","content":"# Vegan Brisket\n\n\n[ref](https://www.youtube.com/watch?v=B4UuP0heR8w)\n\n\n\n1 cup marsala wine\n¼ cup (60ml) soy sauce or tamari \n¼ cup (60ml) maple syrup\n2 tbsp sriracha\n3½ cups (870ml) low sodium vegetable stock\n1 small can of tomato paste, about ¼ cup (4 tbsp)\n3+ tbsp olive oil\n\nWhisk all above ingredients well.\n\nIn separate bowl mix the dry batch:\n\nDry Mixture\n\n2¼ cups (280g) vital wheat gluten flour\n¾ cup (95g) chickpea flour\n2 tbsp chili powder\n1 tbsp paprika\n1½ tsp cumin\n2 tbsp onion granules\n2 tbsp garlic granules\n1 tbsp salt\n\n---\n\n1. Prepare baking dish by coating lightly with oil. Set aside. Preheat oven to 375 degrees fahrenheit.\n\n2. Hand mix the wet and dry batches separately. Combine dry mixture with half of wet mixture.  Mix until combined completely. Knead for 3 minutes until all is mixed thoroughly and the dough has an elastic texture.\n\n3. Form into a rough oval shape and place in baking dish. Lightly coat the raw seitan with oil. \n\n4. Add rest of braising liquid around the casserole dish, pouring over raw seitan. \n\n5. Place in oven and bake for about 25 minutes. \n\n6. At the 25 minute mark, flip loaf over. Place back in oven for another 20 minutes. If you will be putting this on the grill, be sure to fire-up the grill. Prepare this BBQ sauce (https://wickedhealthyfood.com/2020/04...)  while your seitan is cooking. \n\n7. Remove the seitan a few minutes before its done and baste the seitan with some of the remaining liquid in the dish. Place back in oven for another 5-10 minutes. The liquid should be almost evaporated and thickened. Remove from oven and leave to cool for a few minutes. \n\n8. Once the seitan is cooled, it's time to finish it on the grill. Be sure the grill is blazing hot and on high heat. In a casserole dish, or the same that the seitan was baked in, cover it with BBQ sauce being sure it coats all sides well. \n\n9. Place on the grill and allow to brill for about 8 minutes on each side to create the killer char that will make this finish dish. \n\n10. While this is grilling, gather all the fixin's to complete your BBQ board, or BBQ sandwich. Fresh sliced pickles, sliced raw white onion, Texas toast, extra BBQ sauce and of course a toll of paper towels. \n\n 11. After flipping brisket and getting some great char on both sides, remove from grill. Its time to assemble. \n","servings":2,"desc":"[ref](https://www.youtube.com/watch?v=B4UuP0heR8w)\n\n\n\n1 cup marsala wine\n¼ cup (60ml) soy sauce or tamari \n¼ cup (60ml) maple syrup\n2 tbsp sriracha\n3½ cups (870ml) low sodium vegetable stock\n1 small can of tomato paste, about ¼ cup (4 tbsp)\n3+ tbsp olive oil\n\nWhisk all above ingredients well.\n\nIn separate bowl mix the dry batch:\n\nDry Mixture\n\n2¼ cups (280g) vital wheat gluten flour\n¾ cup (95g) chickpea flour\n2 tbsp chili powder\n1 tbsp paprika\n1½ tsp cumin\n2 tbsp onion granules\n2 tbsp garlic granules\n1 tbsp salt\n\n---","type":"food","title":"Vegan Brisket"}},"chefs":["jenny","katie","scoot"],"types":["beverage","dinner","baked","food","snack","breakfast","bread","drink"]}));</script>
 </html>

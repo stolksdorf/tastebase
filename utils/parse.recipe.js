@@ -20,23 +20,22 @@ const convertComments = (text)=>{
 	return text;
 };
 
-const toHTML = (text)=>{
-	let result = '';
-	let [ingredients, content] = extractIngredients(text);
+// const toHTML = (text)=>{
+// 	let result = '';
+// 	let [ingredients, content] = extractIngredients(text);
 
-	result = convertTemperatures(content);
-	result = convertComments(result);
-	//result = marked(result);
-	result = md(result, {allowHTML:true});
+// 	result = convertTemperatures(content);
+// 	result = convertComments(result);
+// 	result = md(result, {allowHTML:true});
 
-	if(ingredients.length){
-		let pos = result.search(/<\/h\d>/);
-		pos = (pos===-1) ? 0 : pos + 6;
-		const ingredientList = `<ul class='ingredientList'>${ingredients.map(i=>`<li>${toElement(i)}</li>`).join('\n')}</ul>\n`;
-		result = result.slice(0,pos) + ingredientList + result.slice(pos);
-	}
-	return result;
-};
+// 	if(ingredients.length){
+// 		let pos = result.search(/<\/h\d>/);
+// 		pos = (pos===-1) ? 0 : pos + 6;
+// 		const ingredientList = `<ul class='ingredientList'>${ingredients.map(i=>`<li>${toElement(i)}</li>`).join('\n')}</ul>\n`;
+// 		result = result.slice(0,pos) + ingredientList + result.slice(pos);
+// 	}
+// 	return result;
+// };
 
 const splitOnHeaders = (text)=>{
 	let [first, ...rest] = text.split(/^#/m);
@@ -45,10 +44,31 @@ const splitOnHeaders = (text)=>{
 
 const parseRecipe = (raw)=>{
 	let {content, ...info} = extractMetadata(raw);
-	let html = splitOnHeaders(content).map(toHTML).join('\n\n');
+	//let allIngredients = [];
+
+	let html = splitOnHeaders(content).map((section)=>{
+
+		let result = '';
+		let [ingredients, content] = extractIngredients(section);
+
+		//allIngredients = allIngredients.concat(ingredients);
+
+		result = convertTemperatures(content);
+		result = convertComments(result);
+		result = md(result, {allowHTML:true});
+
+		if(ingredients.length){
+			let pos = result.search(/<\/h\d>/);
+			pos = (pos===-1) ? 0 : pos + 6;
+			const ingredientList = `<ul class='ingredientList'>${ingredients.map(i=>`<li>${toElement(i)}</li>`).join('\n')}</ul>\n`;
+			result = result.slice(0,pos) + ingredientList + result.slice(pos);
+		}
+		return result;
+	}).join('\n\n');
 
 	return {
 		...info,
+		//ingredients : allIngredients,
 		hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
 		html
 	}

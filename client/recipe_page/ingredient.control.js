@@ -38,11 +38,6 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 
 	if(!this.refs.baseServings) this.refs.baseServings = initServings;
 	this.useEffect(()=>ServeringsEmitter.on('servingsChange', setServings),[]);
-	this.useEffect(()=>ServeringsEmitter.on('servingsChange', ()=>{
-		console.log('oh hello')
-	}),[]);
-
-	console.log({servings})
 
 	const qty = convert(ingredient, unit, servings/this.refs.baseServings);
 	return x`<span class='ingredientControl'>

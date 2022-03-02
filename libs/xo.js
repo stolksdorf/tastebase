@@ -233,7 +233,7 @@ const render = (obj, node)=>{
 		Object.keys(node.children).map(key=>{
 			if(!undef(obj[key])) return;
 			unmount(node.children[key]);
-			node.children[key].el.remove();
+			if(node.children[key]?.el) node.children[key].el.remove();
 			Array.isArray(node.children) ? node.children.splice(key, 1) : delete node.children[key];
 		});
 

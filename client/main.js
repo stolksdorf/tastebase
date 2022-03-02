@@ -47,14 +47,14 @@ const Main = comp(function({ recipes, chefs, types }){
 	const [page, setPage] = this.useState('');
 	const [param, setParam] = this.useState('');
 
-
 	const updatePage = ()=>{
 		const [page, param] = window.location.hash.substr(1).split('=');
 		setPage(page || 'search');
-		setParam(decodeURIComponent(param || ''));
+			setParam(decodeURIComponent(param || ''));
 	}
 
 	this.useEffect(()=>{
+		console.log({recipes})
 		window.onhashchange = updatePage;
 		updatePage();
 	}, []);
@@ -71,7 +71,7 @@ const Main = comp(function({ recipes, chefs, types }){
 			</ul>
 		</nav>
 
-		${page == 'search' && SearchPage(Object.values(recipes), param)}
+		${page == 'search' && SearchPage(Object.values(recipes), param, types, chefs)}
 		${page == 'recipe' && RecipePage(recipes[param])}
 		${page == 'conversion' && ConversionPage()}
 

@@ -41,5 +41,7 @@ module.exports = (raw)=>{
 		content = content.substring(recipeStart).trim();
 	}
 
+	metadata.type = metadata.type.toLowerCase();
+
 	return {...metadata, content};
 }

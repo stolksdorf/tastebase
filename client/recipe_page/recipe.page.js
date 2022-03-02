@@ -74,58 +74,61 @@ global.css.recipe_page = css`
 
 global.css.instruction_section = css`
 
-	section.Recipe{
-		.instructions{
-			font-size: 1.3em;
+	section.Recipe .instructions{
+		font-size: 1.3em;
 
-			h3{
-				label{
-					font-size: 1rem;
-					float: right;
-				}
+		h3{
+			label{
+				font-size: 1rem;
+				float: right;
 			}
+		}
 
+		li{
+			margin: 0.6em 0em;
+		}
+
+		ul.ingredientList{
+			margin-left : 15px;
+			border-left : 2px solid #cf664063;
 			li{
-				margin: 0.6em 0em;
-			}
-
-			label.showChefNotes{
-				cursor: pointer;
-				user-select: none;
-			}
-
-			.temperature{
-				small{
-					display: none;
-				}
-				&:hover{
-					small{
-						display: inherit;
-					}
-				}
-			}
-
-			.chef_note{
-				display: none;
-				//border: var(--green) 1px solid;
-				//border-radius: 3px;
-				font-style: italic;
-				//border-left: 2px solid black;
-				padding-left: 5px;
 				font-size: 0.8em;
-				color: var(--grey);
-
+				margin: 5px;
 			}
+		}
 
-			textarea{
-				font-family: inherit;
-				width : 100%;
-				background-color: transparent;
-				//border: none;
-				resize: none;
-				font-size: 1em;
-				min-height: 800px;
+
+		.temperature{
+			small{
+				display: none;
 			}
+			&:hover{
+				small{
+					display: inherit;
+				}
+			}
+		}
+
+		.chef_note{
+			display: none;
+			//border: var(--green) 1px solid;
+			//border-radius: 3px;
+			font-style: italic;
+			//border-left: 2px solid black;
+			padding-left: 5px;
+			font-size: 0.8em;
+			color: var(--grey);
+
+		}
+
+		textarea{
+			font-family: inherit;
+			width : 100%;
+			background-color: transparent;
+			//border: none;
+			resize: none;
+			font-size: 1em;
+			min-height: 800px;
 		}
 	}
 `

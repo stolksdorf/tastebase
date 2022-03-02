@@ -3,43 +3,12 @@ const {x, comp, cx} = require('../../libs/xo.js');
 const css = require('../../libs/pico-css.js');
 
 const RecipeCard = require('./recipe.card.js');
-const FilterRecipes = require('./filter.recipes.js');
-
-
-// const updateURL = (query)=>{
-// 	if(history.pushState) {
-// 		var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + query
-// 		window.history.pushState({path:newurl},'',newurl);
-// 	}
-// 	//window.location.search = encodeURI(query);
-// };
-
-//const has = (str, key)=>(str||"").toLowerCase().indexOf(key) !== -1;
 
 
 
 global.css.search_page = css`
 	.Search{
 		min-height: 100vh;
-
-
-		.searchBox{
-			margin: auto;
-			border: 1px solid var(--grey);
-			border-radius: 1em;
-			padding: 0em 1em;
-			background-color: white;
-			width : 70%;
-			font-size: 1.5em;
-			input{
-				border: none;
-				font-family: 'IM Fell English', serif;
-				font-style: italic;
-				font-size: 1.3em;
-			}
-		}
-
-
 
 		.results{
 			display: flex;
@@ -58,126 +27,78 @@ global.css.search_page = css`
 	}
 `
 
-
-// const getQueryObj = (query)=>{
-// 	let result = { terms : [], filters : {}}
-// 	query.split(' ').map(part=>{
-// 		let [key, val] = part.split(':');
-// 		if(!val) return result.terms.push(part);
-// 		if(!key) return result.filters[val] = true;
-// 		result.filters[key] = val;
-// 	})
-// 	return result;
-// };
-
-// const scoreRecipes = (recipes, terms=[])=>{
-// 	if(terms.length == 0) return recipes;
-// 	let result = recipes.map(recipe=>{
-// 		let score = 0;
-// 		terms.map(term=>{
-// 			if(recipe.title.indexOf(term) !== -1) score +=5;
-// 			if(recipe.desc.indexOf(term) !== -1) score +=1;
-// 			// recipe.ingredients.map(({name})=>{
-// 			// 	if(name.indexOf(term) !== -1) score++;
-// 			// });
-// 		})
-// 		return [recipe, score];
-// 	});
+const SearchControl = require('./search.control.js');
 
 
-// 	result = result.filter(([recipe, score])=>score>0);
-// 	return result.sort((a,b)=>{
-// 		return b[1] - a[1];
-// 	}).map(([recipe, score])=>recipe);
-// };
+const FilterRecipes = (recipes, {terms, types})=>{
+	let result = [...recipes];
 
-
-// const filterRecipes = (recipes, keys)=>{
-// 	return recipes.filter(recipe=>{
-// 		return Object.entries(keys).every(([key,val])=>{
-// 			return recipe[key] === val;
-// 		});
-// 	});
-// };
-
-
-
-const SearchControl = ()=>{
-
-}
-
-
-
-
-const SearchPage = comp(function(allRecipes, initQuery){
-	const applyQuery = ()=>{
-		return FilterRecipes(allRecipes, query);
+	if(types.length !== 0){
+		result = result.filter(recipe=>{
+			return types.includes(recipe.type);
+		});
 	}
 
-	console.log(allRecipes)
+	if(terms.length !== 0){
+		result = result.filter(recipe=>{
+			return terms.every(term=>{
+				if(recipe.title.toLowerCase().indexOf(term) !== -1) return true;
+				if(recipe.desc.toLowerCase().indexOf(term) !== -1) return true;
+
+				//TODO: add ingredient level search
+
+				//if(recipe.content.toLowerCase().indexOf(term) !== -1) return true;
+
+				return false;
+			})
+		});
+	}
+
+	return result;
+};
 
 
-	const [query, setQuery] = this.useState('');
-	const [inProgress, setInProgress] = this.useState(false);
+function shuffle(arr){
+	let res = [], array = [...arr];
+	while(array.length !== 0){
+		const idx = Math.floor(Math.random()*array.length);
+		res.push(array.splice(idx, 1)[0]);
+	}
+	return res;
+};
 
-	const [recipes, setRecipes] = this.useState(applyQuery);
 
 
+const SearchPage = comp(function(allRecipes){
+
+	const [recipes, setRecipes] = this.useState(allRecipes);
 
 
 	this.useEffect(()=>{
-		setInProgress(true);
-		clearTimeout(this.refs.timeout);
-		this.refs.timeout = setTimeout(()=>{
-			setRecipes(applyQuery());
-			setInProgress(false);
-			//updateURL(query ? `?search=${encodeURI(query)}`: '?');
-
-			window.location.hash = `#search=${encodeURI(query)}`;
-		}, 150);
-	}, [query])
-
-	this.useEffect(()=>{
-		//this.el.querySelector('input').focus();
 		document.title = `Tastebase - Search`;
 		window.scrollTo(0, 0);
 	},[]);
 
-	this.useEffect(()=>setQuery(initQuery),[initQuery]);
+
+	const handleSearch = (queryObj)=>{
+		setRecipes(FilterRecipes(allRecipes, queryObj))
+	};
+
+	const shuffleRecipes = ()=>{
+		console.log({recipes});
+		console.log(shuffle(recipes))
+		setRecipes(shuffle(recipes));
+	}
 
 	return x`<section class='Search'>
 
 		<div class='top'>
-
-			<div class='searchBox'>
-				<i class='fa fa-search'></i>
-				<input type='text' value=${query} oninput=${(evt)=>setQuery(evt.target.value)} placeholder='Search terms here...'></input>
-			</div>
-
-			<div class='controls'>
-				<label>
-					<input type='checkbox'></input>
-					Only yours
-				</label>
-
-				<label>
-					<input type='checkbox'></input>
-					Only Favs
-				</label>
-
-			</div>
-
-			<div class='searchTips'>
-				<div class=''>
-					Search is broken... Kinda....
-				</div>
-
-			</div>
-
+			${SearchControl(handleSearch)}
+			<button onclick=${()=>shuffleRecipes()}>Shuffle</button>
 		</div>
 
 		<div class='results'>
-			${recipes.map(RecipeCard)}
+			${Object.fromEntries(recipes.map(recipe=>[recipe.id, RecipeCard(recipe)]))}
 		</div>
 	</section>`
 });
