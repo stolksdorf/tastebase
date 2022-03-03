@@ -45,6 +45,7 @@ global.css.search_control = css`
 				font-size: 1.1em;
 				display: inline-block;
 				opacity : 0.4;
+				user-select: none;
 
 				border-radius: 1em;
 
