@@ -69,32 +69,39 @@ function shuffle(arr){
 
 
 
-const SearchPage = comp(function(allRecipes){
+const Store = require('../recipe.store.js');
 
-	const [recipes, setRecipes] = this.useState(allRecipes);
+
+
+const SearchPage = comp(function(allRecipes){
+	const [recipes, setRecipes] = this.useState([]);
+
 
 
 	this.useEffect(()=>{
 		document.title = `Tastebase - Search`;
 		window.scrollTo(0, 0);
+
+		setRecipes(Store.getRecipes());
+
+
 	},[]);
 
 
 	const handleSearch = (queryObj)=>{
-		setRecipes(FilterRecipes(allRecipes, queryObj))
+		//setRecipes(FilterRecipes(allRecipes, queryObj))
 	};
 
-	const shuffleRecipes = ()=>{
-		console.log({recipes});
-		console.log(shuffle(recipes))
-		setRecipes(shuffle(recipes));
-	}
+	// const shuffleRecipes = ()=>{
+	// 	setRecipes(shuffle(recipes));
+	// }
+
+	console.log({recipes})
 
 	return x`<section class='Search'>
 
 		<div class='top'>
 			${SearchControl(handleSearch)}
-			<button onclick=${()=>shuffleRecipes()}>Shuffle</button>
 		</div>
 
 		<div class='results'>

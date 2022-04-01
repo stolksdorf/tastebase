@@ -12,6 +12,8 @@ const convertTemperatures = (text)=>{
 	});
 };
 
+//TODO: add a comment cache to fill in comments after ingredient parse
+	// INgredients in comments are being read in as actual ingredients
 const convertComments = (text)=>{
 	text = text.replace(/\/\*/g, `<span class='chef_note'>`);
 	text = text.replace(/\*\//g, `</span>`);
@@ -44,14 +46,14 @@ const splitOnHeaders = (text)=>{
 
 const parseRecipe = (raw)=>{
 	let {content, ...info} = extractMetadata(raw);
-	//let allIngredients = [];
+	let allIngredients = [];
 
 	let html = splitOnHeaders(content).map((section)=>{
 
 		let result = '';
 		let [ingredients, content] = extractIngredients(section);
 
-		//allIngredients = allIngredients.concat(ingredients);
+		allIngredients = allIngredients.concat(ingredients);
 
 		result = convertTemperatures(content);
 		result = convertComments(result);
@@ -68,8 +70,8 @@ const parseRecipe = (raw)=>{
 
 	return {
 		...info,
-		//ingredients : allIngredients,
-		hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
+		ingredients : allIngredients,
+		//hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
 		html
 	}
 }

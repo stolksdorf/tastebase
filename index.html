@@ -165,6 +165,13 @@ input[type='text']{
 input[type='text']:focus{
 	border-color:var(--green);
 }
+nav>a{
+	font-style:italic;
+	color:black;
+}
+nav>a:visited{
+	color:black;
+}
 .RecipeCard{
 	display:block;
 	position:relative;
@@ -254,6 +261,7 @@ input[type='text']:focus{
 	font-size:1.1em;
 	display:inline-block;
 	opacity:0.4;
+	user-select:none;
 	border-radius:1em;
 	border:1px solid black;
 	padding:5px 10px;
@@ -392,26 +400,25 @@ section.Recipe .instructions textarea{
 	max-width:500px;
 	font-size:2em;
 }
-main nav>a{
-	font-style:italic;
-	color:black;
-}
-main nav>a:visited{
-	color:black;
-}</style>
+</style>
 	<script>window.css={};window.head={};</script>
 </head>
 <body><main>
 		<nav>
-			<a href='#'>Tastebase</a>
-			<ul>
-				<li><a href='#search'>Search</a></li>
-				<li><a href='#conversion'>Convert</a></li>
-				<li><a href='https://github.com/stolksdorf/tastebase/tree/master/recipes' target='_blank'>Add Recipe</a></li>
-				<li><a href='https://github.com/stolksdorf/tastebase'>Github</a></li>
-				<li><a onclick=>Login</a></li>
-			</ul>
-		</nav>
+		<a href='#'>Tastebase</a>
+		<ul>
+			<li><a href='#conversion'>Convert</a></li>
+			<li>
+				<a href='https://gist.github.com/'>Add Recipe</a>
+				<a href='https://github.com/stolksdorf/tastebase/recipe_instructions.md'>❓</a>
+			</li>
+			<li onclick=>
+				Update Recipes
+				<small>Last updated  ago</small>
+			</li>
+			
+		</ul>
+	</nav>
 
 		
 		
@@ -1009,223 +1016,6 @@ global.css.base_style = css`
 
 `;
 },deps:{"../libs/pico-css":"1hqukto","./assets/regal.png":"1qcd6a9","./assets/lightpaperfibers.png":"1n6ln67"},fn:'client/style.js',dn:'client', root:'..'};
-global.__Modules["1q757m3"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtMTMxLjYgMTc5LjJjLTExLjE5OSAxMS4xOTktMTEuMTk5IDI4IDAgMzkuMTk5IDExLjE5OSAxMS4xOTkgMjggMTEuMTk5IDM5LjE5OSAwIDMzLjYwMi0zMy42MDIgMzMuNjAyLTg2LjgwMSAwLTExNy42LTExLjE5OS0xMS4xOTktMTEuMTk5LTI4IDAtMzkuMTk5IDExLjE5OS0xMS4xOTkgMTEuMTk5LTI4IDAtMzkuMTk5LTExLjE5OS0xMS4xOTktMjgtMTEuMTk5LTM5LjE5OSAwLTMzLjYwMiAzMy42MDItMzMuNjAyIDg2LjgwMSAwIDExNy42IDExLjE5OSAxMS4xOTkgMTEuMTk5IDMwLjgwMSAwIDM5LjE5OXoiLz4KICA8cGF0aCBkPSJtMjcxLjYgMjA3LjJjLTExLjE5OSAxMS4xOTktMTEuMTk5IDI4IDAgMzkuMTk5IDExLjE5OSAxMS4xOTkgMjggMTEuMTk5IDM5LjE5OSAwIDMzLjYwMi0zMy42MDIgMzMuNjAyLTg2LjgwMSAwLTExNy42LTExLjE5OS0xMS4xOTktMTEuMTk5LTI4IDAtMzkuMTk5IDExLjE5OS0xMS4xOTkgMTEuMTk5LTI4IDAtMzkuMTk5LTExLjE5OS0xMS4xOTktMjgtMTEuMTk5LTM5LjE5OSAwLTMzLjYwMiAzMy42MDItMzMuNjAyIDg2LjgwMSAwIDExNy42IDExLjE5OSAxMS4xOTkgMTEuMTk5IDMwLjgwMSAwIDM5LjE5OXoiLz4KICA8cGF0aCBkPSJtNjAyIDM1MGgtMjA3LjJsMTkzLjItMTE0LjhjMTQtOC4zOTg0IDE2LjgwMS0yNS4xOTkgMTEuMTk5LTM5LjE5OS04LjM5ODQtMTQtMjUuMTk5LTE2LjgwMS0zOS4xOTktOC4zOTg0bC0yNzQuNCAxNjUuMmgtMTg3LjZjLTIyLjM5OCAwLTM2LjM5OCAyNS4xOTktMjUuMTk5IDQybDg0IDE0MGM1LjYwMTYgOC4zOTg0IDE0IDE0IDI1LjE5OSAxNGgzMzZjMTEuMTk5IDAgMTkuNjAyLTUuNjAxNiAyNS4xOTktMTRsODQtMTQwYzExLjE5OS0xOS42MDItMi44MDA4LTQ0LjgwMS0yNS4xOTktNDQuODAxem0tMTAwLjggMTQwaC0zMDIuNGwtNTAuMzk4LTg0aDQwNnoiLz4KIDwvZz4KPC9zdmc+Cg==';
-},deps:{},fn:'client/assets/icons/bowl.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["-nu9i7r"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtMjM1LjIgMzg5LjJjMTYuODAxIDIuODAwOCAzMC44MDEtNS42MDE2IDMzLjYwMi0xOS42MDIgMTEuMTk5LTM2LjM5OCA0NC44MDEtNjEuNTk4IDgxLjE5OS02MS41OTggMTYuODAxIDAgMjgtMTEuMTk5IDI4LTI4cy0xMS4xOTktMjgtMjgtMjhjLTY3LjE5OSAwLTEyMC40IDQ0LjgwMS0xMzQuNCAxMDMuNi01LjYwMTYgMTYuNzk3IDIuNzk2OSAzMC43OTcgMTkuNTk4IDMzLjU5OHoiLz4KICA8cGF0aCBkPSJtNjAyIDQ0OGgtNS42MDE2YzUuNjAxNi0xOS42MDIgNS42MDE2LTM2LjM5OCA1LjYwMTYtNTYgMC05OC01My4xOTktMTgyLTE0MC0yMjQgMC02MS42MDItNTAuMzk4LTExMi0xMTItMTEycy0xMTIgNTAuMzk4LTExMiAxMTJjLTg2LjgwMSA0Mi0xNDAgMTI4LjgtMTQwIDIyNCAwIDE5LjYwMiAyLjgwMDggMzYuMzk4IDUuNjAxNiA1NmgtNS42MDE2Yy0xNi44MDEgMC0yOCAxMS4xOTktMjggMjhzMTEuMTk5IDI4IDI4IDI4aDUwNGMxNi44MDEgMCAyOC0xMS4xOTkgMjgtMjhzLTExLjE5OS0yOC0yOC0yOHptLTI1Mi0zMzZjMjIuMzk4IDAgNDIgMTQgNTAuMzk4IDMzLjYwMi01LjYwMTYtMi44MDA4LTIyLjM5OC0yLjgwMDgtMzMuNjAyLTUuNjAxNi0yMi4zOTggMC00Ny41OTggMC02Ny4xOTUgNS42MDE2IDguMzk4NC0xOS42MDIgMjgtMzMuNjAyIDUwLjM5OC0zMy42MDJ6bTAgODRjMTA2LjQgMCAxOTYgODYuODAxIDE5NiAxOTYgMCAxOS42MDItMi44MDA4IDM2LjM5OC04LjM5ODQgNTZoLTM3NS4yYy01LjU5NzctMTkuNjAyLTguMzk4NC0zNi4zOTgtOC4zOTg0LTU2IDAtMTA5LjIgODkuNjAyLTE5NiAxOTYtMTk2eiIvPgogPC9nPgo8L3N2Zz4K';
-},deps:{},fn:'client/assets/icons/dinner.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["14eo077"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNDczLjIgODRjLTI4IDAtNTguODAxIDguMzk4NC04NC0yMi4zOTgtOTgtMTA5LjItMjgwLTY0LjQwMi0zMTMuNiA3NS41OTgtMTQgNjEuNjAyIDIuODAwOCAxMjMuMiA0NC44MDEgMTY4IDE0IDE2LjgwMSAzMy42MDIgNDIgMzMuNjAyIDcwIDIuODAwOCA1OC44MDEgMzMuNjAyIDExNC44IDg0IDE0OC40IDExMiA4MS4xOTkgMjc0LjQgMTYuODAxIDMwNS4yLTEyMy4yIDguMzk4NC00NC44MDEgODYuODAxLTU2IDg2LjgwMS0xNjIuNC0wLjAwMzkwNi04NC03MC4wMDQtMTU0LTE1Ni44LTE1NHptMTQgMzA4Yy0xOS42MDIgMTAwLjgtMTM3LjIgMTQyLjgtMjE1LjYgODYuODAxLTM2LjM5OC0yNS4xOTktNTguODAxLTY0LjM5OC02MS42MDItMTA2LjQtMi43OTY5LTM2LjQwMi0xOS41OTgtNzIuODAxLTUwLjM5NS0xMDMuNi0yOC0zMy42MDItMzkuMjAzLTc1LjYwMi0zMC44MDEtMTE3LjYgMjUuMTk5LTk4IDE1MS4yLTEyOC44IDIxOC40LTUzLjE5OSA0NC44MDEgNTAuMzk4IDk4IDQyIDEyNiA0MiA1NiAwIDEwMC44IDQ0LjgwMSAxMDAuOCAxMDAuOCAwIDgxLjE5OS03Mi44MDEgNzUuNTk4LTg2LjgwMSAxNTEuMnoiLz4KICA8cGF0aCBkPSJtMzUwIDE2OGMtNjEuNjAyIDAtMTEyIDUwLjM5OC0xMTIgMTEyczUwLjM5OCAxMTIgMTEyIDExMiAxMTItNTAuMzk4IDExMi0xMTItNTAuMzk4LTExMi0xMTItMTEyem0wIDE2OGMtMzAuODAxIDAtNTYtMjUuMTk5LTU2LTU2czI1LjE5OS01NiA1Ni01NiA1NiAyNS4xOTkgNTYgNTYtMjUuMTk5IDU2LTU2IDU2eiIvPgogPC9nPgo8L3N2Zz4K';
-},deps:{},fn:'client/assets/icons/egg.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["1dn7q0b"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNTkzLjYgMzkuMTk5Yy03OC40MDItNzguMzk4LTI0Ni40LTMzLjU5OC0zODMuNiAxMDAuOC0xMzQuNCAxMzcuMi0xNzkuMiAzMDUuMi0xMDAuOCAzODMuNiA1MC4zOTggNTAuMzk4IDEzNy4yIDQ3LjYwMiAxOTAuNC01LjYwMTZsMjg1LjYtMjg4LjRjNTYtNTYgNTguODAxLTE0MCA4LjQwMjMtMTkwLjR6bS00Ny42MDIgMTUxLjItMjg1LjYgMjg1LjZjLTMzLjYwMiAzMy42MDItODQgMzYuMzk4LTExMiA1LjYwMTYtMzYuMzk4LTMzLjYwMi0yMi4zOTgtMTAzLjYtMi43OTY5LTE1MS4yIDE2LjgwMSAyMi4zOTggNDIgNDcuNjAyIDg2LjgwMSA2Ny4xOTkgMTQgNS42MDE2IDMwLjgwMSAwIDM2LjM5OC0xNCA1LjYwMTYtMTQgMC0zMC44MDEtMTQtMzYuMzk4LTMzLjYwMi0xNi44MDEtNjcuMTk5LTQyLTc4LjM5OC03NS42MDIgMTMuOTk2LTI1LjE5OSAzMC43OTctNDcuNTk4IDUwLjM5OC02Ny4xOTkgMTYuODAxIDE5LjYwMiA0NC44MDEgNDcuNjAyIDg5LjU5OCA3MCAxNCA1LjYwMTYgMzAuODAxIDAgMzYuMzk4LTE0IDUuNjAxNi0xNCAwLTMwLjgwMS0xNC0zNi4zOTgtNDEuOTk2LTIyLjM5OC02MS41OTgtNDQuODAxLTY5Ljk5Ni02MS42MDIgMjUuMTk5LTIyLjM5OCA1MC4zOTgtNDIgNzUuNjAyLTU2IDE0IDI1LjE5OSA0MiA1OC44MDEgOTggODQgMTQgNS42MDE2IDMwLjgwMSAwIDM2LjM5OC0xNCA1LjYwMTYtMTQgMC0zMC44MDEtMTQtMzYuMzk4LTQyLTE5LjYwMi02MS42MDItNDQuODAxLTcwLTU4LjgwMSAzMC44MDEtMTYuODAxIDY0LjM5OC0yNS4xOTkgOTIuMzk4LTI1LjE5OXM1MC4zOTggOC4zOTg0IDY0LjM5OCAyMi4zOThjMzAuODAxIDI4IDMwLjgwMSA3OC40MDItNS41OTc3IDExMnoiLz4KPC9zdmc+Cg==';
-},deps:{},fn:'client/assets/icons/bread.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["-1rsj3va"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNjMwIDI4MGMwLTM5LjE5OS0yNS4xOTktNzAtNjEuNjAyLTgxLjE5OSAyLjgwMDgtOC40MDIzIDUuNjAxNi0xOS42MDIgNS42MDE2LTMwLjgwMSAwLTQ3LjYwMi0zNi4zOTgtODQtODQtODRoLTMwLjgwMWMtMTEuMTk5LTQ3LjYwMi01Ni04NC0xMDkuMi04NHMtOTUuMTk5IDM2LjM5OC0xMDkuMiA4NGgtMzAuODAxYy00NC44MDEgMC04NCAzNi4zOTgtODQgODQgMCAxMS4xOTkgMi44MDA4IDIyLjM5OCA1LjYwMTYgMzAuODAxLTM2LjQwMiAxMS4xOTktNjEuNjAyIDQyLTYxLjYwMiA4MS4xOTlzMjggNzIuODAxIDY0LjM5OCA4MS4xOTlsNzguMzk4IDE4MmMyLjgwNDcgMTEuMTk5IDE0LjAwNCAxNi44MDEgMjUuMjAzIDE2LjgwMWgyMjRjMTEuMTk5IDAgMjIuMzk4LTUuNjAxNiAyNS4xOTktMTYuODAxbDc4LjM5OC0xODJjMzkuMjAzLTguMzk4NCA2NC40MDItNDIgNjQuNDAyLTgxLjE5OXptLTE4Ny42IDIyNGgtMTg0LjhsLTU4LjgwMS0xNDBoMzA4em0xMDMuNi0xOTZoLTM5MmMtMTQgMC0yOC0xNC0yOC0yOCAwLTE2LjgwMSAxNC0yOCAyOC0yOGg4NGMxNi44MDEgMCAyOC0xMS4xOTkgMjgtMjhzLTE0LTI4LTI4LTI4aC0yOGMtMTYuODAxIDAtMjgtMTEuMTk5LTI4LTI4czE0LTI4IDI4LTI4aDU2YzE2LjgwMSAwIDI4LTExLjE5OSAyOC0yOCAwLTMwLjgwMSAyNS4xOTktNTYgNTYtNTZzNTYgMjUuMTk5IDU2IDU2YzAgMTYuODAxIDExLjE5OSAyOCAyOCAyOGg1NmMxNi44MDEgMCAyOCAxMS4xOTkgMjggMjggMCAxNC0xMS4xOTkgMjgtMjggMjhoLTg0Yy0xNi44MDEgMC0yOCAxMS4xOTktMjggMjhzMTEuMTk5IDI4IDI4IDI4aDE0MGMxNi44MDEgMCAyOCAxMS4xOTkgMjggMjggMCAxNC0xMS4xOTkgMjgtMjggMjh6Ii8+Cjwvc3ZnPgo=';
-},deps:{},fn:'client/assets/icons/cupcake.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["-am7f1v"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNTE4IDE5NmgtMjh2LTU2YzAtMTYuODAxLTExLjE5OS0yOC0yOC0yOGgtMzY0Yy0xNi44MDEgMC0yOCAxMS4xOTktMjggMjh2MzA4YzAgNjEuNjAyIDUwLjM5OCAxMTIgMTEyIDExMmgxOTZjNjEuNjAyIDAgMTEyLTUwLjM5OCAxMTItMTEydi0yOGgyOGM2MS42MDIgMCAxMTItNTAuMzk4IDExMi0xMTJzLTUwLjM5OC0xMTItMTEyLTExMnptLTg0LTI4djU2aC0zMDh2LTU2em0wIDI4MGMwIDMwLjgwMS0yNS4xOTkgNTYtNTYgNTZoLTE5NmMtMzAuODAxIDAtNTYtMjUuMTk5LTU2LTU2di0xNjhoMzA4djE2OHptODQtODRoLTI4di0xMTJoMjhjMzAuODAxIDAgNTYgMjUuMTk5IDU2IDU2cy0yNS4xOTkgNTYtNTYgNTZ6Ii8+CiAgPHBhdGggZD0ibTI2NiA4NGMxNi44MDEgMCAyOC0xMS4xOTkgMjgtMjh2LTI4YzAtMTYuODAxLTExLjE5OS0yOC0yOC0yOHMtMjggMTEuMTk5LTI4IDI4djI4YzAgMTYuODAxIDExLjE5OSAyOCAyOCAyOHoiLz4KICA8cGF0aCBkPSJtMTU0IDg0YzE2LjgwMSAwIDI4LTExLjE5OSAyOC0yOHYtMjhjMC0xNi44MDEtMTEuMTk5LTI4LTI4LTI4cy0yOCAxMS4xOTktMjggMjh2MjhjMCAxNi44MDEgMTEuMTk5IDI4IDI4IDI4eiIvPgogIDxwYXRoIGQ9Im0zNzggODRjMTYuODAxIDAgMjgtMTEuMTk5IDI4LTI4di0yOGMwLTE2LjgwMS0xMS4xOTktMjgtMjgtMjhzLTI4IDExLjE5OS0yOCAyOHYyOGMwIDE2LjgwMSAxMS4xOTkgMjggMjggMjh6Ii8+CiA8L2c+Cjwvc3ZnPgo=';
-},deps:{},fn:'client/assets/icons/drink.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["6ubmn5"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNDczLjIgMTEuMTk5Yy0xMS4xOTktMTEuMTk5LTI4LTExLjE5OS0zOS4xOTkgMGwtMzU1LjYgMzQ0LjRjLTE2LjgwMSAxNi44MDEtNS42MDE2IDQ3LjYwMiAxOS42MDIgNDcuNjAyaDE0MHY3NS42MDJjMCAxNi44MDEgMTEuMTk5IDI4IDI4IDI4czI4LTExLjE5OSAyOC0yOHYtNzUuNjAyaDU2djEyNmMwIDE2LjgwMSAxMS4xOTkgMjggMjggMjhzMjgtMTEuMTk5IDI4LTI4di0xMjZoMTk2YzE2LjgwMSAwIDI4LTExLjE5OSAyOC0yOCAwLTEzNy4yLTU2LTI2Ni0xNTYuOC0zNjR6bS0zMDUuMiAzMzYgMjg1LjYtMjc3LjJjNzAgNzguMzk4IDExMiAxNzMuNiAxMjAuNCAyNzcuMnoiLz4KICA8cGF0aCBkPSJtMzUwIDI0MC44YzAgNDcuNjAyIDM2LjM5OCA4NCA4NCA4NHM4NC0zNi4zOTggODQtODRjMC00Ny42MDItMzYuMzk4LTg0LTg0LTg0cy04NCAzNi4zOTgtODQgODR6bTExMiAwYzAgMTYuODAxLTExLjE5OSAyOC0yOCAyOHMtMjgtMTEuMTk5LTI4LTI4IDExLjE5OS0yOCAyOC0yOCAyOCAxNCAyOCAyOHoiLz4KIDwvZz4KPC9zdmc+Cg==';
-},deps:{},fn:'client/assets/icons/pizza.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["1rpcvfv"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNDY0LjggNTguODAxYy01Ni03OC4zOTgtMTcwLjgtNzguMzk4LTIyNi44IDAtODYuODAxLTE2LjgwMS0xNjggNTAuMzk4LTE2OCAxMzcuMiAwIDYxLjYwMiAzOS4xOTkgMTE0LjggOTUuMTk5IDEzNC40bDE2LjgwMSAyMDQuNGMwIDE0IDE0IDI1LjE5OSAyOCAyNS4xOTloMjgwYzE0IDAgMjgtMTEuMTk5IDI4LTI1LjE5OWwxNi44MDEtMjA0LjRjNTYtMTkuNjAyIDk1LjE5OS03MCA5NS4xOTktMTM0LjQgMC04Ni44MDUtODEuMTk5LTE1NC0xNjUuMi0xMzcuMnptLTIyOS42IDQ0NS4yLTUuNjAxNi01NmgyMzhsLTUuNjAxNiA1NnptMjY4LjgtMjI0Yy0xNCAyLjgwMDgtMjIuMzk4IDExLjE5OS0yMi4zOTggMjUuMTk5bC04LjQwMjMgODYuODAxaC0yNDYuNGwtNS42MDE2LTg2LjgwMWMtMi44MDA4LTE0LTExLjE5OS0yNS4xOTktMjUuMTk5LTI1LjE5OS0zOS4xOTktOC4zOTg0LTcwLTQyLTcwLTg0IDAtNTguODAxIDYxLjYwMi05OCAxMTItNzguMzk4IDE0IDUuNjAxNiAyOCAwIDM2LjM5OC0xNCAzMC44MDEtNjQuMzk4IDEyMC40LTY0LjM5OCAxNTEuMiAwIDUuNjAxNiAxNCAyMi4zOTggMTkuNjAyIDM2LjM5OCAxNCA1My4xOTktMTkuNjAyIDExMiAxOS42MDIgMTEyIDc4LjM5OCAwLjAwMzkwNiA0Mi0zMC43OTcgNzUuNjAyLTY5Ljk5NiA4NHoiLz4KICA8cGF0aCBkPSJtNDQ4IDE0Mi44Yy0xNCA1LjU5NzctMTkuNjAyIDIyLjM5OC0xNCAzNi4zOThzMjIuMzk4IDIyLjM5OCAzNi4zOTggMTYuODAxYzguNDAyMy0yLjgwMDggMTkuNjAyIDUuNjAxNiAxOS42MDIgMTYuODAxIDAgMTYuODAxIDExLjE5OSAyOCAyOCAyOHMyOC0xMS4xOTkgMjgtMjhjMC01My4xOTktNTMuMTk5LTg2LjgwMS05OC03MHoiLz4KIDwvZz4KPC9zdmc+Cg==';
-},deps:{},fn:'client/assets/icons/chef_hat.svg',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["-17h0hps"]={func:function(module, exports, global, __filename, __dirname, __root, require){// https://thenounproject.com/browse/collection-icon/food-smooth-line-icons-34368/?p=2
-
-module.exports = {
-	lunch : require('./bowl.svg'),
-	dinner : require('./dinner.svg'),
-	breakfast : require('./egg.svg'),
-	bread : require('./bread.svg'),
-	dessert : require('./cupcake.svg'),
-	drink : require('./drink.svg'),
-	snack : require('./pizza.svg'),
-	experiment : require('./chef_hat.svg'),
-
-	//grill : require('./grill.svg'),
-	//cheese : require('./cheese.svg'),
-};
-},deps:{"./bowl.svg":"1q757m3","./dinner.svg":"-nu9i7r","./egg.svg":"14eo077","./bread.svg":"1dn7q0b","./cupcake.svg":"-1rsj3va","./drink.svg":"-am7f1v","./pizza.svg":"6ubmn5","./chef_hat.svg":"1rpcvfv"},fn:'client/assets/icons/index.js',dn:'client/assets/icons', root:'../../..'};
-global.__Modules["-1lcvatb"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
-const css = require('../libs/pico-css.js');
-
-const hasLocalStorage = typeof localStorage !== 'undefined';
-
-const hasFav = (id)=>{
-	if(!hasLocalStorage) return false;
-	return window.localStorage.getItem(`fav__${id}`) == 'true';
-};
-
-const toggleFav = (id)=>{
-	if(!hasLocalStorage) return;
-	hasFav(id)
-		? window.localStorage.removeItem(`fav__${id}`)
-		: window.localStorage.setItem(`fav__${id}`, 'true')
-	return hasFav(id);
-};
-
-global.css.fav_control = css`
-	.FavControl{
-		cursor: pointer;
-		&.fa-heart{
-			color: red;
-		}
-	}
-`;
-
-const FavControl = comp(function(id){
-	const [fav, setFav] = this.useState(()=>hasFav(id));
-
-	const handleClick = (evt)=>{
-		setFav(toggleFav(id));
-		return false;
-	};
-
-	return x`<i class=${cx(`FavControl fa`,{
-		'fa-heart'   : fav,
-		'fa-heart-o' : !fav
-	})} onclick=${handleClick}></i>`;
-});
-
-
-module.exports = {
-	hasFav,
-	toggleFav,
-	FavControl
-};
-},deps:{"../libs/xo.js":"-1pvg4m","../libs/pico-css.js":"1hqukto"},fn:'client/fav.js',dn:'client', root:'..'};
-global.__Modules["qumug0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-
-
-const useLocalState = (scope, key, init)=>{
-	const [val, setVal] = scope.useState(()=>{
-		try{ return JSON.parse(window.localStorage.getItem(key)) ?? init;
-		}catch(err){ return init; }
-	});
-	return [val, (newVal)=>{
-		try{ window.localStorage.setItem(key, JSON.stringify(newVal)); } catch (err){}
-		setVal(newVal);
-	}];
-};
-
-
-global.css.search_control = css`
-	.SearchControl{
-
-		display: flex;
-
-		.searchBox{
-
-			margin: auto;
-			border: 1px solid var(--grey);
-			border-radius: 1em;
-			padding: 0em 1em;
-			background-color: white;
-			width : 70%;
-			font-size: 1.5em;
-			input{
-				border: none;
-				font-family: 'IM Fell English', serif;
-				font-style: italic;
-				font-size: 1.3em;
-				width : 100%;
-			}
-		}
-
-		.typeSelector{
-			width : 300px;
-			.type{
-				cursor: pointer;
-				font-size: 1.1em;
-				display: inline-block;
-				opacity : 0.4;
-
-				border-radius: 1em;
-
-				border: 1px solid black;
-				padding : 5px 10px;
-
-				img{
-					height : 1em;
-					vertical-align: middle;
-					margin-right : 0.25em;
-				}
-
-				&.selected{
-					background-color: #f0dfaf7a;
-					opacity : 1;
-				}
-			}
-
-		}
-
-	}
-`;
-
-const Icons = require('../assets/icons');
-const Types = Object.keys(Icons);
-
-const SearchControl = comp(function(onUpdate){
-	let [filterTypes, setFilterTypes] = useLocalState(this, 'search-types', []);
-	let [search, setSearch] = useLocalState(this, 'search-query', '');
-
-
-	const update = ()=>{
-		onUpdate({
-			terms : search.toLowerCase().split(' ').filter(x=>!!x),
-			types : [...filterTypes],
-			//onlyFav : false,
-			//chef : 'All'
-		})
-	}
-
-	const handleText = (newSearch)=>{
-		clearTimeout(this.refs.searchTimer);
-		search = newSearch;
-		setSearch(newSearch);
-		this.refs.searchTimer = setTimeout(update, 200);
-	};
-
-
-	const toggle = (type)=>{
-		if(filterTypes.includes(type)){
-			filterTypes = filterTypes.filter(x=>x!==type);
-		}else{
-			filterTypes = filterTypes.concat(type);
-		}
-		setFilterTypes(filterTypes);
-		update();
-	};
-
-	this.useEffect(()=>update(), []);
-
-
-	return x`<div class='SearchControl'>
-
-		<div class='searchBox'>
-			<input
-				placeholder='Search...'
-				type='text'
-				oninput=${(evt)=>handleText(evt.target.value)}
-				value=${search}></input>
-		</div>
-
-
-		<div class='typeSelector'>
-			${Types.map(type=>{
-				return x`<div
-					onclick=${()=>toggle(type)}
-					class=${cx('type', {selected : filterTypes.includes(type)})}>
-
-					<img src=${Icons[type]}></img>
-					${type}
-				</div>`;
-			})}
-		</div>
-
-	</div>`;
-});
-
-
-module.exports = SearchControl;
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps"},fn:'client/search_page/search.control.js',dn:'client/search_page', root:'../..'};
 global.__Modules["nhahfu"]={func:function(module, exports, global, __filename, __dirname, __root, require){const metaParse = (str)=>{
 	let result = {}, lastKey;
 	const get = (str)=>{
@@ -1650,6 +1440,8 @@ const convertTemperatures = (text)=>{
 	});
 };
 
+//TODO: add a comment cache to fill in comments after ingredient parse
+	// INgredients in comments are being read in as actual ingredients
 const convertComments = (text)=>{
 	text = text.replace(/\/\*/g, `<span class='chef_note'>`);
 	text = text.replace(/\*\//g, `</span>`);
@@ -1682,14 +1474,14 @@ const splitOnHeaders = (text)=>{
 
 const parseRecipe = (raw)=>{
 	let {content, ...info} = extractMetadata(raw);
-	//let allIngredients = [];
+	let allIngredients = [];
 
 	let html = splitOnHeaders(content).map((section)=>{
 
 		let result = '';
 		let [ingredients, content] = extractIngredients(section);
 
-		//allIngredients = allIngredients.concat(ingredients);
+		allIngredients = allIngredients.concat(ingredients);
 
 		result = convertTemperatures(content);
 		result = convertComments(result);
@@ -1706,8 +1498,8 @@ const parseRecipe = (raw)=>{
 
 	return {
 		...info,
-		//ingredients : allIngredients,
-		hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
+		ingredients : allIngredients,
+		//hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
 		html
 	}
 }
@@ -1715,6 +1507,288 @@ const parseRecipe = (raw)=>{
 module.exports = parseRecipe;
 
 },deps:{"../libs/pico-md.js":"nhahfu","./parse.ingredient.js":"1i32h7a","./metadata.recipe.js":"-fhm08"},fn:'utils/parse.recipe.js',dn:'utils', root:'..'};
+global.__Modules["ndi2ae"]={func:function(module, exports, global, __filename, __dirname, __root, require){const parseRecipe = require('../utils/parse.recipe.js');
+
+const sequence = async (obj, fn)=>{
+	let res = Array.isArray(obj)?[]:{};
+	return Object.keys(obj).reduce((p,k)=>p.then(()=>fn(obj[k], k)).then(r=>res[k]=r), Promise.resolve()).then(()=>res);
+};
+
+const request = async (url)=>{
+	return fetch(url, {
+		method : 'GET',
+		headers: {'Content-Type':'application/json'},
+	}).then(res=>{
+		return res.text().then(data=>{
+			try{
+				return JSON.parse(data);
+			}catch(err){}
+			throw res;
+		});
+	});
+};
+
+const snakeCase = (text)=>text.toLowerCase().replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s/g, '_');
+
+
+const fetchRecipeGist = async (gist_id)=>{
+	const gist = await request(`https://api.github.com/gists/${gist_id}`);
+	return Object.values(gist.files).map(file=>{
+		const recipe = parseRecipe(file.content);
+
+		const id = snakeCase(gist.owner.login + ' ' + (recipe.title || file.filename.split('.')[0]));
+		return {
+			chef : gist.owner.login,
+			gist_id,
+			id,
+			updated : Date.now(),
+			...recipe
+		}
+	})
+};
+
+
+const fetchUserRecipeGistIds = async (username)=>{
+	if(typeof window === 'undefined') return [];
+
+	const filter = '[recipe]';
+	const gists = await request(`https://api.github.com/users/${username}/gists?per_page=100&page=1`);
+	return gists.reduce((acc, gist)=>{
+		if(!gist.description.toLowerCase().startsWith(filter)) return acc;
+		return acc.concat(gist.id);
+	}, []);
+};
+
+
+const fetchAllRecipes = async (users)=>{
+	const ids = (await sequence(users, async (user)=>fetchUserRecipeGistIds(user))).flat();
+	return (await sequence(ids, async (id)=>fetchRecipeGist(id))).flat();
+};
+
+module.exports = {
+	fetchRecipeGist,
+	//fetchUserRecipeGistIds,
+	fetchAllRecipes
+}
+},deps:{"../utils/parse.recipe.js":"-153mfgm"},fn:'client/fetch.recipes.js',dn:'client', root:'..'};
+global.__Modules["1q757m3"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtMTMxLjYgMTc5LjJjLTExLjE5OSAxMS4xOTktMTEuMTk5IDI4IDAgMzkuMTk5IDExLjE5OSAxMS4xOTkgMjggMTEuMTk5IDM5LjE5OSAwIDMzLjYwMi0zMy42MDIgMzMuNjAyLTg2LjgwMSAwLTExNy42LTExLjE5OS0xMS4xOTktMTEuMTk5LTI4IDAtMzkuMTk5IDExLjE5OS0xMS4xOTkgMTEuMTk5LTI4IDAtMzkuMTk5LTExLjE5OS0xMS4xOTktMjgtMTEuMTk5LTM5LjE5OSAwLTMzLjYwMiAzMy42MDItMzMuNjAyIDg2LjgwMSAwIDExNy42IDExLjE5OSAxMS4xOTkgMTEuMTk5IDMwLjgwMSAwIDM5LjE5OXoiLz4KICA8cGF0aCBkPSJtMjcxLjYgMjA3LjJjLTExLjE5OSAxMS4xOTktMTEuMTk5IDI4IDAgMzkuMTk5IDExLjE5OSAxMS4xOTkgMjggMTEuMTk5IDM5LjE5OSAwIDMzLjYwMi0zMy42MDIgMzMuNjAyLTg2LjgwMSAwLTExNy42LTExLjE5OS0xMS4xOTktMTEuMTk5LTI4IDAtMzkuMTk5IDExLjE5OS0xMS4xOTkgMTEuMTk5LTI4IDAtMzkuMTk5LTExLjE5OS0xMS4xOTktMjgtMTEuMTk5LTM5LjE5OSAwLTMzLjYwMiAzMy42MDItMzMuNjAyIDg2LjgwMSAwIDExNy42IDExLjE5OSAxMS4xOTkgMTEuMTk5IDMwLjgwMSAwIDM5LjE5OXoiLz4KICA8cGF0aCBkPSJtNjAyIDM1MGgtMjA3LjJsMTkzLjItMTE0LjhjMTQtOC4zOTg0IDE2LjgwMS0yNS4xOTkgMTEuMTk5LTM5LjE5OS04LjM5ODQtMTQtMjUuMTk5LTE2LjgwMS0zOS4xOTktOC4zOTg0bC0yNzQuNCAxNjUuMmgtMTg3LjZjLTIyLjM5OCAwLTM2LjM5OCAyNS4xOTktMjUuMTk5IDQybDg0IDE0MGM1LjYwMTYgOC4zOTg0IDE0IDE0IDI1LjE5OSAxNGgzMzZjMTEuMTk5IDAgMTkuNjAyLTUuNjAxNiAyNS4xOTktMTRsODQtMTQwYzExLjE5OS0xOS42MDItMi44MDA4LTQ0LjgwMS0yNS4xOTktNDQuODAxem0tMTAwLjggMTQwaC0zMDIuNGwtNTAuMzk4LTg0aDQwNnoiLz4KIDwvZz4KPC9zdmc+Cg==';
+},deps:{},fn:'client/assets/icons/bowl.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["-nu9i7r"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtMjM1LjIgMzg5LjJjMTYuODAxIDIuODAwOCAzMC44MDEtNS42MDE2IDMzLjYwMi0xOS42MDIgMTEuMTk5LTM2LjM5OCA0NC44MDEtNjEuNTk4IDgxLjE5OS02MS41OTggMTYuODAxIDAgMjgtMTEuMTk5IDI4LTI4cy0xMS4xOTktMjgtMjgtMjhjLTY3LjE5OSAwLTEyMC40IDQ0LjgwMS0xMzQuNCAxMDMuNi01LjYwMTYgMTYuNzk3IDIuNzk2OSAzMC43OTcgMTkuNTk4IDMzLjU5OHoiLz4KICA8cGF0aCBkPSJtNjAyIDQ0OGgtNS42MDE2YzUuNjAxNi0xOS42MDIgNS42MDE2LTM2LjM5OCA1LjYwMTYtNTYgMC05OC01My4xOTktMTgyLTE0MC0yMjQgMC02MS42MDItNTAuMzk4LTExMi0xMTItMTEycy0xMTIgNTAuMzk4LTExMiAxMTJjLTg2LjgwMSA0Mi0xNDAgMTI4LjgtMTQwIDIyNCAwIDE5LjYwMiAyLjgwMDggMzYuMzk4IDUuNjAxNiA1NmgtNS42MDE2Yy0xNi44MDEgMC0yOCAxMS4xOTktMjggMjhzMTEuMTk5IDI4IDI4IDI4aDUwNGMxNi44MDEgMCAyOC0xMS4xOTkgMjgtMjhzLTExLjE5OS0yOC0yOC0yOHptLTI1Mi0zMzZjMjIuMzk4IDAgNDIgMTQgNTAuMzk4IDMzLjYwMi01LjYwMTYtMi44MDA4LTIyLjM5OC0yLjgwMDgtMzMuNjAyLTUuNjAxNi0yMi4zOTggMC00Ny41OTggMC02Ny4xOTUgNS42MDE2IDguMzk4NC0xOS42MDIgMjgtMzMuNjAyIDUwLjM5OC0zMy42MDJ6bTAgODRjMTA2LjQgMCAxOTYgODYuODAxIDE5NiAxOTYgMCAxOS42MDItMi44MDA4IDM2LjM5OC04LjM5ODQgNTZoLTM3NS4yYy01LjU5NzctMTkuNjAyLTguMzk4NC0zNi4zOTgtOC4zOTg0LTU2IDAtMTA5LjIgODkuNjAyLTE5NiAxOTYtMTk2eiIvPgogPC9nPgo8L3N2Zz4K';
+},deps:{},fn:'client/assets/icons/dinner.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["14eo077"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNDczLjIgODRjLTI4IDAtNTguODAxIDguMzk4NC04NC0yMi4zOTgtOTgtMTA5LjItMjgwLTY0LjQwMi0zMTMuNiA3NS41OTgtMTQgNjEuNjAyIDIuODAwOCAxMjMuMiA0NC44MDEgMTY4IDE0IDE2LjgwMSAzMy42MDIgNDIgMzMuNjAyIDcwIDIuODAwOCA1OC44MDEgMzMuNjAyIDExNC44IDg0IDE0OC40IDExMiA4MS4xOTkgMjc0LjQgMTYuODAxIDMwNS4yLTEyMy4yIDguMzk4NC00NC44MDEgODYuODAxLTU2IDg2LjgwMS0xNjIuNC0wLjAwMzkwNi04NC03MC4wMDQtMTU0LTE1Ni44LTE1NHptMTQgMzA4Yy0xOS42MDIgMTAwLjgtMTM3LjIgMTQyLjgtMjE1LjYgODYuODAxLTM2LjM5OC0yNS4xOTktNTguODAxLTY0LjM5OC02MS42MDItMTA2LjQtMi43OTY5LTM2LjQwMi0xOS41OTgtNzIuODAxLTUwLjM5NS0xMDMuNi0yOC0zMy42MDItMzkuMjAzLTc1LjYwMi0zMC44MDEtMTE3LjYgMjUuMTk5LTk4IDE1MS4yLTEyOC44IDIxOC40LTUzLjE5OSA0NC44MDEgNTAuMzk4IDk4IDQyIDEyNiA0MiA1NiAwIDEwMC44IDQ0LjgwMSAxMDAuOCAxMDAuOCAwIDgxLjE5OS03Mi44MDEgNzUuNTk4LTg2LjgwMSAxNTEuMnoiLz4KICA8cGF0aCBkPSJtMzUwIDE2OGMtNjEuNjAyIDAtMTEyIDUwLjM5OC0xMTIgMTEyczUwLjM5OCAxMTIgMTEyIDExMiAxMTItNTAuMzk4IDExMi0xMTItNTAuMzk4LTExMi0xMTItMTEyem0wIDE2OGMtMzAuODAxIDAtNTYtMjUuMTk5LTU2LTU2czI1LjE5OS01NiA1Ni01NiA1NiAyNS4xOTkgNTYgNTYtMjUuMTk5IDU2LTU2IDU2eiIvPgogPC9nPgo8L3N2Zz4K';
+},deps:{},fn:'client/assets/icons/egg.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["1dn7q0b"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNTkzLjYgMzkuMTk5Yy03OC40MDItNzguMzk4LTI0Ni40LTMzLjU5OC0zODMuNiAxMDAuOC0xMzQuNCAxMzcuMi0xNzkuMiAzMDUuMi0xMDAuOCAzODMuNiA1MC4zOTggNTAuMzk4IDEzNy4yIDQ3LjYwMiAxOTAuNC01LjYwMTZsMjg1LjYtMjg4LjRjNTYtNTYgNTguODAxLTE0MCA4LjQwMjMtMTkwLjR6bS00Ny42MDIgMTUxLjItMjg1LjYgMjg1LjZjLTMzLjYwMiAzMy42MDItODQgMzYuMzk4LTExMiA1LjYwMTYtMzYuMzk4LTMzLjYwMi0yMi4zOTgtMTAzLjYtMi43OTY5LTE1MS4yIDE2LjgwMSAyMi4zOTggNDIgNDcuNjAyIDg2LjgwMSA2Ny4xOTkgMTQgNS42MDE2IDMwLjgwMSAwIDM2LjM5OC0xNCA1LjYwMTYtMTQgMC0zMC44MDEtMTQtMzYuMzk4LTMzLjYwMi0xNi44MDEtNjcuMTk5LTQyLTc4LjM5OC03NS42MDIgMTMuOTk2LTI1LjE5OSAzMC43OTctNDcuNTk4IDUwLjM5OC02Ny4xOTkgMTYuODAxIDE5LjYwMiA0NC44MDEgNDcuNjAyIDg5LjU5OCA3MCAxNCA1LjYwMTYgMzAuODAxIDAgMzYuMzk4LTE0IDUuNjAxNi0xNCAwLTMwLjgwMS0xNC0zNi4zOTgtNDEuOTk2LTIyLjM5OC02MS41OTgtNDQuODAxLTY5Ljk5Ni02MS42MDIgMjUuMTk5LTIyLjM5OCA1MC4zOTgtNDIgNzUuNjAyLTU2IDE0IDI1LjE5OSA0MiA1OC44MDEgOTggODQgMTQgNS42MDE2IDMwLjgwMSAwIDM2LjM5OC0xNCA1LjYwMTYtMTQgMC0zMC44MDEtMTQtMzYuMzk4LTQyLTE5LjYwMi02MS42MDItNDQuODAxLTcwLTU4LjgwMSAzMC44MDEtMTYuODAxIDY0LjM5OC0yNS4xOTkgOTIuMzk4LTI1LjE5OXM1MC4zOTggOC4zOTg0IDY0LjM5OCAyMi4zOThjMzAuODAxIDI4IDMwLjgwMSA3OC40MDItNS41OTc3IDExMnoiLz4KPC9zdmc+Cg==';
+},deps:{},fn:'client/assets/icons/bread.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["-1rsj3va"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8cGF0aCBkPSJtNjMwIDI4MGMwLTM5LjE5OS0yNS4xOTktNzAtNjEuNjAyLTgxLjE5OSAyLjgwMDgtOC40MDIzIDUuNjAxNi0xOS42MDIgNS42MDE2LTMwLjgwMSAwLTQ3LjYwMi0zNi4zOTgtODQtODQtODRoLTMwLjgwMWMtMTEuMTk5LTQ3LjYwMi01Ni04NC0xMDkuMi04NHMtOTUuMTk5IDM2LjM5OC0xMDkuMiA4NGgtMzAuODAxYy00NC44MDEgMC04NCAzNi4zOTgtODQgODQgMCAxMS4xOTkgMi44MDA4IDIyLjM5OCA1LjYwMTYgMzAuODAxLTM2LjQwMiAxMS4xOTktNjEuNjAyIDQyLTYxLjYwMiA4MS4xOTlzMjggNzIuODAxIDY0LjM5OCA4MS4xOTlsNzguMzk4IDE4MmMyLjgwNDcgMTEuMTk5IDE0LjAwNCAxNi44MDEgMjUuMjAzIDE2LjgwMWgyMjRjMTEuMTk5IDAgMjIuMzk4LTUuNjAxNiAyNS4xOTktMTYuODAxbDc4LjM5OC0xODJjMzkuMjAzLTguMzk4NCA2NC40MDItNDIgNjQuNDAyLTgxLjE5OXptLTE4Ny42IDIyNGgtMTg0LjhsLTU4LjgwMS0xNDBoMzA4em0xMDMuNi0xOTZoLTM5MmMtMTQgMC0yOC0xNC0yOC0yOCAwLTE2LjgwMSAxNC0yOCAyOC0yOGg4NGMxNi44MDEgMCAyOC0xMS4xOTkgMjgtMjhzLTE0LTI4LTI4LTI4aC0yOGMtMTYuODAxIDAtMjgtMTEuMTk5LTI4LTI4czE0LTI4IDI4LTI4aDU2YzE2LjgwMSAwIDI4LTExLjE5OSAyOC0yOCAwLTMwLjgwMSAyNS4xOTktNTYgNTYtNTZzNTYgMjUuMTk5IDU2IDU2YzAgMTYuODAxIDExLjE5OSAyOCAyOCAyOGg1NmMxNi44MDEgMCAyOCAxMS4xOTkgMjggMjggMCAxNC0xMS4xOTkgMjgtMjggMjhoLTg0Yy0xNi44MDEgMC0yOCAxMS4xOTktMjggMjhzMTEuMTk5IDI4IDI4IDI4aDE0MGMxNi44MDEgMCAyOCAxMS4xOTkgMjggMjggMCAxNC0xMS4xOTkgMjgtMjggMjh6Ii8+Cjwvc3ZnPgo=';
+},deps:{},fn:'client/assets/icons/cupcake.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["-am7f1v"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNTE4IDE5NmgtMjh2LTU2YzAtMTYuODAxLTExLjE5OS0yOC0yOC0yOGgtMzY0Yy0xNi44MDEgMC0yOCAxMS4xOTktMjggMjh2MzA4YzAgNjEuNjAyIDUwLjM5OCAxMTIgMTEyIDExMmgxOTZjNjEuNjAyIDAgMTEyLTUwLjM5OCAxMTItMTEydi0yOGgyOGM2MS42MDIgMCAxMTItNTAuMzk4IDExMi0xMTJzLTUwLjM5OC0xMTItMTEyLTExMnptLTg0LTI4djU2aC0zMDh2LTU2em0wIDI4MGMwIDMwLjgwMS0yNS4xOTkgNTYtNTYgNTZoLTE5NmMtMzAuODAxIDAtNTYtMjUuMTk5LTU2LTU2di0xNjhoMzA4djE2OHptODQtODRoLTI4di0xMTJoMjhjMzAuODAxIDAgNTYgMjUuMTk5IDU2IDU2cy0yNS4xOTkgNTYtNTYgNTZ6Ii8+CiAgPHBhdGggZD0ibTI2NiA4NGMxNi44MDEgMCAyOC0xMS4xOTkgMjgtMjh2LTI4YzAtMTYuODAxLTExLjE5OS0yOC0yOC0yOHMtMjggMTEuMTk5LTI4IDI4djI4YzAgMTYuODAxIDExLjE5OSAyOCAyOCAyOHoiLz4KICA8cGF0aCBkPSJtMTU0IDg0YzE2LjgwMSAwIDI4LTExLjE5OSAyOC0yOHYtMjhjMC0xNi44MDEtMTEuMTk5LTI4LTI4LTI4cy0yOCAxMS4xOTktMjggMjh2MjhjMCAxNi44MDEgMTEuMTk5IDI4IDI4IDI4eiIvPgogIDxwYXRoIGQ9Im0zNzggODRjMTYuODAxIDAgMjgtMTEuMTk5IDI4LTI4di0yOGMwLTE2LjgwMS0xMS4xOTktMjgtMjgtMjhzLTI4IDExLjE5OS0yOCAyOHYyOGMwIDE2LjgwMSAxMS4xOTkgMjggMjggMjh6Ii8+CiA8L2c+Cjwvc3ZnPgo=';
+},deps:{},fn:'client/assets/icons/drink.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["6ubmn5"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNDczLjIgMTEuMTk5Yy0xMS4xOTktMTEuMTk5LTI4LTExLjE5OS0zOS4xOTkgMGwtMzU1LjYgMzQ0LjRjLTE2LjgwMSAxNi44MDEtNS42MDE2IDQ3LjYwMiAxOS42MDIgNDcuNjAyaDE0MHY3NS42MDJjMCAxNi44MDEgMTEuMTk5IDI4IDI4IDI4czI4LTExLjE5OSAyOC0yOHYtNzUuNjAyaDU2djEyNmMwIDE2LjgwMSAxMS4xOTkgMjggMjggMjhzMjgtMTEuMTk5IDI4LTI4di0xMjZoMTk2YzE2LjgwMSAwIDI4LTExLjE5OSAyOC0yOCAwLTEzNy4yLTU2LTI2Ni0xNTYuOC0zNjR6bS0zMDUuMiAzMzYgMjg1LjYtMjc3LjJjNzAgNzguMzk4IDExMiAxNzMuNiAxMjAuNCAyNzcuMnoiLz4KICA8cGF0aCBkPSJtMzUwIDI0MC44YzAgNDcuNjAyIDM2LjM5OCA4NCA4NCA4NHM4NC0zNi4zOTggODQtODRjMC00Ny42MDItMzYuMzk4LTg0LTg0LTg0cy04NCAzNi4zOTgtODQgODR6bTExMiAwYzAgMTYuODAxLTExLjE5OSAyOC0yOCAyOHMtMjgtMTEuMTk5LTI4LTI4IDExLjE5OS0yOCAyOC0yOCAyOCAxNCAyOCAyOHoiLz4KIDwvZz4KPC9zdmc+Cg==';
+},deps:{},fn:'client/assets/icons/pizza.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["1rpcvfv"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNDY0LjggNTguODAxYy01Ni03OC4zOTgtMTcwLjgtNzguMzk4LTIyNi44IDAtODYuODAxLTE2LjgwMS0xNjggNTAuMzk4LTE2OCAxMzcuMiAwIDYxLjYwMiAzOS4xOTkgMTE0LjggOTUuMTk5IDEzNC40bDE2LjgwMSAyMDQuNGMwIDE0IDE0IDI1LjE5OSAyOCAyNS4xOTloMjgwYzE0IDAgMjgtMTEuMTk5IDI4LTI1LjE5OWwxNi44MDEtMjA0LjRjNTYtMTkuNjAyIDk1LjE5OS03MCA5NS4xOTktMTM0LjQgMC04Ni44MDUtODEuMTk5LTE1NC0xNjUuMi0xMzcuMnptLTIyOS42IDQ0NS4yLTUuNjAxNi01NmgyMzhsLTUuNjAxNiA1NnptMjY4LjgtMjI0Yy0xNCAyLjgwMDgtMjIuMzk4IDExLjE5OS0yMi4zOTggMjUuMTk5bC04LjQwMjMgODYuODAxaC0yNDYuNGwtNS42MDE2LTg2LjgwMWMtMi44MDA4LTE0LTExLjE5OS0yNS4xOTktMjUuMTk5LTI1LjE5OS0zOS4xOTktOC4zOTg0LTcwLTQyLTcwLTg0IDAtNTguODAxIDYxLjYwMi05OCAxMTItNzguMzk4IDE0IDUuNjAxNiAyOCAwIDM2LjM5OC0xNCAzMC44MDEtNjQuMzk4IDEyMC40LTY0LjM5OCAxNTEuMiAwIDUuNjAxNiAxNCAyMi4zOTggMTkuNjAyIDM2LjM5OCAxNCA1My4xOTktMTkuNjAyIDExMiAxOS42MDIgMTEyIDc4LjM5OCAwLjAwMzkwNiA0Mi0zMC43OTcgNzUuNjAyLTY5Ljk5NiA4NHoiLz4KICA8cGF0aCBkPSJtNDQ4IDE0Mi44Yy0xNCA1LjU5NzctMTkuNjAyIDIyLjM5OC0xNCAzNi4zOThzMjIuMzk4IDIyLjM5OCAzNi4zOTggMTYuODAxYzguNDAyMy0yLjgwMDggMTkuNjAyIDUuNjAxNiAxOS42MDIgMTYuODAxIDAgMTYuODAxIDExLjE5OSAyOCAyOCAyOHMyOC0xMS4xOTkgMjgtMjhjMC01My4xOTktNTMuMTk5LTg2LjgwMS05OC03MHoiLz4KIDwvZz4KPC9zdmc+Cg==';
+},deps:{},fn:'client/assets/icons/chef_hat.svg',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["-17h0hps"]={func:function(module, exports, global, __filename, __dirname, __root, require){// https://thenounproject.com/browse/collection-icon/food-smooth-line-icons-34368/?p=2
+
+module.exports = {
+	lunch : require('./bowl.svg'),
+	dinner : require('./dinner.svg'),
+	breakfast : require('./egg.svg'),
+	bread : require('./bread.svg'),
+	dessert : require('./cupcake.svg'),
+	drink : require('./drink.svg'),
+	snack : require('./pizza.svg'),
+	experiment : require('./chef_hat.svg'),
+
+	//grill : require('./grill.svg'),
+	//cheese : require('./cheese.svg'),
+};
+},deps:{"./bowl.svg":"1q757m3","./dinner.svg":"-nu9i7r","./egg.svg":"14eo077","./bread.svg":"1dn7q0b","./cupcake.svg":"-1rsj3va","./drink.svg":"-am7f1v","./pizza.svg":"6ubmn5","./chef_hat.svg":"1rpcvfv"},fn:'client/assets/icons/index.js',dn:'client/assets/icons', root:'../../..'};
+global.__Modules["-1lcvatb"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
+const css = require('../libs/pico-css.js');
+
+const hasLocalStorage = typeof localStorage !== 'undefined';
+
+const hasFav = (id)=>{
+	if(!hasLocalStorage) return false;
+	return window.localStorage.getItem(`fav__${id}`) == 'true';
+};
+
+const toggleFav = (id)=>{
+	if(!hasLocalStorage) return;
+	hasFav(id)
+		? window.localStorage.removeItem(`fav__${id}`)
+		: window.localStorage.setItem(`fav__${id}`, 'true')
+	return hasFav(id);
+};
+
+global.css.fav_control = css`
+	.FavControl{
+		cursor: pointer;
+		&.fa-heart{
+			color: red;
+		}
+	}
+`;
+
+const FavControl = comp(function(id){
+	const [fav, setFav] = this.useState(()=>hasFav(id));
+
+	const handleClick = (evt)=>{
+		setFav(toggleFav(id));
+		return false;
+	};
+
+	return x`<i class=${cx(`FavControl fa`,{
+		'fa-heart'   : fav,
+		'fa-heart-o' : !fav
+	})} onclick=${handleClick}></i>`;
+});
+
+
+module.exports = {
+	hasFav,
+	toggleFav,
+	FavControl
+};
+},deps:{"../libs/xo.js":"-1pvg4m","../libs/pico-css.js":"1hqukto"},fn:'client/fav.js',dn:'client', root:'..'};
+global.__Modules["qumug0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+
+
+const useLocalState = (scope, key, init)=>{
+	const [val, setVal] = scope.useState(()=>{
+		try{ return JSON.parse(window.localStorage.getItem(key)) ?? init;
+		}catch(err){ return init; }
+	});
+	return [val, (newVal)=>{
+		try{ window.localStorage.setItem(key, JSON.stringify(newVal)); } catch (err){}
+		setVal(newVal);
+	}];
+};
+
+
+global.css.search_control = css`
+	.SearchControl{
+
+		display: flex;
+
+		.searchBox{
+
+			margin: auto;
+			border: 1px solid var(--grey);
+			border-radius: 1em;
+			padding: 0em 1em;
+			background-color: white;
+			width : 70%;
+			font-size: 1.5em;
+			input{
+				border: none;
+				font-family: 'IM Fell English', serif;
+				font-style: italic;
+				font-size: 1.3em;
+				width : 100%;
+			}
+		}
+
+		.typeSelector{
+			width : 300px;
+			.type{
+				cursor: pointer;
+				font-size: 1.1em;
+				display: inline-block;
+				opacity : 0.4;
+				user-select: none;
+
+				border-radius: 1em;
+
+				border: 1px solid black;
+				padding : 5px 10px;
+
+				img{
+					height : 1em;
+					vertical-align: middle;
+					margin-right : 0.25em;
+				}
+
+				&.selected{
+					background-color: #f0dfaf7a;
+					opacity : 1;
+				}
+			}
+
+		}
+
+	}
+`;
+
+const Icons = require('../assets/icons');
+const Types = Object.keys(Icons);
+
+const SearchControl = comp(function(onUpdate){
+	let [filterTypes, setFilterTypes] = useLocalState(this, 'search-types', []);
+	let [search, setSearch] = useLocalState(this, 'search-query', '');
+
+
+	const update = ()=>{
+		onUpdate({
+			terms : search.toLowerCase().split(' ').filter(x=>!!x),
+			types : [...filterTypes],
+			//onlyFav : false,
+			//chef : 'All'
+		})
+	}
+
+	const handleText = (newSearch)=>{
+		clearTimeout(this.refs.searchTimer);
+		search = newSearch;
+		setSearch(newSearch);
+		this.refs.searchTimer = setTimeout(update, 200);
+	};
+
+
+	const toggle = (type)=>{
+		if(filterTypes.includes(type)){
+			filterTypes = filterTypes.filter(x=>x!==type);
+		}else{
+			filterTypes = filterTypes.concat(type);
+		}
+		setFilterTypes(filterTypes);
+		update();
+	};
+
+	this.useEffect(()=>update(), []);
+
+
+	return x`<div class='SearchControl'>
+
+		<div class='searchBox'>
+			<input
+				placeholder='Search...'
+				type='text'
+				oninput=${(evt)=>handleText(evt.target.value)}
+				value=${search}></input>
+		</div>
+
+
+		<div class='typeSelector'>
+			${Types.map(type=>{
+				return x`<div
+					onclick=${()=>toggle(type)}
+					class=${cx('type', {selected : filterTypes.includes(type)})}>
+
+					<img src=${Icons[type]}></img>
+					${type}
+				</div>`;
+			})}
+		</div>
+
+	</div>`;
+});
+
+
+module.exports = SearchControl;
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps"},fn:'client/search_page/search.control.js',dn:'client/search_page', root:'../..'};
 global.__Modules["-1vuptfe"]={func:function(module, exports, global, __filename, __dirname, __root, require){const Emitter=()=>{
 	let cache={};
 	return {
@@ -1835,6 +1909,529 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 
 module.exports = IngredientControl
 },deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../servings.emitter.js":"-1fvb86o","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c"},fn:'client/recipe_page/ingredient.control.js',dn:'client/recipe_page', root:'../..'};
+global.__Modules["ksc8r0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+
+const {getCompatibleUnits} = require('../../utils/units.js');
+const convert = require('../../utils/convert.units.js');
+const {parseIngredient} = require('../../utils/parse.ingredient.js');
+
+global.css.conversion_page = css`
+	.ConversionPage{
+		min-height: 500px;
+		.searchBox{
+			text-align: center;
+
+			input{
+				text-align: left;
+				font-size: 3em;
+				border: none;
+				font-family: inherit;
+				color: #854E3A;
+				background-color: transparent;
+				border-left: 3px solid #854E3A;
+			}
+		}
+
+		.results{
+			margin: 0 auto;
+			max-width: 500px;
+			font-size: 2em;
+			ul{
+				//font-size: 2em;
+			}
+			.temperature{
+
+			}
+		}
+
+	}
+`;
+
+
+
+const ConversionPage = comp(function(){
+
+	const [query, setQuery] = this.useState('');
+
+
+	this.useEffect(()=>{
+		this.el.querySelector('input').focus();
+		document.title = `Convert Units - Tastebase`;
+		window.scrollTo(0, 0);
+	},[]);
+
+
+
+	const tryIngredientUnits = (str)=>{
+		const ingredient = parseIngredient(query);
+		if(!ingredient.unit) return [];
+		return getCompatibleUnits(ingredient).map(unit=>{
+			return `${convert(ingredient, unit)} ${unit}`;
+		});
+	};
+
+	const tryTemperature = (str)=>{
+		const res = (/(\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)/img).exec(str);
+		if(!res) return;
+		let [_,val,unit] = res;
+		unit = unit.toLowerCase();
+
+
+		if(unit.includes('f')) return (val*1.8 + 32).toFixed(1) +'°C';
+		if(unit.includes('c')) return (val*1.8 + 32).toFixed(1) +'°F';
+	}
+
+	const units = tryIngredientUnits(query);
+
+	const temperature = tryTemperature(query);
+
+
+
+
+
+
+	return x`<section class='ConversionPage'>
+		<h2>Ye Olde Conversion Tool</h2>
+
+		<div class='searchBox'>
+			<input type='text'
+				value=${query}
+				oninput=${(evt)=>setQuery(evt.target.value)}
+				placeholder='3 1/4 cups of butter, 45C, ...'></input>
+		</div>
+
+		<hr>
+
+		<div class='results'>
+
+			${units.length!==0 && x`<ul>
+				${units.map(unit=>x`<li><strong>${unit}<strong></li>`)}
+				</ul>`
+			}
+
+			${!!temperature && x`<div class='temperature'>${temperature}</div>`}
+
+		</div>
+
+	</section>`
+});
+
+
+
+module.exports = ConversionPage;
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c","../../utils/parse.ingredient.js":"1i32h7a"},fn:'client/conversion_page/conversion.page.js',dn:'client/conversion_page', root:'../..'};
+global.__Modules["-4hneic"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {fetchRecipeGist, fetchAllRecipes} = require('./fetch.recipes.js');
+
+const storageSet = (key, val)=>{
+	if(typeof window === 'undefined') return;
+	window.localStorage.setItem(key, JSON.stringify(val));
+};
+
+const storageGet = (key, fallback=null)=>{
+	if(typeof window === 'undefined') return fallback;
+	try{
+		return JSON.parse(window.localStorage.getItem(key));
+	}catch(err){
+		return fallback;
+	}
+};
+
+const isTooOld = (ts)=>{
+	//maybe 3 days?
+	return false;
+};
+
+
+const Emitter = {
+	cache : [],
+	on : (fn)=>{
+		Emitter.cache.push(fn);
+		return ()=>Emitter.cache = Emitter.cache.filter(func=>func!==fn);
+	},
+	emit : ()=>Emitter.cache.map(fn=>fn()),
+};
+
+
+
+let Recipes = null;
+let LastUpdated = null;
+let Chefs = [];
+let fetching = false;
+
+const init = (chefs)=>{
+	let flag = false;
+	Recipes = storageGet('recipes');
+	if(!Recipes || !Object.keys(Recipes).length) flag = true;
+
+	LastUpdated = storageGet('lastUpdated');
+	if(!LastUpdated || isTooOld(LastUpdated)) flag = true;
+
+
+	Chefs = chefs;
+
+
+	// Chefs = storageGet('chefs', []);
+	// if(users.join(',') !== Chefs.join(',')){
+	// 	Chefs = users;
+	// 	flag = true;
+	// }
+
+	if(flag) return fetchAll();
+	Emitter.emit();
+};
+
+const save = ()=>{
+	storageSet('recipes', Recipes);
+	storageSet('lastUpdated', LastUpdated);
+	storageSet('chefs', Chefs);
+};
+
+
+const fetchRecipe = async (id)=>{
+	fetching = true;
+	Emitter.emit();
+
+	const recipes = await fetchRecipeGist(Recipes[id].gist_id);
+	recipes.map(recipe=>{
+		Recipes[recipe.id] = recipe;
+	});
+	fetching = false;
+	Emitter.emit();
+	save();
+};
+
+const fetchAll = async ()=>{
+	fetching = true;
+	Emitter.emit();
+
+	const recipes = await fetchAllRecipes(Chefs);
+	Recipes = {};
+	recipes.map(recipe=>{Recipes[recipe.id] = recipe;});
+
+	LastUpdated = Date.now();
+	fetching = false;
+
+	Emitter.emit();
+	save();
+};
+
+
+const getRecipe = (id)=>{
+	if(!Recipes[id]) return false;
+	if(isTooOld(Recipes[id].lastUpdate)) fetchRecipe(id);
+
+	return Recipes[id];
+};
+
+const searchRecipes = ({chef, types, query})=>{
+	let recipes = Object.values(Recipes);
+
+	if(chef) recipes = recipes.filter(recipe=>recipe.chef === chef);
+	if(types) recipes = recipes.filter(recipe=>types.includes(recipe.type));
+	if(query){
+		recipes = recipes.filter(recipe=>{
+			return query.toLowerCase().split(' ').every(term=>{
+				if(recipe.title.toLowerCase().includes(term)) return true;
+				if(recipe.desc.toLowerCase().includes(term)) return true;
+				return recipe.ingredients.some(({raw})=>raw.includes(term));
+			});
+		});
+	}
+	return recipes;
+};
+
+
+
+module.exports = {
+	init,
+	fetchAll,
+	getRecipe,
+	searchRecipes,
+	getChefs : ()=>Chefs,
+	getLastUpdated : ()=>LastUpdated,
+
+	getRecipes : ()=>Object.values(Recipes),
+
+	on : Emitter.on,
+	isFetching : ()=>fetching,
+};
+},deps:{"./fetch.recipes.js":"ndi2ae"},fn:'client/recipe.store.js',dn:'client', root:'..'};
+global.__Modules["-1knvkhj"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
+const css = require('../libs/pico-css.js');
+
+
+global.css.navbar = css`
+	nav{
+		&>a{
+			font-style: italic;
+			color: black;
+			&:visited{ color: black; }
+		}
+	}
+`;
+
+
+const Store = require('./recipe.store.js');
+
+
+const Navbar = comp(function(){
+	const [fetching, setFetching] = this.useState(false);
+	const [lastUpdate, setLastUpdate] = this.useState(null);
+
+
+	this.useEffect(()=>{
+		return Store.on(()=>{
+			setFetching(Store.isFetching());
+			setLastUpdate(Store.getLastUpdated());
+		})
+	}, [])
+
+
+	const handleUpdate = ()=>{
+		alert('woo');
+	};
+
+
+	return x`<nav>
+		<a href='#'>Tastebase</a>
+		<ul>
+			<li><a href='#conversion'>Convert</a></li>
+			<li>
+				<a href='https://gist.github.com/'>Add Recipe</a>
+				<a href='https://github.com/stolksdorf/tastebase/recipe_instructions.md'>❓</a>
+			</li>
+			${!fetching && x`<li onclick=${handleUpdate}>
+				Update Recipes
+				<small>Last updated ${lastUpdate} ago</small>
+			</li>`}
+			${fetching && x`<li>
+				Fetching...
+			</li>`}
+		</ul>
+	</nav>`;
+});
+
+
+module.exports = Navbar;
+},deps:{"../libs/xo.js":"-1pvg4m","../libs/pico-css.js":"1hqukto","./recipe.store.js":"-4hneic"},fn:'client/nav.js',dn:'client', root:'..'};
+global.__Modules["14uqikj"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+
+const Icons = require('../assets/icons');
+
+
+global.css.sneakpeek = css`
+	.RecipeCard{
+		display: block;
+		position: relative;
+		text-decoration: none;
+		color: black;
+		&:visited{
+			color: inherit;
+		}
+
+		&:hover{
+			background-color: #f0dfaf;
+		}
+
+		background-color: white;
+
+		//clip-path: polygon(3% 0, 7% 1%, 11% 0%, 16% 2%, 20% 0, 23% 2%, 28% 2%, 32% 1%, 35% 1%, 39% 3%, 41% 1%, 45% 0%, 47% 2%, 50% 2%, 53% 0, 58% 2%, 60% 2%, 63% 1%, 65% 0%, 67% 2%, 69% 2%, 73% 1%, 76% 1%, 79% 0, 82% 1%, 85% 0, 87% 1%, 89% 0, 92% 1%, 96% 0, 98% 3%, 99% 3%, 99% 6%, 100% 11%, 98% 15%, 100% 21%, 99% 28%, 100% 32%, 99% 35%, 99% 40%, 100% 43%, 99% 48%, 100% 53%, 100% 57%, 99% 60%, 100% 64%, 100% 68%, 99% 72%, 100% 75%, 100% 79%, 99% 83%, 100% 86%, 100% 90%, 99% 94%, 99% 98%, 95% 99%, 92% 99%, 89% 100%, 86% 99%, 83% 100%, 77% 99%, 72% 100%, 66% 98%, 62% 100%, 59% 99%, 54% 99%, 49% 100%, 46% 98%, 43% 100%, 40% 98%, 38% 100%, 35% 99%, 31% 100%, 28% 99%, 25% 99%, 22% 100%, 19% 99%, 16% 100%, 13% 99%, 10% 99%, 7% 100%, 4% 99%, 2% 97%, 1% 97%, 0% 94%, 1% 89%, 0% 84%, 1% 81%, 0 76%, 0 71%, 1% 66%, 0% 64%, 0% 61%, 0% 59%, 1% 54%, 0% 49%, 1% 45%, 0% 40%, 1% 37%, 0% 34%, 1% 29%, 0% 23%, 2% 20%, 1% 17%, 1% 13%, 0 10%, 1% 6%, 1% 3%);
+
+		//border: 5px dashed #68401f;
+		border: 2px solid #68401f;
+		box-shadow: 8px 8px 15px 1px #68401f73;
+		//margin-right: -5px;
+		//margin-bottom: -5px;
+
+
+
+		max-width: 150px;
+		padding: 15px;
+
+
+
+
+		h3{
+			margin: 0px;
+			font-size: 1.5em;
+		}
+		p{
+			margin: 5px 0px;
+			max-height : 60px;
+			text-overflow: ellipsis;
+			overflow-y: hidden;
+		}
+
+		img.icon{
+			position: absolute;
+			top: 10px;
+			right: 7px;
+			font-size: 1.2em;
+			width: 27px;
+		}
+
+		// img{
+		// 	max-height : 100%;
+		// 	max-width : 120px;
+		// 	position: absolute;
+		// 	top : 0px;
+		// 	right: 0px;
+		// }
+
+		.FavControl{
+			display : none;
+			position: absolute;
+			top : 10px;
+			right : 10px;
+			font-size: 1.2em;
+		}
+
+	}
+`;
+
+
+
+const RecipeCard = (recipe)=>{
+
+
+	return x`<a href=${`#recipe=${recipe.id}`} class='RecipeCard'>
+
+		${Icons[recipe.type] && x`<img class='icon' src=${Icons[recipe.type]}></img>`}
+
+		<h3>${recipe.title}</h3>
+
+
+		${recipe.desc && x`<p>${recipe.desc}</p>`}
+
+	</a>`
+}
+
+//${recipe.img && x`<img src=${recipe.img}></img>`}
+//${recipe.img && x`<div class='img' style=${`background-image: url("${recipe.img}");`}></div>`}
+
+// <small>${recipe.chef} - ${recipe.type}</small>
+
+module.exports = RecipeCard;
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps"},fn:'client/search_page/recipe.card.js',dn:'client/search_page', root:'../..'};
+global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
+const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+const RecipeCard = require('./recipe.card.js');
+
+
+
+global.css.search_page = css`
+	.Search{
+		min-height: 100vh;
+
+		.results{
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			gap : 10px;
+			.RecipeCard + .RecipeCard{
+				//border-color:red;
+			}
+
+			.RecipeCard{
+				min-width : 300px;
+				width     : 50%;
+			}
+		}
+	}
+`
+
+const SearchControl = require('./search.control.js');
+
+
+const FilterRecipes = (recipes, {terms, types})=>{
+	let result = [...recipes];
+
+	if(types.length !== 0){
+		result = result.filter(recipe=>{
+			return types.includes(recipe.type);
+		});
+	}
+
+	if(terms.length !== 0){
+		result = result.filter(recipe=>{
+			return terms.every(term=>{
+				if(recipe.title.toLowerCase().indexOf(term) !== -1) return true;
+				if(recipe.desc.toLowerCase().indexOf(term) !== -1) return true;
+
+				//TODO: add ingredient level search
+
+				//if(recipe.content.toLowerCase().indexOf(term) !== -1) return true;
+
+				return false;
+			})
+		});
+	}
+
+	return result;
+};
+
+
+function shuffle(arr){
+	let res = [], array = [...arr];
+	while(array.length !== 0){
+		const idx = Math.floor(Math.random()*array.length);
+		res.push(array.splice(idx, 1)[0]);
+	}
+	return res;
+};
+
+
+
+const Store = require('../recipe.store.js');
+
+
+
+const SearchPage = comp(function(allRecipes){
+	const [recipes, setRecipes] = this.useState([]);
+
+
+
+	this.useEffect(()=>{
+		document.title = `Tastebase - Search`;
+		window.scrollTo(0, 0);
+
+		setRecipes(Store.getRecipes());
+
+
+	},[]);
+
+
+	const handleSearch = (queryObj)=>{
+		//setRecipes(FilterRecipes(allRecipes, queryObj))
+	};
+
+	// const shuffleRecipes = ()=>{
+	// 	setRecipes(shuffle(recipes));
+	// }
+
+	console.log({recipes})
+
+	return x`<section class='Search'>
+
+		<div class='top'>
+			${SearchControl(handleSearch)}
+		</div>
+
+		<div class='results'>
+			${Object.fromEntries(recipes.map(recipe=>[recipe.id, RecipeCard(recipe)]))}
+		</div>
+	</section>`
+});
+
+module.exports = SearchPage;
+
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./search.control.js":"qumug0","../recipe.store.js":"-4hneic"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
 global.__Modules["3l2hej"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
 const css = require('../../libs/pico-css.js');
 
@@ -2005,20 +2602,22 @@ const ServingsEmitter = require('../servings.emitter.js');
 
 const FavControl = require('../fav.js').FavControl;
 
+const Store = require('../recipe.store.js');
+
+const RecipePage = comp(function(recipeId){
+	const recipe = Store.getRecipe(recipeId);
+
+	if(!recipe) return x`<section class='Recipe'><div class='notFound'>Oops, recipe not found</div></section>`;
 
 
-const RecipePage = comp(function(initRecipe){
-	if(!initRecipe) return x`<section class='Recipe'><div class='notFound'>Oops, recipe not found</div></section>`;
+	// const [content, setContent] = this.useState(initRecipe.content);
 
+	// const getRecipe = ()=>{
+	// 	const {id, github, chef} = initRecipe;
+	// 	return {id, github, chef, ...parseRecipe(content)};
+	// };
 
-	const [content, setContent] = this.useState(initRecipe.content);
-
-	const getRecipe = ()=>{
-		const {id, github, chef} = initRecipe;
-		return {id, github, chef, ...parseRecipe(content)};
-	};
-
-	const [recipe, setRecipe] = this.useState(getRecipe);
+	// const [recipe, setRecipe] = this.useState(getRecipe);
 
 	const [servings, setServings] = this.useState(recipe.servings);
 	const [showNotes, setShowNotes] = this.useState(false);
@@ -2026,11 +2625,11 @@ const RecipePage = comp(function(initRecipe){
 	const [editMode, setEditMode] = this.useState(false);
 
 
-	const applyEditChanges = ()=>{
-		setRecipe(getRecipe());
-		setEditMode(false);
-		setTimeout(createIngredientControls, 5);
-	};
+	// const applyEditChanges = ()=>{
+	// 	setRecipe(getRecipe());
+	// 	setEditMode(false);
+	// 	setTimeout(createIngredientControls, 5);
+	// };
 
 	const createIngredientControls = ()=>{
 		[...document.querySelectorAll('.ingredient')].map((el)=>{
@@ -2053,14 +2652,14 @@ const RecipePage = comp(function(initRecipe){
 	this.useEffect(()=>{
 		document.title = `${recipe.title} - Tastebase`;
 		window.scrollTo(0, 0);
-		window.onbeforeunload = (evt)=>{
-			if(initRecipe.content !== content){
-				evt.preventDefault();
-				evt.returnValue = 'test';
+		// window.onbeforeunload = (evt)=>{
+		// 	if(initRecipe.content !== content){
+		// 		evt.preventDefault();
+		// 		evt.returnValue = 'test';
 
-				return confirm("You have made changes to this form. Do you want to continue without saving these changes?");
-			}
-		};
+		// 		return confirm("You have made changes to this form. Do you want to continue without saving these changes?");
+		// 	}
+		// };
 
 		createIngredientControls();
 	}, []);
@@ -2069,8 +2668,6 @@ const RecipePage = comp(function(initRecipe){
 	return x`<section class=${cx('Recipe', {showNotes})}>
 		<div class='controls'>
 			<a href=${recipe.github} target='_blank'>Edit this Recipe <i class='fa fa-pencil'></i></a>
-			${FavControl(recipe.id)}
-
 		</div>
 
 		<div class='top'>
@@ -2098,19 +2695,13 @@ const RecipePage = comp(function(initRecipe){
 			Show Chef Notes
 		</label>`}
 
-		${!editMode && x`<i class='fa fa-pencil' onclick=${()=>setEditMode(true)}></i>`}
-		${editMode && x`<i class='fa fa-times' onclick=${()=>applyEditChanges()}></i>`}
-
 
 
 
 		<hr />
 
 		<div class='instructions'>
-
-			${editMode && x`<textarea value=${content} oninput=${(evt)=>setContent(evt.target.value)}></textarea>`}
-			${!editMode && x(`<div>${recipe.html}</div>`)}
-
+			${x(`<div>${recipe.html}</div>`)}
 		</div>
 		<hr />
 	</section>`
@@ -2118,374 +2709,14 @@ const RecipePage = comp(function(initRecipe){
 
 module.exports = RecipePage;
 
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/parse.recipe.js":"-153mfgm","./ingredient.control.js":"fn4mc7","../servings.emitter.js":"-1fvb86o","../fav.js":"-1lcvatb"},fn:'client/recipe_page/recipe.page.js',dn:'client/recipe_page', root:'../..'};
-global.__Modules["ksc8r0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-
-const {getCompatibleUnits} = require('../../utils/units.js');
-const convert = require('../../utils/convert.units.js');
-const {parseIngredient} = require('../../utils/parse.ingredient.js');
-
-global.css.conversion_page = css`
-	.ConversionPage{
-		min-height: 500px;
-		.searchBox{
-			text-align: center;
-
-			input{
-				text-align: left;
-				font-size: 3em;
-				border: none;
-				font-family: inherit;
-				color: #854E3A;
-				background-color: transparent;
-				border-left: 3px solid #854E3A;
-			}
-		}
-
-		.results{
-			margin: 0 auto;
-			max-width: 500px;
-			font-size: 2em;
-			ul{
-				//font-size: 2em;
-			}
-			.temperature{
-
-			}
-		}
-
-	}
-`;
-
-
-
-const ConversionPage = comp(function(){
-
-	const [query, setQuery] = this.useState('');
-
-
-	this.useEffect(()=>{
-		this.el.querySelector('input').focus();
-		document.title = `Convert Units - Tastebase`;
-		window.scrollTo(0, 0);
-	},[]);
-
-
-
-	const tryIngredientUnits = (str)=>{
-		const ingredient = parseIngredient(query);
-		if(!ingredient.unit) return [];
-		return getCompatibleUnits(ingredient).map(unit=>{
-			return `${convert(ingredient, unit)} ${unit}`;
-		});
-	};
-
-	const tryTemperature = (str)=>{
-		const res = (/(\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)/img).exec(str);
-		if(!res) return;
-		let [_,val,unit] = res;
-		unit = unit.toLowerCase();
-
-
-		if(unit.includes('f')) return (val*1.8 + 32).toFixed(1) +'°C';
-		if(unit.includes('c')) return (val*1.8 + 32).toFixed(1) +'°F';
-	}
-
-	const units = tryIngredientUnits(query);
-
-	const temperature = tryTemperature(query);
-
-
-
-
-
-
-	return x`<section class='ConversionPage'>
-		<h2>Ye Olde Conversion Tool</h2>
-
-		<div class='searchBox'>
-			<input type='text'
-				value=${query}
-				oninput=${(evt)=>setQuery(evt.target.value)}
-				placeholder='3 1/4 cups of butter, 45C, ...'></input>
-		</div>
-
-		<hr>
-
-		<div class='results'>
-
-			${units.length!==0 && x`<ul>
-				${units.map(unit=>x`<li><strong>${unit}<strong></li>`)}
-				</ul>`
-			}
-
-			${!!temperature && x`<div class='temperature'>${temperature}</div>`}
-
-		</div>
-
-	</section>`
-});
-
-
-
-module.exports = ConversionPage;
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c","../../utils/parse.ingredient.js":"1i32h7a"},fn:'client/conversion_page/conversion.page.js',dn:'client/conversion_page', root:'../..'};
-global.__Modules["18609dp"]={func:function(module, exports, global, __filename, __dirname, __root, require){const emitter = require('../libs/emitter')();
-const KEY = 'tb-account';
-
-const login = ()=>{
-	let res = prompt('Enter User name');
-	window.localStorage.setItem(KEY, res);
-	emitter.emit('update', res);
-};
-
-const logout = ()=>{
-	window.localStorage.setItem(KEY, '');
-	emitter.emit('update', '');
-};
-
-const get = ()=>{
-	try{
-		return window.localStorage.getItem(KEY);
-	}catch(err){
-		return;
-	}
-};
-
-const useAccount = (scope)=>{
-	const [name, setName] = scope.useState(get);
-	scope.useEffect(()=>emitter.on('update', setName), []);
-	return name;
-}
-
-module.exports = {
-	login,
-	logout,
-	get,
-	useAccount,
-
-	emitter
-};
-},deps:{"../libs/emitter":"-1vuptfe"},fn:'client/account.js',dn:'client', root:'..'};
-global.__Modules["14uqikj"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-
-const Icons = require('../assets/icons');
-
-
-global.css.sneakpeek = css`
-	.RecipeCard{
-		display: block;
-		position: relative;
-		text-decoration: none;
-		color: black;
-		&:visited{
-			color: inherit;
-		}
-
-		&:hover{
-			background-color: #f0dfaf;
-		}
-
-		background-color: white;
-
-		//clip-path: polygon(3% 0, 7% 1%, 11% 0%, 16% 2%, 20% 0, 23% 2%, 28% 2%, 32% 1%, 35% 1%, 39% 3%, 41% 1%, 45% 0%, 47% 2%, 50% 2%, 53% 0, 58% 2%, 60% 2%, 63% 1%, 65% 0%, 67% 2%, 69% 2%, 73% 1%, 76% 1%, 79% 0, 82% 1%, 85% 0, 87% 1%, 89% 0, 92% 1%, 96% 0, 98% 3%, 99% 3%, 99% 6%, 100% 11%, 98% 15%, 100% 21%, 99% 28%, 100% 32%, 99% 35%, 99% 40%, 100% 43%, 99% 48%, 100% 53%, 100% 57%, 99% 60%, 100% 64%, 100% 68%, 99% 72%, 100% 75%, 100% 79%, 99% 83%, 100% 86%, 100% 90%, 99% 94%, 99% 98%, 95% 99%, 92% 99%, 89% 100%, 86% 99%, 83% 100%, 77% 99%, 72% 100%, 66% 98%, 62% 100%, 59% 99%, 54% 99%, 49% 100%, 46% 98%, 43% 100%, 40% 98%, 38% 100%, 35% 99%, 31% 100%, 28% 99%, 25% 99%, 22% 100%, 19% 99%, 16% 100%, 13% 99%, 10% 99%, 7% 100%, 4% 99%, 2% 97%, 1% 97%, 0% 94%, 1% 89%, 0% 84%, 1% 81%, 0 76%, 0 71%, 1% 66%, 0% 64%, 0% 61%, 0% 59%, 1% 54%, 0% 49%, 1% 45%, 0% 40%, 1% 37%, 0% 34%, 1% 29%, 0% 23%, 2% 20%, 1% 17%, 1% 13%, 0 10%, 1% 6%, 1% 3%);
-
-		//border: 5px dashed #68401f;
-		border: 2px solid #68401f;
-		box-shadow: 8px 8px 15px 1px #68401f73;
-		//margin-right: -5px;
-		//margin-bottom: -5px;
-
-
-
-		max-width: 150px;
-		padding: 15px;
-
-
-
-
-		h3{
-			margin: 0px;
-			font-size: 1.5em;
-		}
-		p{
-			margin: 5px 0px;
-			max-height : 60px;
-			text-overflow: ellipsis;
-			overflow-y: hidden;
-		}
-
-		img.icon{
-			position: absolute;
-			top: 10px;
-			right: 7px;
-			font-size: 1.2em;
-			width: 27px;
-		}
-
-		// img{
-		// 	max-height : 100%;
-		// 	max-width : 120px;
-		// 	position: absolute;
-		// 	top : 0px;
-		// 	right: 0px;
-		// }
-
-		.FavControl{
-			display : none;
-			position: absolute;
-			top : 10px;
-			right : 10px;
-			font-size: 1.2em;
-		}
-
-	}
-`;
-
-
-const {FavControl} = require('../fav.js');
-
-const RecipeCard = (recipe)=>{
-	const hasFav = (typeof localStorage !== 'undefined') && !!localStorage.getItem(`fav__${recipe.id}`)
-
-
-	return x`<a href=${`#recipe=${recipe.id}`} class='RecipeCard'>
-
-		${Icons[recipe.type] && x`<img class='icon' src=${Icons[recipe.type]}></img>`}
-		${FavControl(recipe.id)}
-
-		<h3>${recipe.title}</h3>
-
-
-		${recipe.desc && x`<p>${recipe.desc}</p>`}
-
-	</a>`
-}
-
-//${recipe.img && x`<img src=${recipe.img}></img>`}
-//${recipe.img && x`<div class='img' style=${`background-image: url("${recipe.img}");`}></div>`}
-
-// <small>${recipe.chef} - ${recipe.type}</small>
-
-module.exports = RecipeCard;
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps","../fav.js":"-1lcvatb"},fn:'client/search_page/recipe.card.js',dn:'client/search_page', root:'../..'};
-global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
-const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-const RecipeCard = require('./recipe.card.js');
-
-
-
-global.css.search_page = css`
-	.Search{
-		min-height: 100vh;
-
-		.results{
-			display: flex;
-			justify-content: space-around;
-			flex-wrap: wrap;
-			gap : 10px;
-			.RecipeCard + .RecipeCard{
-				//border-color:red;
-			}
-
-			.RecipeCard{
-				min-width : 300px;
-				width     : 50%;
-			}
-		}
-	}
-`
-
-const SearchControl = require('./search.control.js');
-
-
-const FilterRecipes = (recipes, {terms, types})=>{
-	let result = [...recipes];
-
-	if(types.length !== 0){
-		result = result.filter(recipe=>{
-			return types.includes(recipe.type);
-		});
-	}
-
-	if(terms.length !== 0){
-		result = result.filter(recipe=>{
-			return terms.every(term=>{
-				if(recipe.title.toLowerCase().indexOf(term) !== -1) return true;
-				if(recipe.desc.toLowerCase().indexOf(term) !== -1) return true;
-
-				//TODO: add ingredient level search
-
-				//if(recipe.content.toLowerCase().indexOf(term) !== -1) return true;
-
-				return false;
-			})
-		});
-	}
-
-	return result;
-};
-
-
-function shuffle(arr){
-	let res = [], array = [...arr];
-	while(array.length !== 0){
-		const idx = Math.floor(Math.random()*array.length);
-		res.push(array.splice(idx, 1)[0]);
-	}
-	return res;
-};
-
-
-
-const SearchPage = comp(function(allRecipes){
-
-	const [recipes, setRecipes] = this.useState(allRecipes);
-
-
-	this.useEffect(()=>{
-		document.title = `Tastebase - Search`;
-		window.scrollTo(0, 0);
-	},[]);
-
-
-	const handleSearch = (queryObj)=>{
-		setRecipes(FilterRecipes(allRecipes, queryObj))
-	};
-
-	const shuffleRecipes = ()=>{
-		console.log({recipes});
-		console.log(shuffle(recipes))
-		setRecipes(shuffle(recipes));
-	}
-
-	return x`<section class='Search'>
-
-		<div class='top'>
-			${SearchControl(handleSearch)}
-			<button onclick=${()=>shuffleRecipes()}>Shuffle</button>
-		</div>
-
-		<div class='results'>
-			${Object.fromEntries(recipes.map(recipe=>[recipe.id, RecipeCard(recipe)]))}
-		</div>
-	</section>`
-});
-
-module.exports = SearchPage;
-
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./search.control.js":"qumug0"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/parse.recipe.js":"-153mfgm","./ingredient.control.js":"fn4mc7","../servings.emitter.js":"-1fvb86o","../fav.js":"-1lcvatb","../recipe.store.js":"-4hneic"},fn:'client/recipe_page/recipe.page.js',dn:'client/recipe_page', root:'../..'};
 global.__Modules["1k4rf0b"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 
 require('./style.js');
 
+
+const Navbar = require('./nav.js');
 
 const SearchPage = require('./search_page/search.page.js');
 const RecipePage = require('./recipe_page/recipe.page.js');
@@ -2493,69 +2724,34 @@ const ConversionPage = require('./conversion_page/conversion.page.js');
 
 global.css.main_page = css`
 	main{
-		nav{
-			&>a{
-				font-style: italic;
-				color: black;
-				&:visited{ color: black; }
-			}
-		}
+
 	}
 `;
 
-const Account = require('./account.js');
+const Store = require('./recipe.store.js');
 
-const accountItem = comp(function(){
-	const name = Account.useAccount(this);
-
-	const logout = ()=>{
-		if(confirm('Sure, you want to logout?')) Account.logout();
-	};
-
-	if(!name) return x`<a onclick=${Account.login}>Login</a>`;
-	return x`<a href=${`#search=chef:${name}`}>
-		${name}
-		<i class='fa fa-times' onclick=${logout}></i>
-	</a>`; //TODO: this should link to a search page with only your chef
-});
-
-const addRecipeItem = comp(function(){
-	const name = Account.useAccount(this);
-	if(!name) return x`<a href='https://github.com/stolksdorf/tastebase/tree/master/recipes' target='_blank'>Add Recipe</a>`;
-	return x`<a href=${`https://github.com/stolksdorf/tastebase/new/master/recipes/${name}`} target='_blank'>Add Recipe</a>`;
-})
-
-
-const Main = comp(function({ recipes, chefs, types }){
+const Main = comp(function({ chefs }){
 	const [page, setPage] = this.useState('');
 	const [param, setParam] = this.useState('');
 
 	const updatePage = ()=>{
 		const [page, param] = window.location.hash.substr(1).split('=');
 		setPage(page || 'search');
-			setParam(decodeURIComponent(param || ''));
+		setParam(decodeURIComponent(param || ''));
 	}
 
 	this.useEffect(()=>{
-		console.log({recipes})
-		window.onhashchange = updatePage;
+		Store.init(chefs);
 		updatePage();
 	}, []);
 
-	return x`<main>
-		<nav>
-			<a href='#'>Tastebase</a>
-			<ul>
-				<li><a href='#search'>Search</a></li>
-				<li><a href='#conversion'>Convert</a></li>
-				<li>${addRecipeItem()}</li>
-				<li><a href='https://github.com/stolksdorf/tastebase'>Github</a></li>
-				<li>${accountItem()}</li>
-			</ul>
-		</nav>
+	console.log({page, param})
 
-		${page == 'search' && SearchPage(Object.values(recipes), param, types, chefs)}
-		${page == 'recipe' && RecipePage(recipes[param])}
+	return x`<main>
+		${Navbar()}
+
+		${page == 'search' && SearchPage()}
+		${page == 'recipe' && RecipePage(param)}
 		${page == 'conversion' && ConversionPage()}
 
 		<footer></footer>
@@ -2564,7 +2760,7 @@ const Main = comp(function({ recipes, chefs, types }){
 
 
 module.exports = Main;
-},deps:{"../libs/xo.js":"-1pvg4m","../libs/pico-css.js":"1hqukto","./style.js":"-n3qvub","./search_page/search.page.js":"12s55an","./recipe_page/recipe.page.js":"3l2hej","./conversion_page/conversion.page.js":"ksc8r0","./account.js":"18609dp"},fn:'client/main.js',dn:'client', root:'..'};
+},deps:{"../libs/xo.js":"-1pvg4m","../libs/pico-css.js":"1hqukto","./style.js":"-n3qvub","./nav.js":"-1knvkhj","./search_page/search.page.js":"12s55an","./recipe_page/recipe.page.js":"3l2hej","./conversion_page/conversion.page.js":"ksc8r0","./recipe.store.js":"-4hneic"},fn:'client/main.js',dn:'client', root:'..'};
 	const req = (id)=>{
 		const mod = global.__Modules[id];
 		if(mod.executed) return mod.export;
@@ -2580,5 +2776,5 @@ module.exports = Main;
 		module.exports = req('1k4rf0b');
 	}
 })();</script>
-<script>xo.render(document.body.children[0], window.main({"recipes":{"jenny__tea":{"id":"jenny__tea","chef":"jenny","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/jenny/tea.md","content":"# Tea\n\nThis is how you make tea. I know it's super secret stuff\n\n![](https://optional_img_url.biz)\n\ntype: beverage\nservings : 1 \n\n\n1. Boil {1cup of water} in a kettle or pot, but not microwave. This is fancy tea. \n1. Grab {1 teabag}. Put it in a mug.\n1. Steep tea for however long you want. Watch the colour. Is it good tea?\n1. Add optional {1splash of milk} after steeping. Not before, after.\n1. Wait for it to cool down.\n1. Forget about it.\n1. Reheat or repeat.\n\n/* You never remember tea the first time you make it. */\n","servings":1,"desc":"This is how you make tea. I know it's super secret stuff\n\n![](https://optional_img_url.biz)","type":"beverage","title":"Tea"},"katie__coconut chicken stew":{"id":"katie__coconut chicken stew","chef":"katie","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/katie/coconut chicken stew.md","content":"# Spicy coconut chicken stew\n\nWarm, filling, with a little bit of heat.\n\ntype: dinner\nservings : 4  \n\n\n1. In a large, deep skillet, heat {2 tbsp oil}. Add {3 shallots} and {2 chiles} and cook over moderate heat, stirring occasionally, until tender, about 5 minutes.\n2. Add {1 can coconut milk}, {1/2 cup stock} and {1/4 cup lime juice} and bring to a simmer.\n3. Season the broth generously with {salt} and {pepper}.\n4. Stir in {1 lb rotisserie chicken} and {1 cup corn kernals} and cook until hot, 3 to 5 minutes.\n5. Stir in {3 cups spinach} and simmer until just wilted.\n6. Stir in {1 cup of basil}.\n7. Transfer to shallow bowls, garnish with basil and serve.\n\n\n","servings":4,"desc":"Warm, filling, with a little bit of heat.","type":"dinner","title":"Spicy coconut chicken stew"},"scoot__audrianna_bread":{"id":"scoot__audrianna_bread","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/audrianna_bread.md","content":"# Audrianna bread\n\nservings: 1\ntype: bread\n\nAudrianna's simple bread recipe.\n\n\n1. Start prepping {1/4 cup of oatmeal} with boiling water\n1. Add {yeast} and {some sugar} to {1/2 cup of water} at 38C. Wait until foamy\n1. In mixing bowl add {2 cups of flour}, {1 tsp of salt}, {1 tbsp of brown sugar}, the oatmeal, the yeast.\n1. Mix and add water until smooth dough. Cover and let rise for ~1hr\n1. Punch down and move to bread tin. Cover and let rise for ~1hr\n1. Bake at 350F for 20min\n\n\n\n/*\nOriginal\n\n\nThis recipe will make 2 loaves:\n\n1.5 c water\n3 T oil\n1.5 T molasses\n1.5 T sugar\n2.25 t salt\n.5 c cooked oatmeal\n4.5 c flour\n1 T yeast (heaping)\n\nIn the bread machine, I add the ingredients in that order, press the “dough” button, and in 2 hours it dings :)\n\nWhen I made this bread at camp, I would proof the yeast in a bowl of lukewarm water + sugar. Mix the oatmeal, salt, oil, and  molasses…then add yeast mixture…. in large  bowl and mix with with dough hook; gradually add in flour until dough pulls away from bowl. (At camp, I always needed more flour than was called for). Plop out onto floured surface and knead briefly. Put all into a bowl rubbed with oil. Cover with cloth and let rise til double in size (20-60 min depending on how warm the room is).\n\nPunch down and plop onto flour covered surface. Knead briefly. Cut into 2. Put each into greased bread tins. Cover with towel and let rise until doubled.\n\nBake 350 for 20 minutes until golden.\n\nEnjoy!\n\nAdditional notes: We always used the leftover oatmeal from breakfast. When I do this at home, I cook up a batch of oatmeal, then scoop by 1/2 cupfuls into a muffin tin and freeze. I then store the frozen “pucks” and thaw individually as needed.\n\n*/","servings":1,"desc":"Audrianna's simple bread recipe.","type":"bread","title":"Audrianna bread"},"scoot__basic_bread":{"id":"scoot__basic_bread","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/basic_bread.md","content":"# Basic Bread\n\ntype: bread\nservings: 1\nref: https://www.tasteofhome.com/recipes/basic-homemade-bread/\n\nJust a stupidly simple bread recipes that works.\n\n\n1. Warm {1 cup of water} to 35C and mix in {1 packet of yeast}. /* Needed to add ~1/4 cup more of water */\n1. Mix {4 cups of flour} and {2 tsp of salt}, then add yeast mixture once foamy (~5min) and {3 tbsp of metled butter}\n1. Mix/knead for 5min\n1. Add some olive oil to bowl and lift ut dough so it's covered in the oil. Cover bowl and let rise for ~2hrs\n1. Preheat oven to 375F.","servings":1,"desc":"Just a stupidly simple bread recipes that works.","type":"bread","title":"Basic Bread","ref":"https://www.tasteofhome.com/recipes/basic-homemade-bread/"},"scoot__cauliflower_soup":{"id":"scoot__cauliflower_soup","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cauliflower_soup.md","content":"# Cauliflower Soup\n\nimg: https://rainbowplantlife.com/wp-content/uploads/2021/01/Instant-Pot-Cauliflower-Soup-macro-1-of-1-scaled.jpg\nref: https://rainbowplantlife.com/instant-pot-cauliflower-soup/\n\n\n> This Creamy Cauliflower Soup is unbelievably creamy yet dairy-free and vegan, thanks to cashews and cannellini beans. It's easy and quick to make, freezes great, and is satisfying enough for a main meal. The perfect healthy weeknight dinner!\n\n\n1. Pour boiling water over the {1 cup of raw cashews} to cover and let rest for 15 minutes. Drain and rinse before using.\n1. Make the bouquet garni. Use kitchen twine to tie up the {thyme sprigs}, {rosemary sprigs}, and {bay leaf}. And chop the {head of cauliflower} into small florets.\n1. Add {1 large chopped yellow onion} to dutch oven with olive oil. Brown, then add {4 cloves of minced garlic}, cook for another 2-3min\n1. Pour in {5 cups of broth}, scrape the bottom. Add in the cashews, cauliflower, {2 cans of cannellini beans}, {5 tbsp of nutrional yeast}, and salt and pepper. Gently tuck the bouquet garni into the broth.\n1. Bring the soup to a boil. Then reduce the heat to maintain a rapid simmer and cook for 15-30 minutes, or until the cauliflower is tender and soft.\n1. Remove the bouquet garni and transfer the soup to a stand blender (you will need to do this in two batches). Blend until smooth, thick, and creamy.\n1. Taste for salt and pepper and adjust accordingly. Transfer the soup to bowls, and before serving, {optional lemon zest} on top, add a scattering of {chili flakes}\n","servings":2,"desc":"This Creamy Cauliflower Soup is unbelievably creamy yet dairy-free and vegan, thanks to cashews and cannellini beans. It's easy and quick to make, freezes great, and is satisfying enough for a main meal. The perfect healthy weeknight dinner!","type":"food","title":"Cauliflower Soup","img":"https://rainbowplantlife.com/wp-content/uploads/2021/01/Instant-Pot-Cauliflower-Soup-macro-1-of-1-scaled.jpg","ref":"https://rainbowplantlife.com/instant-pot-cauliflower-soup/"},"scoot__cauliflower_wings":{"id":"scoot__cauliflower_wings","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cauliflower_wings.md","content":"# Cauliflower Wings\n\ntype: dinner\nservings: 2\n\n\nBreaded and crispy cauliflower wings that taste like real wings\n\n\n1. Cut cauliflower into inch sized pieces\n1. Mix {1/2 cup milk}, {1/2 cup water}, {3/4 cup all-purpose flour}, {2 tsp. garlic powder}, {1 tsp. onion powder}, {1 tsp. smoked paprika} into a large bowl\n1. Coat cauliflower, and cover in {Panko bread crumbs}\n1. Cook at 350 degrees for 15 minutes on Air fryer mode.\n","servings":2,"desc":"Breaded and crispy cauliflower wings that taste like real wings","type":"dinner","title":"Cauliflower Wings"},"scoot__chickpea_cookie_dough":{"id":"scoot__chickpea_cookie_dough","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/chickpea_cookie_dough.md","content":"# Chickpea Cookie Bites\n\ntype: snack\nservings: 12\n\nA \"healthy\" snack that uses chickpeas instead of flour as the base.\n\n\n1. Drain {1 can of chickpeas} into a blender\n1. Mix in\n  - {2 tbsp maple sryup}\n  - {1 tbsp vanilla}\n  - {1 tbsp peanut butter}\n  - {1 scoop protein powder}\n  - {pinch of salt}\n  - {1 tbsp cinnamon}\n1. Blend together, you may need to scrape down the sides\n1. Add {chocolate chips}\n1. Roll into bite sized balls, sprinkle with salt and freeze","servings":12,"desc":"A \"healthy\" snack that uses chickpeas instead of flour as the base.","type":"snack","title":"Chickpea Cookie Bites"},"scoot__churro_kettle_corn":{"id":"scoot__churro_kettle_corn","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/churro_kettle_corn.md","content":"# Churro Kettle Corn\n\ntype: snack\nref : https://www.bingingwithbabish.com/recipes/kettle-corn-community\n\nCinnamon and sweet popcorn.\n\n\n1. Add the {3tbsp oil} and cinnamon sticks to a large stockpot. \n1. Begin heating the oil over low heat. Let the oil infuse for 5 minutes.\n1. Carefully remove the cinnamon sticks. \n1. Increase the heat to medium-high and allow the oil to heat for 1 minute.\n1. Add 2 or 3 kernels to the oil and once they pop, add all the remaining {1/3cup kernels}.\n1. While gently shaking the pot with one hand, slowly stream in the {1/4cup sugar}.\n1. Cover the pot with a lid and continuously shake the pot until all of the kernels have popped.\n1. Transfer the kettle corn to a large rimmed baking sheet. Spread the popcorn out to ensure the kettle corn doesn’t clump together. Season with salt to taste. \n1. Serve immediately. \n","servings":2,"desc":"Cinnamon and sweet popcorn.","type":"snack","title":"Churro Kettle Corn","ref":"https://www.bingingwithbabish.com/recipes/kettle-corn-community"},"scoot__cookie_dough":{"id":"scoot__cookie_dough","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/cookie_dough.md","content":"# Raw Cookie Dough\n\nBy heat treating the flour, you can make edible raw cookie dough!\n\ntype: snack\nservings: 16\nimg: https://www.benjerry.com/files/live/sites/systemsite/files/flavors/recipes/edible-cookie-dough/Beauty%20Reshoot/DRV_EdibleCookieDough_BeautyShot_BNJ2106-15_7465_779x400_AR.jpg\nref : https://www.benjerry.com/flavors/recipes/edible-cookie-dough\n\n1. Melt {8tbsp butter} (~45sec in microwave)\n1. stand mixer beat together the butter and {1cup of brown sugar} until light and fluffy.\n1. heat treat the {1 cup of flour} (~35sec in microwave). Use an instant-read thermometer to ensure that the flour reaches 74C throughout.\n1. Add the {1tsp vanilla}, {2tbsp heavy cream}, and {1/2tsp salt}, flour and mix to incorporate.\n1. Fold in the {1/2cup of chocolate chips}.\n1. Spread out on parchment paper, score it into squares, sprinkle with salt\n1. Freeze, then pop off parchment and store in tupperware\n\n","servings":16,"desc":"By heat treating the flour, you can make edible raw cookie dough!","type":"snack","title":"Raw Cookie Dough","img":"https://www.benjerry.com/files/live/sites/systemsite/files/flavors/recipes/edible-cookie-dough/Beauty%20Reshoot/DRV_EdibleCookieDough_BeautyShot_BNJ2106-15_7465_779x400_AR.jpg","ref":"https://www.benjerry.com/flavors/recipes/edible-cookie-dough"},"scoot__creme_brulee":{"id":"scoot__creme_brulee","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/creme_brulee.md","content":"# Creme Brulee\n\n3 ingredient creme brulee using ice cream\n\n\ntype: dessert\nref: https://tasty.co/recipe/3-ingredient-creme-brulee\n\n\n\n1. Preheat the oven to 325˚F\n1. Microwave the {1 cup of ice cream} for 30 to 40 seconds or until completely melted.\n1. Add the {1 egg} into the melted ice cream and whisk well.\n1. Pour the mixture into a ramekin. Place the ramekin in a pan. Pour hot water into the pan to come roughly halfway up the sides of the ramekin.\n1. Bake for 50 minutes. The crème brûlée should be set, but still a little jiggly in the middle.\n1. Remove the ramekins, allow to cool to room temperature, cover with plastic wrap and refrigerate for at least 2 hours, and up to 3 days.\n\n\n1. Heat {2 tbsp sugar} over medium low heat until it turns into a thick liquid, then quickly pour over the ramekins before it hardens","servings":2,"desc":"3 ingredient creme brulee using ice cream","type":"dessert","title":"Creme Brulee","ref":"https://tasty.co/recipe/3-ingredient-creme-brulee"},"scoot__curry":{"id":"scoot__curry","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/curry.md","content":"# Basic Curry\n\ntype: dinner\n\nReally simple, but flavourful curry recipe\n\n\n1. Heat oil in pot add {3 tbsp of curry paste} (green - mild, red - medium, yellow - spicy)\n1. After a minute, add chopped veggies: {onion}, {peas}, {carrots}, {potatoes}\n1. Season with pepper and salt, and optionally {1/2 tbsp of Garam Masala}\n1. Once soft (~5min), add {1 can of chickpeas} and {1 can of coconut milk}\n1. Prep {1 cup of rice}\n1. Reduce heat once simmering, cook until reduced and thick (~20min), stir occasionally\n1. Serve with rice and {naan}","servings":2,"desc":"Really simple, but flavourful curry recipe","type":"dinner","title":"Basic Curry"},"scoot__eggs_benny":{"id":"scoot__eggs_benny","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/eggs_benny.md","content":"# Eggs Benny any% speedrun\n\nMy summary of Alex's speedrun of Eggs benny\n\ntype: breakfast\nservings: 1\nref: https://www.youtube.com/watch?v=LqHqX8xfYCs\n\n\n\n### Hollendaise Sauce\n\n0. Melt {2tbsp butter} in microwave 50 sec in lightly covered container (less if not cold butter)\n1. Add an {1 egg yolk}, {pinch of salt} (and paprike/cayenne), and {1/2 tsp lemon juice} to blender\n2. Mix in melted butter and run for 10sec\n\n/*\n- Use immersion blender\n- Cook final mixutre in 15sec interval, with whisking inbetween until the right consistency\n*/\n\n\n### Poached Egg\n\n0. Add enough water to submerge an egg and a splash of {white vinegar} into a jar (use same butter jar from sauce)\n1. Crack {1 egg} into jar\n2. Microwave for 70 seconds (will vary on microwave, plz test)\n3. Pour out over a slotted spoon to catch egg\n\n\nServe the poached egg on toast with hollandiase, topped with a pinch of {paprika}\n\n\n","servings":1,"desc":"My summary of Alex's speedrun of Eggs benny","type":"breakfast","title":"Eggs Benny any% speedrun","ref":"https://www.youtube.com/watch?v=LqHqX8xfYCs"},"scoot__fake_fake_crab":{"id":"scoot__fake_fake_crab","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/fake_fake_crab.md","content":"# Fake Fake Crab\n\ntype: experiment\n\nA vegetarian alternitive to shredded crab for sushi or other dishes\n\n\n1. Grate {firm tofu}\n1. Mix with {kewpie mayo}, {siracha}, and {crushed seaweed} to taste\n","servings":2,"desc":"A vegetarian alternitive to shredded crab for sushi or other dishes","type":"experiment","title":"Fake Fake Crab"},"scoot__focaccia":{"id":"scoot__focaccia","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/focaccia.md","content":"# Focaccia\n\nHerby, cruchy, and savoury. Quite possibly the best Focaccia recipe\n\nType: bread\nServings: 4\nref: https://www.youtube.com/watch?v=NGnMrM9qDtE\n\n### Dough\n\n1. Dissolve yeast in 1/2cup 40C water for 5min\n1. Add {2.5 cups water} , {6 cups flour} + {2tbsp salt} + spices ({oregano} & {rosemary}) + yeast\n1. mix slow for 1min, 5min on med-high\n1. Cover and rest for 10min\n1. mix for 15min on med-high (should be elastic)\n1. Lift dough out, {1/4cup olive oil} in bowl, add dough, and cover\n1. Let rise for 1.5hr\n\n### Pan\n\n1. Lightly oil and salt sheet, Spread out dough on sheet until it springs back\n1. Mix {minced garlic} {rosemary} amd {1/2 cup oil} in a bowl\n1. Cover and rest until it reaches the top of the pan (~45min)\n\n\n### Bake\n\n1. Oven at 450F\n1. Dimple dough with fingers\n1. Drizzle oil + salt on top (should be mostly covered)\n1. Place on bottom rack of oven for 25min\n1. Move to top rack for 5min\n1. Let cool for 10min, cut into pieces with scissors\n","servings":4,"desc":"Herby, cruchy, and savoury. Quite possibly the best Focaccia recipe","type":"bread","title":"Focaccia","ref":"https://www.youtube.com/watch?v=NGnMrM9qDtE"},"scoot__french_toast_bites":{"id":"scoot__french_toast_bites","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/french_toast_bites.md","content":"# French Toast Bites\n\nThese little bites get evenly crispy, and much easier to dip in maple syrup\n\nservings: 2\ntype: breakfast\nimg: https://1.bp.blogspot.com/-DA_lwtmbuYw/XAmGR83uhiI/AAAAAAAAe6M/vRx8pcygHvUIWWIyCmJRNPk-63hZiydaACLcBGAs/s1600/Cinnamon-French-Toast-Bites-in-process-4.jpg\n\n\n1. Whisk {1 egg}, {1/4 cup milk}, {vanilla}, {pinch of salt}, and {cinnamon} until smooth\n1. Cut {2 slices of bread} into inch sized pieces.\n1. Dump bread into mixture and toss until coated evenly. Should use up nearly all of the mixture.\n1. Heat pan to med. Add butter.\n1. Fry bread pieces, wait until one side has crisped up before flipping. Toss occasionally until golden brown on each side","servings":2,"desc":"These little bites get evenly crispy, and much easier to dip in maple syrup","type":"breakfast","title":"French Toast Bites","img":"https://1.bp.blogspot.com/-DA_lwtmbuYw/XAmGR83uhiI/AAAAAAAAe6M/vRx8pcygHvUIWWIyCmJRNPk-63hZiydaACLcBGAs/s1600/Cinnamon-French-Toast-Bites-in-process-4.jpg"},"scoot__ginger_beer":{"id":"scoot__ginger_beer","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/ginger_beer.md","content":"# Ginger Beer\n\ntype: experiment\nref: https://www.mountainfeed.com/blogs/learn/27592385-the-ginger-bug-easily-make-your-own-ginger-beer\n","servings":2,"desc":"","type":"experiment","title":"Ginger Beer","ref":"https://www.mountainfeed.com/blogs/learn/27592385-the-ginger-bug-easily-make-your-own-ginger-beer"},"scoot__korean_tacos":{"id":"scoot__korean_tacos","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/korean_tacos.md","content":"# Korean Tacos\n\ntype: dinner\n\n\n1. {1cup TVP} + water + {korean spice}. Soak ~10min\n2. {1cup rice} + {1.5cups water}. Bring to boil, then simmer on low for 18min\n3. shred {2 carrots} and thinly slice {1/3 cucumber} into half moons\n4. Soak in {white wine vinegar} + {tblsp of sugar} + {pinch of salt} until coated\n5. Cook {1 chopped onion} in pan + {seasame oil} + {korean spice} + {gochujang paste} until soft\n6. Add tvp and brown\n7. Mix {1/2cup of mayo} + splash of water + spoonful of gochujang paste. Mix well, add paste until desired spiciness\n8. Drain carrots + cucumbers \n9. Serve!","servings":2,"desc":"","type":"dinner","title":"Korean Tacos"},"scoot__miso_soup":{"id":"scoot__miso_soup","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/miso_soup.md","content":"# Miso Soup\n\nservings: 1\ntype: lunch\nref: https://www.allrecipes.com/recipe/13107/miso-soup/\n\n1. In a medium saucepan over medium-high heat, combine {1/2 tsp dashi} and {1 cups of water}; bring to a boil.\n1. Reduce heat to medium, and whisk in the {1 tbsp of miso paste}. Stir in diced and pressed tofu.\n1. Cut {1 stalk of green onions} into little rings and press and slice {10 small pieces of tofu}. Add them to the soup.\n1. Simmer gently for 2 to 3 minutes before serving.\n","servings":1,"desc":"","type":"lunch","title":"Miso Soup","ref":"https://www.allrecipes.com/recipe/13107/miso-soup/"},"scoot__pancakes":{"id":"scoot__pancakes","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/pancakes.md","content":"# Pancakes\n\nYou need to add your pancake recipe here","servings":2,"desc":"","type":"food","title":"Pancakes"},"scoot__popcorn":{"id":"scoot__popcorn","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/popcorn.md","content":"# Popcorn\n\nservings : 2\ntype: snack\n\nTheater-style stove top popcorn\n\n1. {1/3 cup of coconut oil} into pot on med heat with a few kernals\n1. Once the few kernals have popped, add {1/2 cup of kernals} and {1 tsp of Flavocol} once they have popped, lower heat a bit\n1. Keep moving until the popping slows down (2-3min)\n1. Top with a small sprinkling of {1 tsp of Flavocol} on top","servings":2,"desc":"Theater-style stove top popcorn","type":"snack","title":"Popcorn"},"scoot__preserved_lemon":{"id":"scoot__preserved_lemon","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/preserved_lemon.md","content":"# Preserved lemon\n\ntype: experiment\n\nref: https://www.foodnetwork.com/recipes/alton-brown/quick-preserved-lemons-7423982\n\n1. Trim the ends off the lemons. Slice each lemon into 8 wedges, removing any seeds as you go. Reserve as much of the juice as possible.\n1. Layer the lemon wedges in a wide-mouthed 16-ounce canning jar, covering each layer with salt. Pack the jar as tightly as possible, pressing down to release the lemons' juice as you go and leaving about 1/4 inch of headspace in the jar.\n1. Cover the wedges with the reserved lemon juice from the cutting board and the ends. If your lemons do not release a significant amount of juice, top off the jar with the juice of another lemon.\n1. Stash in the refrigerator for 4 days, then flip the jar over and age another 4 days before sampling. The peel should be nice and soft. Rinse before using.","servings":2,"desc":"","type":"experiment","title":"Preserved lemon","ref":"https://www.foodnetwork.com/recipes/alton-brown/quick-preserved-lemons-7423982"},"scoot__quick_risotto":{"id":"scoot__quick_risotto","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/quick_risotto.md","content":"# Quick Rosotto\n\ntype: dinner\n\nA fast and simple rosotto using mostly frozen or dry ingredients.\n\n\n1. add {1 package of impossible meat} to high-walled pan, high heat\n1. Once brown, add {minced garlic} and {onions}\n1. add {1 cup of Arborio rice}, mix\n1. after a min, add {2 cups of stock}\n1. Bring to simmer and reduce heat, cook for 12min\n1. Mix in peas + other veg. Cook for 5 min\n1. Remove from heat. Mix in {parm cheese}, {sour cream}, and {1 tbsp butter}\n1. Season with salt + pepper\n","servings":2,"desc":"A fast and simple rosotto using mostly frozen or dry ingredients.","type":"dinner","title":"Quick Rosotto"},"scoot__seitan":{"id":"scoot__seitan","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/seitan.md","content":"# Seitan\n\n\nVegetarian Chicken\n\ntype: experiment\nref : https://www.youtube.com/watch?v=yY2YN6krVtk\n\n\n\n1. {4 cups of flour} and {2 cups of water}\n2. Knead for 5-10min, go for soft and sticky\n3. Rest for 2hrs dough in bowl covered in water\n4. drain and replace with cleanw ater\n5. Massage and squeezedough while in the water for 3-5min\n6. Wash again with clean water, massage (Dough should look like it's falling apart)\n7. Do 4 more washes (for a total of 6 washes) \n8. Cover and rest for 10min\n9. Create broth to simmer dough in. {4 cups of water} {1tbsp of garlic powder} {1tbsp of garlic powder} {2tsp of paprika} {veg bullion} {3tbsp of soy sauce}\n10. Heat til boiling\n11. Flatten dough, cut into 3 strips connected at the top, then braid tightly\n12. Stretch into a rope, then tie multiple knots in the rope\n13. Simmer in broth for an hour, halfway through flip the dough\n14. You can chill over night in fridge covered in broth (optional)\n\n","servings":2,"desc":"Vegetarian Chicken","type":"experiment","title":"Seitan","ref":"https://www.youtube.com/watch?v=yY2YN6krVtk"},"scoot__swedish_cardamom_buns":{"id":"scoot__swedish_cardamom_buns","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/swedish_cardamom_buns.md","content":"# Swedish Cardamom Buns\n\ntype: dessert\nservings: 20\n\nSweet and savoury buns with the foral taste of cardamom.\n\n\n### Dough\n\n1. Heat {1 3/4 cups of water} to 35C (~45sec in microwave). Mix in {2 tsp of yeast} and {sugar}. Wait until foamy\n1. Mix Dry into stand mixer: {4 cups of flour}, {1/3 cup of sugar}, {1 tsp of salt}, {1/2 cup of softened butter}, {1 tbsp of ground cardamom}\n1. Pour in the yeast-milk mixture. Mix on low speed until a dough forms. Add flour until it's just sticky to the touch.\n1. Cover and let rise for about an hour.\n\n\n### Filling\n/* 1. Mix together {1 tbsp of ground cardamom}, {100g of sugar}, {100g of softened butter} */\n\n1. Mix together {1 tbsp of ground cardamom}, {1/2 cup of sugar}, {1/2 cup of softened butter}\n\n\n### Buns\n1. Roll out dough into a 1ft x 2ft rectangle\n1. Spread thin layer of filling over dough\n1. Fold in half to cover the filling\n1. Prepare 2 baking sheets with parchment paper\n1. Cut ~16 thin strips about 1-2cm thick. Twist and roll strips around three fingers, rotating until it forms a nest/bun. Place on baking sheet\n1. Cover and let rise while oven pre-heats\n\n### Baking\n1. Preheat oven to 425F\n1. Bake buns for 15-20min. Should be golden on top, brown on bottom. Internal temp should be 200F\n1. (Optional) While baking, make glaze: 3tbsp of water}, {3tbsp of sugar}, {1/4tsp of vanilla extract}\n1. Brush buns with glaze right out of the oven. Dust buns with some ground cardamom, cinnamon, and salt to stick to the glaze.\n","servings":20,"desc":"Sweet and savoury buns with the foral taste of cardamom.","type":"dessert","title":"Swedish Cardamom Buns"},"scoot__vegan_brisket":{"id":"scoot__vegan_brisket","chef":"scoot","github":"https://github.com/stolksdorf/tastebase/blob/master/recipes/scoot/vegan_brisket.md","content":"# Vegan Brisket\n\nExperiments in making vegan meat.\n\n\ntype: experiment\nref: https://www.youtube.com/watch?v=B4UuP0heR8w\n\n\n\n1 cup marsala wine\n¼ cup (60ml) soy sauce or tamari \n¼ cup (60ml) maple syrup\n2 tbsp sriracha\n3½ cups (870ml) low sodium vegetable stock\n1 small can of tomato paste, about ¼ cup (4 tbsp)\n3+ tbsp olive oil\n\nWhisk all above ingredients well.\n\nIn separate bowl mix the dry batch:\n\nDry Mixture\n\n2¼ cups (280g) vital wheat gluten flour\n¾ cup (95g) chickpea flour\n2 tbsp chili powder\n1 tbsp paprika\n1½ tsp cumin\n2 tbsp onion granules\n2 tbsp garlic granules\n1 tbsp salt\n\n---\n\n1. Prepare baking dish by coating lightly with oil. Set aside. Preheat oven to 375 degrees fahrenheit.\n\n2. Hand mix the wet and dry batches separately. Combine dry mixture with half of wet mixture.  Mix until combined completely. Knead for 3 minutes until all is mixed thoroughly and the dough has an elastic texture.\n\n3. Form into a rough oval shape and place in baking dish. Lightly coat the raw seitan with oil. \n\n4. Add rest of braising liquid around the casserole dish, pouring over raw seitan. \n\n5. Place in oven and bake for about 25 minutes. \n\n6. At the 25 minute mark, flip loaf over. Place back in oven for another 20 minutes. If you will be putting this on the grill, be sure to fire-up the grill. Prepare this BBQ sauce (https://wickedhealthyfood.com/2020/04...)  while your seitan is cooking. \n\n7. Remove the seitan a few minutes before its done and baste the seitan with some of the remaining liquid in the dish. Place back in oven for another 5-10 minutes. The liquid should be almost evaporated and thickened. Remove from oven and leave to cool for a few minutes. \n\n8. Once the seitan is cooled, it's time to finish it on the grill. Be sure the grill is blazing hot and on high heat. In a casserole dish, or the same that the seitan was baked in, cover it with BBQ sauce being sure it coats all sides well. \n\n9. Place on the grill and allow to brill for about 8 minutes on each side to create the killer char that will make this finish dish. \n\n10. While this is grilling, gather all the fixin's to complete your BBQ board, or BBQ sandwich. Fresh sliced pickles, sliced raw white onion, Texas toast, extra BBQ sauce and of course a toll of paper towels. \n\n 11. After flipping brisket and getting some great char on both sides, remove from grill. Its time to assemble. \n","servings":2,"desc":"Experiments in making vegan meat.\n\n\n\n\n\n\n\n1 cup marsala wine\n¼ cup (60ml) soy sauce or tamari \n¼ cup (60ml) maple syrup\n2 tbsp sriracha\n3½ cups (870ml) low sodium vegetable stock\n1 small can of tomato paste, about ¼ cup (4 tbsp)\n3+ tbsp olive oil\n\nWhisk all above ingredients well.\n\nIn separate bowl mix the dry batch:\n\nDry Mixture\n\n2¼ cups (280g) vital wheat gluten flour\n¾ cup (95g) chickpea flour\n2 tbsp chili powder\n1 tbsp paprika\n1½ tsp cumin\n2 tbsp onion granules\n2 tbsp garlic granules\n1 tbsp salt\n\n---","type":"experiment","title":"Vegan Brisket","ref":"https://www.youtube.com/watch?v=B4UuP0heR8w"}},"chefs":["jenny","katie","scoot"],"types":["beverage","dinner","bread","food","snack","dessert","breakfast","experiment","lunch"]}));</script>
+<script>xo.render(document.body.children[0], window.main({"chefs":["stolksdorf","meggeroni"]}));</script>
 </html>

@@ -14,6 +14,8 @@ INGREDIENTS:
 
 2 Tbsp (28g) granulated sugar
 
+1 tsp of Yeast
+
 
 Ginger bug feeding (every 24 hours):
 

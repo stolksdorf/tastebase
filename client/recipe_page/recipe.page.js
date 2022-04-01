@@ -168,20 +168,22 @@ const ServingsEmitter = require('../servings.emitter.js');
 
 const FavControl = require('../fav.js').FavControl;
 
+const Store = require('../recipe.store.js');
+
+const RecipePage = comp(function(recipeId){
+	const recipe = Store.getRecipe(recipeId);
+
+	if(!recipe) return x`<section class='Recipe'><div class='notFound'>Oops, recipe not found</div></section>`;
 
 
-const RecipePage = comp(function(initRecipe){
-	if(!initRecipe) return x`<section class='Recipe'><div class='notFound'>Oops, recipe not found</div></section>`;
+	// const [content, setContent] = this.useState(initRecipe.content);
 
+	// const getRecipe = ()=>{
+	// 	const {id, github, chef} = initRecipe;
+	// 	return {id, github, chef, ...parseRecipe(content)};
+	// };
 
-	const [content, setContent] = this.useState(initRecipe.content);
-
-	const getRecipe = ()=>{
-		const {id, github, chef} = initRecipe;
-		return {id, github, chef, ...parseRecipe(content)};
-	};
-
-	const [recipe, setRecipe] = this.useState(getRecipe);
+	// const [recipe, setRecipe] = this.useState(getRecipe);
 
 	const [servings, setServings] = this.useState(recipe.servings);
 	const [showNotes, setShowNotes] = this.useState(false);
@@ -189,11 +191,11 @@ const RecipePage = comp(function(initRecipe){
 	const [editMode, setEditMode] = this.useState(false);
 
 
-	const applyEditChanges = ()=>{
-		setRecipe(getRecipe());
-		setEditMode(false);
-		setTimeout(createIngredientControls, 5);
-	};
+	// const applyEditChanges = ()=>{
+	// 	setRecipe(getRecipe());
+	// 	setEditMode(false);
+	// 	setTimeout(createIngredientControls, 5);
+	// };
 
 	const createIngredientControls = ()=>{
 		[...document.querySelectorAll('.ingredient')].map((el)=>{
@@ -216,14 +218,14 @@ const RecipePage = comp(function(initRecipe){
 	this.useEffect(()=>{
 		document.title = `${recipe.title} - Tastebase`;
 		window.scrollTo(0, 0);
-		window.onbeforeunload = (evt)=>{
-			if(initRecipe.content !== content){
-				evt.preventDefault();
-				evt.returnValue = 'test';
+		// window.onbeforeunload = (evt)=>{
+		// 	if(initRecipe.content !== content){
+		// 		evt.preventDefault();
+		// 		evt.returnValue = 'test';
 
-				return confirm("You have made changes to this form. Do you want to continue without saving these changes?");
-			}
-		};
+		// 		return confirm("You have made changes to this form. Do you want to continue without saving these changes?");
+		// 	}
+		// };
 
 		createIngredientControls();
 	}, []);
@@ -232,8 +234,6 @@ const RecipePage = comp(function(initRecipe){
 	return x`<section class=${cx('Recipe', {showNotes})}>
 		<div class='controls'>
 			<a href=${recipe.github} target='_blank'>Edit this Recipe <i class='fa fa-pencil'></i></a>
-			${FavControl(recipe.id)}
-
 		</div>
 
 		<div class='top'>
@@ -261,19 +261,13 @@ const RecipePage = comp(function(initRecipe){
 			Show Chef Notes
 		</label>`}
 
-		${!editMode && x`<i class='fa fa-pencil' onclick=${()=>setEditMode(true)}></i>`}
-		${editMode && x`<i class='fa fa-times' onclick=${()=>applyEditChanges()}></i>`}
-
 
 
 
 		<hr />
 
 		<div class='instructions'>
-
-			${editMode && x`<textarea value=${content} oninput=${(evt)=>setContent(evt.target.value)}></textarea>`}
-			${!editMode && x(`<div>${recipe.html}</div>`)}
-
+			${x(`<div>${recipe.html}</div>`)}
 		</div>
 		<hr />
 	</section>`
