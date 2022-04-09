@@ -30,8 +30,9 @@ module.exports = (raw)=>{
 
 	content = content.trim();
 
+
 	//Description
-	const recipeStart = content.search(/(^\d+\.)|(^#{1,5})/m);
+	const recipeStart = content.search(/(^\d+\.)|(^#{1,5})|\/\*|\/\//m);
 	if(recipeStart > 0){
 		metadata.desc = content
 			.substring(0,recipeStart)
@@ -41,7 +42,7 @@ module.exports = (raw)=>{
 		content = content.substring(recipeStart).trim();
 	}
 
-	metadata.type = metadata.type.toLowerCase();
+	metadata.type = metadata.type.toLowerCase().split(/\W+/);
 
 	return {...metadata, content};
 }

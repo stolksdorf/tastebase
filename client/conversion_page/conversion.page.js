@@ -38,6 +38,7 @@ global.css.conversion_page = css`
 				border-left: 1px solid #854E3A;
 				border-bottom: 1px solid #854E3A;
 				height: 200px;
+				outline: none;
 			}
 		}
 

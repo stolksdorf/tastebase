@@ -29,75 +29,88 @@ global.css.recipe_page = css`
 				}
 
 				blockquote{
-					margin-left: -10px;
+					margin-left: 0px;
 					border-left: 3px solid var(--grey);
 					padding-left: 10px;
 					line-height : 1.5em;
 					font-size: 1.3em;
-					max-width : 70%;
+					//max-width : 70%;
+				}
+
+				.types{
+						margin-top: 10px;
+					.type{
+						font-size: 1em;
+						display: inline-block;
+						user-select: none;
+
+						border-radius: 1em;
+
+						border: 1px solid black;
+						padding : 5px 10px;
+						//background-color: #f0dfaf7a;
+
+						img{
+							height : 1em;
+							vertical-align: middle;
+							margin-right : 0.25em;
+						}
+
+					}
 				}
 			}
 
 			.controls{
+				display: block;
 				border: 1px solid var(--grey);
 				border-radius: 5px;
 				padding : 10px;
-				min-width: 250px;
+				width: 200px;
 
-				// display: flex;
-				// flex-direction: column;
-				// justify-content: space-evenly;
-				// align-content: space-between;
 
-				// &>*{
-				// 	height: 50px;
-				// 	vertical-align: middle;
-				// }
 
-				a.editRecipe, a.recipeRef{
-					width: 175px;
+				a.editRecipe, a.recipeRef, .showChefNotes{
+					width: 170px;
 					display: inline-block;
 					text-decoration: none;
 					cursor: pointer;
 					user-select: none;
 					//font-size: 1.4em;
-					border: 1px solid black;
+					border: 1px solid rgba(0,0,0,0.2);
 					padding : 5px 10px;
+
+					margin: 3px 0px;
 
 					color: black;
 
 					border-radius: 1em;
-					vertical-align: middle;
+					vertical-align: baseline;
+
+					background-color: transparent;
+
+					transition: all 0.25s;
+
 					i{
-						//float: right;
+						vertical-align: middle;
 					}
 
 					&:hover{
+						background-color: white;
+						border-color: black;
 
-					}
-				}
-
-
-				label.showChefNotes{
-					cursor: pointer;
-					display: block;
-					margin: 5px 0px;
-
-
-					&.disabled{
-						text-decoration: line-through;
-						opacity: 0.7;
 					}
 				}
 
 
 				.servings{
+					text-align: center;
+					margin-top: 10px;
 					.control{
 						display: inline-flex;
 						//height : 100px;
 						align-items: center;
 						user-select: none;
-						font-size:0.4em;
+						font-size:0.6em;
 
 						.amount{
 							//height: 100%;
@@ -111,7 +124,7 @@ global.css.recipe_page = css`
 							//height: 100%;
 							cursor: pointer;
 							//background-color: red;
-							font-size: 4em;
+							font-size: 3em;
 							padding: 0px 10px;
 							vertical-align:middle;
 							&:hover{
@@ -124,15 +137,7 @@ global.css.recipe_page = css`
 
 			}
 
-			// .info{
-			// 	label{
-			// 		display: inline-block;
-			// 		font-weight: bold;
-			// 		width : 100px;
-			// 	}
-			// }
-
-			img{
+			img.recipeImg{
 				position: absolute;
 				display: none;
 				//height : 200px;
@@ -176,7 +181,6 @@ global.css.instruction_section = css`
 		}
 
 		.chef_note{
-			display: none;
 			font-style: italic;
 			border: 2px solid var(--green);
 			padding: 10px;
@@ -190,6 +194,9 @@ global.css.instruction_section = css`
 const IngredientControl = require('./ingredient.control.js');
 const ServingsEmitter = require('../servings.emitter.js');
 
+
+const Icons = require('../assets/icons');
+const Types = Object.keys(Icons);
 
 
 const Store = require('../recipe.store.js');
@@ -228,18 +235,23 @@ const RecipePage = comp(function(recipeId){
 		return Store.on(()=>this.forceUpdate());
 	}, []);
 
-	console.log({recipe})
+	//console.log({recipe})
 
 	return x`<section class=${cx('Recipe', {showNotes})}>
 
 		<div class='top'>
-			${recipe.img && x`<img src=${recipe.img}></img>`}
+			${recipe.img && x`<img class='recipeImg' src=${recipe.img}></img>`}
 
 			<div class='meta'>
 				<h1>${recipe.title}</h1>
 				<small>By: Chef ${recipe.chef.charAt(0).toUpperCase() + recipe.chef.slice(1)}</small>
 				<div class='types'>
-
+					${recipe.type.map(type=>{
+						return x`<div class='type'>
+							<img src=${Icons[type]}></img>
+							${type}
+						</div>`;
+					})}
 				</div>
 
 				${recipe.desc && x`<blockquote>${recipe.desc}</blockquote>`}
@@ -252,32 +264,33 @@ const RecipePage = comp(function(recipeId){
 					class='editRecipe'
 					href=${`https://gist.github.com/stolksdorf/${recipe.gist_id}/edit`}
 					target='_blank'
-					><i class='fa fa-pencil'> Edit this Recipe</i>
+					>
+					<i class='fa fa-fw fa-pencil'></i>
+					Edit this Recipe
 				</a>
 
 				${recipe.ref &&
 					x`<a class='recipeRef' href=${recipe.ref} target='_blank'>
-						<i class='fa fa-external-link'></i> Recipe Reference
+						<i class='fa fa-fw fa-external-link'></i> Recipe Reference
 					</a>`
 				}
 
-				<label class=${cx('showChefNotes', {disabled: !recipe.hasChefNotes})}>
-					<input
-						type='checkbox'
-						checked=${showNotes}
-						disabled=${!recipe.hasChefNotes}
-						onclick=${()=>setShowNotes(!showNotes)}></input>
-					Show Chef Notes
-				</label>
-
-
+				${recipe.hasChefNotes &&
+					x`<a class='showChefNotes' onclick=${()=>setShowNotes(!showNotes)}>
+						<i class=${cx('fa fa-fw', {
+							'fa-check-square-o' : showNotes,
+							'fa-square-o' : !showNotes
+						})}></i>
+						Show Chef Notes
+					</a>`
+				}
 
 				<div class='servings'>
-					<span>Num of Servings:</span>
+					<div>Num of Servings:</div>
 					<div class='control'>
-						<div class='left' onclick=${()=>setServings(servings-1)} >-</div>
+						<div class='left' onclick=${()=>setServings(servings-1)} ><</div>
 						<div class='amount'>${servings}</div>
-						<div class='right' onclick=${()=>setServings(servings+1)}>+</div>
+						<div class='right' onclick=${()=>setServings(servings+1)}>></div>
 					</div>
 				</div>
 

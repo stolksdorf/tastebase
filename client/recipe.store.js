@@ -101,7 +101,9 @@ const searchRecipes = ({chef, types, query})=>{
 	let recipes = Object.values(Recipes);
 
 	if(chef) recipes = recipes.filter(recipe=>recipe.chef.toLowerCase() === chef);
-	if(types && types.length) recipes = recipes.filter(recipe=>types.includes(recipe.type));
+	if(types && types.length){
+		recipes = recipes.filter(recipe=>types.every(type=>recipe.type.includes(type)));
+	}
 	if(query){
 		recipes = recipes.filter(recipe=>{
 			return query.toLowerCase().split(' ').every(term=>{

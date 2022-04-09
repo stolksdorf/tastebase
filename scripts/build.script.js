@@ -2,9 +2,11 @@ const isDev = process.argv.some(v=>v=='--dev');
 const pack = require('../libs/pico-pack');
 
 const Pages = require('../client/index.js');
-//const {recipes,chefs,types} = require('./getRecipes.js');
 
-const chefs = ['stolksdorf', 'meggeroni'];
+const chefs = require('fs').readFileSync('./chefs.txt', 'utf8')
+	.split('\n')
+	.map(n=>n.trim())
+	.filter(n=>!!n);
 
 
 const bundle = ()=>{
