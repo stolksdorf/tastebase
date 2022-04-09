@@ -92,7 +92,7 @@ const fetchAll = async ()=>{
 
 const getRecipe = (id)=>{
 	if(!Recipes[id]) return false;
-	if(isTooOld(Recipes[id].lastUpdate)) fetchRecipe(id);
+	//if(isTooOld(Recipes[id].lastUpdate)) fetchRecipe(id);
 
 	return Recipes[id];
 };
@@ -113,7 +113,7 @@ const searchRecipes = ({chef, types, query})=>{
 			});
 		});
 	}
-	return recipes;
+	return recipes.map(recipe=>recipe.id);
 };
 
 

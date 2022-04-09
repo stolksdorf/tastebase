@@ -39,7 +39,7 @@ const Store = require('../recipe.store.js');
 
 
 const SearchPage = comp(function(allRecipes){
-	const [recipes, setRecipes] = this.useState([]);
+	const [recipeIds, setRecipeIds] = this.useState([]);
 
 	this.useEffect(()=>{
 		document.title = `Tastebase - Search`;
@@ -50,7 +50,7 @@ const SearchPage = comp(function(allRecipes){
 
 
 	const handleSearch = (queryObj)=>{
-		setRecipes(Store.searchRecipes(queryObj))
+		setRecipeIds(Store.searchRecipes(queryObj))
 	};
 
 
@@ -63,7 +63,7 @@ const SearchPage = comp(function(allRecipes){
 		<hr />
 
 		<div class='results'>
-			${Object.fromEntries(recipes.map(recipe=>[recipe.id, RecipeCard(recipe)]))}
+			${Object.fromEntries(recipeIds.map(id=>[id, RecipeCard(Store.getRecipe(id))]))}
 		</div>
 	</section>`
 });

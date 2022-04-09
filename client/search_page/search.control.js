@@ -134,7 +134,9 @@ const SearchControl = comp(function(chefs, onUpdate){
 		update();
 	}
 
-	this.useEffect(()=>update(), []);
+	this.useEffect(()=>{
+		update();
+	}, []);
 
 	return x`<div class='SearchControl'>
 		<div class='left'>
