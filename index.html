@@ -2244,78 +2244,6 @@ const SearchControl = comp(function(chefs, onUpdate){
 
 module.exports = SearchControl;
 },deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps"},fn:'client/search_page/search.control.js',dn:'client/search_page', root:'../..'};
-global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
-const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-const RecipeCard = require('./recipe.card.js');
-
-
-
-global.css.search_page = css`
-	.Search{
-		min-height: 100vh;
-
-		hr{
-			margin: 20px 0px;
-		}
-
-		.results{
-			display: flex;
-			justify-content: space-around;
-			flex-wrap: wrap;
-			gap : 10px;
-			.RecipeCard + .RecipeCard{
-				//border-color:red;
-			}
-
-			.RecipeCard{
-				min-width : 300px;
-				width     : 50%;
-			}
-		}
-	}
-`
-
-const SearchControl = require('./search.control.js');
-
-
-const Store = require('../recipe.store.js');
-
-
-
-const SearchPage = comp(function(allRecipes){
-	const [recipes, setRecipes] = this.useState([]);
-
-	this.useEffect(()=>{
-		document.title = `Tastebase - Search`;
-		window.scrollTo(0, 0);
-
-	},[]);
-
-
-	const handleSearch = (queryObj)=>{
-		setRecipes(Store.searchRecipes(queryObj))
-	};
-
-
-	return x`<section class='Search'>
-
-		<div class='top'>
-			${SearchControl(Store.getChefs(), handleSearch)}
-		</div>
-
-		<hr />
-
-		<div class='results'>
-			${Object.fromEntries(recipes.map(recipe=>[recipe.id, RecipeCard(recipe)]))}
-		</div>
-	</section>`
-});
-
-module.exports = SearchPage;
-
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./search.control.js":"qumug0","../recipe.store.js":"-4hneic"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
 global.__Modules["-1vuptfe"]={func:function(module, exports, global, __filename, __dirname, __root, require){const Emitter=()=>{
 	let cache={};
 	return {
@@ -2436,6 +2364,228 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 
 module.exports = IngredientControl
 },deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../servings.emitter.js":"-1fvb86o","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c"},fn:'client/recipe_page/ingredient.control.js',dn:'client/recipe_page', root:'../..'};
+global.__Modules["ksc8r0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+
+const {getCompatibleUnits} = require('../../utils/units.js');
+const convert = require('../../utils/convert.units.js');
+const {parseIngredient} = require('../../utils/parse.ingredient.js');
+
+global.css.conversion_page = css`
+	.ConversionPage{
+		min-height: 500px;
+
+		h2{
+			margin-top: 0px;
+			font-size: 2em;
+			text-align: center;
+		}
+
+		.content{
+			display: flex;
+
+			.results{
+				flex-grow:1;
+			}
+
+		}
+
+		.searchBox{
+			text-align: center;
+
+			textarea{
+				text-align: left;
+				font-size: 2em;
+				border: none;
+				font-family: inherit;
+				color: #854E3A;
+				background-color: transparent;
+				border-left: 1px solid #854E3A;
+				border-bottom: 1px solid #854E3A;
+				height: 200px;
+				outline: none;
+			}
+		}
+
+		.results{
+			//background-color:blue;
+			margin: 0 auto;
+			max-width: 500px;
+			font-size: 2em;
+			display: flex;
+			justify-content: space-evenly;
+			.result{
+				min-width: 130px;
+				margin: 0px 10px;
+				h4{
+					margin-top: 0px;
+					margin-bottom: 0px;
+				}
+				ul{
+					margin-top: 10px;
+					margin-left: -16px;
+					font-size: 0.8em;
+				}
+			}
+		}
+
+	}
+`;
+
+
+
+const ConversionPage = comp(function(){
+
+	const [query, setQuery] = this.useState('');
+
+
+	this.useEffect(()=>{
+		this.el.querySelector('textarea').focus();
+		document.title = `Convert Units - Tastebase`;
+		window.scrollTo(0, 0);
+	},[]);
+
+
+
+	const tryIngredientUnits = (str)=>{
+		const ingredient = parseIngredient(str);
+		if(!ingredient.unit) return [];
+		return getCompatibleUnits(ingredient).map(unit=>{
+			return `${convert(ingredient, unit).toLocaleString("en-US")} ${unit}`;
+		});
+	};
+
+	const tryTemperature = (str)=>{
+		const res = (/(\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)/img).exec(str);
+		if(!res) return;
+		let [_,val,unit] = res;
+		unit = unit.toLowerCase();
+
+
+		if(unit.includes('f')) return ((val-32)*5/9).toFixed(1) +'°C';
+		if(unit.includes('c')) return (val*9/5 + 32).toFixed(1) +'°F';
+	}
+
+	const makeResult = (query)=>{
+		query = query.trim();
+		if(!query) return;
+
+		const units = tryIngredientUnits(query);
+		const temperature = tryTemperature(query);
+
+		let list = [];
+		if(temperature){
+			list = list.concat(temperature);
+		}else{
+			list = list.concat(units);
+		}
+
+		return x`<div class='result'>
+			<h4>${query}</h4>
+			<ul>${list.map(item=>x`<li>${item}</li>`)}</ul>
+		</div>`
+	}
+
+
+	return x`<section class='ConversionPage'>
+		<h2>Ye Olde Conversion Tool</h2>
+
+		<div class='content'>
+			<div class='searchBox'>
+				<textarea
+					value=${query}
+					oninput=${(evt)=>setQuery(evt.target.value)}
+					placeholder='3 1/4 cups of butter \n45C\n...'
+				></textarea>
+			</div>
+
+
+			<div class='results'>
+				${query.split('\n').map(line=>makeResult(line))}
+			</div>
+		</div>
+
+	</section>`
+});
+
+
+
+module.exports = ConversionPage;
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c","../../utils/parse.ingredient.js":"1i32h7a"},fn:'client/conversion_page/conversion.page.js',dn:'client/conversion_page', root:'../..'};
+global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
+const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+const RecipeCard = require('./recipe.card.js');
+
+
+
+global.css.search_page = css`
+	.Search{
+		min-height: 100vh;
+
+		hr{
+			margin: 20px 0px;
+		}
+
+		.results{
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			gap : 10px;
+			.RecipeCard + .RecipeCard{
+				//border-color:red;
+			}
+
+			.RecipeCard{
+				min-width : 300px;
+				width     : 50%;
+			}
+		}
+	}
+`
+
+const SearchControl = require('./search.control.js');
+
+
+const Store = require('../recipe.store.js');
+
+
+
+const SearchPage = comp(function(allRecipes){
+	const [recipes, setRecipes] = this.useState([]);
+
+	this.useEffect(()=>{
+		document.title = `Tastebase - Search`;
+		window.scrollTo(0, 0);
+
+		return Store.on(()=>this.forceUpdate());
+	},[]);
+
+
+	const handleSearch = (queryObj)=>{
+		setRecipes(Store.searchRecipes(queryObj))
+	};
+
+
+	return x`<section class='Search'>
+
+		<div class='top'>
+			${SearchControl(Store.getChefs(), handleSearch)}
+		</div>
+
+		<hr />
+
+		<div class='results'>
+			${Object.fromEntries(recipes.map(recipe=>[recipe.id, RecipeCard(recipe)]))}
+		</div>
+	</section>`
+});
+
+module.exports = SearchPage;
+
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./search.control.js":"qumug0","../recipe.store.js":"-4hneic"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
 global.__Modules["3l2hej"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
 const css = require('../../libs/pico-css.js');
 
@@ -2700,7 +2850,7 @@ const RecipePage = comp(function(recipeId){
 
 				<a
 					class='editRecipe'
-					href=${`https://gist.github.com/stolksdorf/${recipe.gist_id}/edit`}
+					href=${`https://gist.github.com/${recipe.chef}/${recipe.gist_id}/edit`}
 					target='_blank'
 					>
 					<i class='fa fa-fw fa-pencil'></i>
@@ -2749,155 +2899,6 @@ const RecipePage = comp(function(recipeId){
 module.exports = RecipePage;
 
 },deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/parse.recipe.js":"-153mfgm","./ingredient.control.js":"fn4mc7","../servings.emitter.js":"-1fvb86o","../assets/icons":"-17h0hps","../recipe.store.js":"-4hneic"},fn:'client/recipe_page/recipe.page.js',dn:'client/recipe_page', root:'../..'};
-global.__Modules["ksc8r0"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-
-const {getCompatibleUnits} = require('../../utils/units.js');
-const convert = require('../../utils/convert.units.js');
-const {parseIngredient} = require('../../utils/parse.ingredient.js');
-
-global.css.conversion_page = css`
-	.ConversionPage{
-		min-height: 500px;
-
-		h2{
-			margin-top: 0px;
-			font-size: 2em;
-			text-align: center;
-		}
-
-		.content{
-			display: flex;
-
-			.results{
-				flex-grow:1;
-			}
-
-		}
-
-		.searchBox{
-			text-align: center;
-
-			textarea{
-				text-align: left;
-				font-size: 2em;
-				border: none;
-				font-family: inherit;
-				color: #854E3A;
-				background-color: transparent;
-				border-left: 1px solid #854E3A;
-				border-bottom: 1px solid #854E3A;
-				height: 200px;
-				outline: none;
-			}
-		}
-
-		.results{
-			//background-color:blue;
-			margin: 0 auto;
-			max-width: 500px;
-			font-size: 2em;
-			display: flex;
-			justify-content: space-evenly;
-			.result{
-				min-width: 130px;
-				margin: 0px 10px;
-				h4{
-					margin-top: 0px;
-					margin-bottom: 0px;
-				}
-				ul{
-					margin-top: 10px;
-					margin-left: -16px;
-					font-size: 0.8em;
-				}
-			}
-		}
-
-	}
-`;
-
-
-
-const ConversionPage = comp(function(){
-
-	const [query, setQuery] = this.useState('');
-
-
-	this.useEffect(()=>{
-		this.el.querySelector('textarea').focus();
-		document.title = `Convert Units - Tastebase`;
-		window.scrollTo(0, 0);
-	},[]);
-
-
-
-	const tryIngredientUnits = (str)=>{
-		const ingredient = parseIngredient(str);
-		if(!ingredient.unit) return [];
-		return getCompatibleUnits(ingredient).map(unit=>{
-			return `${convert(ingredient, unit).toLocaleString("en-US")} ${unit}`;
-		});
-	};
-
-	const tryTemperature = (str)=>{
-		const res = (/(\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)/img).exec(str);
-		if(!res) return;
-		let [_,val,unit] = res;
-		unit = unit.toLowerCase();
-
-
-		if(unit.includes('f')) return ((val-32)*5/9).toFixed(1) +'°C';
-		if(unit.includes('c')) return (val*9/5 + 32).toFixed(1) +'°F';
-	}
-
-	const makeResult = (query)=>{
-		query = query.trim();
-		if(!query) return;
-
-		const units = tryIngredientUnits(query);
-		const temperature = tryTemperature(query);
-
-		let list = [];
-		if(temperature){
-			list = list.concat(temperature);
-		}else{
-			list = list.concat(units);
-		}
-
-		return x`<div class='result'>
-			<h4>${query}</h4>
-			<ul>${list.map(item=>x`<li>${item}</li>`)}</ul>
-		</div>`
-	}
-
-
-	return x`<section class='ConversionPage'>
-		<h2>Ye Olde Conversion Tool</h2>
-
-		<div class='content'>
-			<div class='searchBox'>
-				<textarea
-					value=${query}
-					oninput=${(evt)=>setQuery(evt.target.value)}
-					placeholder='3 1/4 cups of butter \n45C\n...'
-				></textarea>
-			</div>
-
-
-			<div class='results'>
-				${query.split('\n').map(line=>makeResult(line))}
-			</div>
-		</div>
-
-	</section>`
-});
-
-
-
-module.exports = ConversionPage;
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c","../../utils/parse.ingredient.js":"1i32h7a"},fn:'client/conversion_page/conversion.page.js',dn:'client/conversion_page', root:'../..'};
 global.__Modules["1k4rf0b"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 

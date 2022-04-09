@@ -45,6 +45,7 @@ const SearchPage = comp(function(allRecipes){
 		document.title = `Tastebase - Search`;
 		window.scrollTo(0, 0);
 
+		return Store.on(()=>this.forceUpdate());
 	},[]);
 
 
