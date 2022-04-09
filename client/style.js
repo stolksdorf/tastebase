@@ -62,6 +62,7 @@ global.css.base_style = css`
 		//font-family: 'Homemade Apple', cursive;
 		font-family: 'IM Fell English', serif;
 		font-style: italic;
+		margin: 0.3em 0em;
 	}
 
 	*{
@@ -119,26 +120,30 @@ global.css.base_style = css`
 			padding: 0;
 			margin: 0;
 			height: var(--nav-height);
-			vertical-align: middle;
-			display: block;
+
+
+
 			&>li{
-				display: inline-block;
 				margin: 0 0.5rem;
 				position: relative;
-				text-align: left;
-				height: var(--nav-height);
-				line-height: var(--nav-height);
+				height: 100%;
+				cursor: pointer;
+				display:inline-flex;
+				align-items:center;
+				border-bottom: 3px solid transparent;
+				border-top: 3px solid transparent;
+
+				&:hover{
+					color: var(--blue);
+					border-bottom: 3px solid var(--blue);
+				}
 
 				a{
 					color: var(--black);
 					text-decoration: none;
 					display: block;
-					height: 100%;
 					border-bottom: 0px solid var(--blue);
-					&:hover{
-						color: var(--blue);
-						border-bottom: 4px solid var(--blue);
-					}
+
 					&:visited{ color: var(--black); }
 				}
 				button{

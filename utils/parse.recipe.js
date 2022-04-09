@@ -8,7 +8,7 @@ const extractMetadata = require('./metadata.recipe.js');
 const convertTemperatures = (text)=>{
 	return text.replace(/(-?\d*\.?\d+)(c|°c| celsius|f|°f| fahrenheit)(?=\W|$)/img, (_,val, unit)=>{
 		if(unit.toLowerCase().indexOf('c') !== -1) return `<span class='temperature'><span>${val}°C</span><small>(${(val*9/5 + 32).toFixed(1)}°F)</small></span>`;
-		if(unit.toLowerCase().indexOf('f') !== -1) return `<span class='temperature'><span>${val}°F</span><small>(${(val*1.8 + 32).toFixed(1)}°C)</small></span>`;
+		if(unit.toLowerCase().indexOf('f') !== -1) return `<span class='temperature'><span>${val}°F</span><small>(${((val-32)*5/9).toFixed(1)}°C)</small></span>`;
 	});
 };
 
@@ -71,7 +71,7 @@ const parseRecipe = (raw)=>{
 	return {
 		...info,
 		ingredients : allIngredients,
-		//hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
+		hasChefNotes : html.indexOf(`<span class='chef_note'>`)!==-1,
 		html
 	}
 }

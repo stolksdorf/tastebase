@@ -15,8 +15,11 @@ const storageGet = (key, fallback=null)=>{
 };
 
 const isTooOld = (ts)=>{
-	//maybe 3 days?
-	return false;
+	const min = 60 * 1000;
+	const hr = 60 * min;
+	const day = 24 * hr;
+
+	return (Date.now() - ts) > 5 * day;
 };
 
 
@@ -37,25 +40,18 @@ let Chefs = [];
 let fetching = false;
 
 const init = (chefs)=>{
-	let flag = false;
-	Recipes = storageGet('recipes');
-	if(!Recipes || !Object.keys(Recipes).length) flag = true;
-
-	LastUpdated = storageGet('lastUpdated');
-	if(!LastUpdated || isTooOld(LastUpdated)) flag = true;
-
-
 	Chefs = chefs;
+	Recipes = storageGet('recipes');
+	LastUpdated = storageGet('lastUpdated');
 
+	const noRecipes = !Recipes || !Object.keys(Recipes).length;
+	const outDated = !LastUpdated || isTooOld(LastUpdated);
 
-	// Chefs = storageGet('chefs', []);
-	// if(users.join(',') !== Chefs.join(',')){
-	// 	Chefs = users;
-	// 	flag = true;
-	// }
-
-	if(flag) return fetchAll();
+	if(noRecipes || outDated){
+		return fetchAll();
+	}
 	Emitter.emit();
+
 };
 
 const save = ()=>{
@@ -104,8 +100,8 @@ const getRecipe = (id)=>{
 const searchRecipes = ({chef, types, query})=>{
 	let recipes = Object.values(Recipes);
 
-	if(chef) recipes = recipes.filter(recipe=>recipe.chef === chef);
-	if(types) recipes = recipes.filter(recipe=>types.includes(recipe.type));
+	if(chef) recipes = recipes.filter(recipe=>recipe.chef.toLowerCase() === chef);
+	if(types && types.length) recipes = recipes.filter(recipe=>types.includes(recipe.type));
 	if(query){
 		recipes = recipes.filter(recipe=>{
 			return query.toLowerCase().split(' ').every(term=>{
@@ -123,12 +119,16 @@ const searchRecipes = ({chef, types, query})=>{
 module.exports = {
 	init,
 	fetchAll,
-	getRecipe,
+
+	getAllRecipes : ()=>Object.values(Recipes),
+
+
 	searchRecipes,
 	getChefs : ()=>Chefs,
 	getLastUpdated : ()=>LastUpdated,
 
-	getRecipes : ()=>Object.values(Recipes),
+	getRecipe,
+
 
 	on : Emitter.on,
 	isFetching : ()=>fetching,

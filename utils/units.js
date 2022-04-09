@@ -70,6 +70,7 @@ const stapleDensity = { //from g->ml
 	butter : 1.04,
 	water  : 1,
 	oil    : 1.1,
+	rice   : 1.2
 };
 
 const aliases = {
@@ -104,6 +105,7 @@ const useFraction = {
 	sticks : true,
 };
 
+//TODO: only return 'sticks' if staple includes butter
 const getCompatibleUnits = ({staple, unit})=>{
 	const volume = Object.keys(volumeUnits), weight = Object.keys(weightUnits);
 	if(staple) return [...volume, ...weight];

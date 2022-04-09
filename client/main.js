@@ -31,9 +31,8 @@ const Main = comp(function({ chefs }){
 	this.useEffect(()=>{
 		Store.init(chefs);
 		updatePage();
+		window.onhashchange = updatePage;
 	}, []);
-
-	console.log({page, param})
 
 	return x`<main>
 		${Navbar()}

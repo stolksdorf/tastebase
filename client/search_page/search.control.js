@@ -38,11 +38,31 @@ global.css.search_control = css`
 			}
 		}
 
+		select{
+
+			option{
+				font-family: 'IM Fell English', serif;
+				font-style: italic;
+				font-size: 1.3em;
+			}
+		}
+
 		.typeSelector{
-			width : 300px;
+			width : 550px;
+			display:grid;
+			//flex-wrap: wrap;
+			//justify-content: space-around;
+
+			grid-auto-flow: row dense;
+			grid-template-columns: max-content max-content max-content;
+			grid-column-gap: 10px;
+			grid-row-gap: 10px;
+
+			//gap: 5px 5px;
+
 			.type{
 				cursor: pointer;
-				font-size: 1.1em;
+				font-size: 1.4em;
 				display: inline-block;
 				opacity : 0.4;
 				user-select: none;
@@ -72,18 +92,17 @@ global.css.search_control = css`
 const Icons = require('../assets/icons');
 const Types = Object.keys(Icons);
 
-const SearchControl = comp(function(onUpdate){
+const SearchControl = comp(function(chefs, onUpdate){
 	let [filterTypes, setFilterTypes] = useLocalState(this, 'search-types', []);
 	let [search, setSearch] = useLocalState(this, 'search-query', '');
-
+	let [filterChef, setFilterChef] = useLocalState(this, 'search-chef', '');
 
 	const update = ()=>{
 		onUpdate({
-			terms : search.toLowerCase().split(' ').filter(x=>!!x),
+			query : search,
 			types : [...filterTypes],
-			//onlyFav : false,
-			//chef : 'All'
-		})
+			chef : filterChef
+		});
 	}
 
 	const handleText = (newSearch)=>{
@@ -94,7 +113,7 @@ const SearchControl = comp(function(onUpdate){
 	};
 
 
-	const toggle = (type)=>{
+	const toggleType = (type)=>{
 		if(filterTypes.includes(type)){
 			filterTypes = filterTypes.filter(x=>x!==type);
 		}else{
@@ -104,6 +123,13 @@ const SearchControl = comp(function(onUpdate){
 		update();
 	};
 
+	const handleChef = (evt)=>{
+		filterChef = evt.target.value;
+		setFilterChef(evt.target.value);
+		update();
+	}
+
+
 	this.useEffect(()=>update(), []);
 
 
@@ -111,17 +137,27 @@ const SearchControl = comp(function(onUpdate){
 
 		<div class='searchBox'>
 			<input
-				placeholder='Search...'
+				placeholder='Search names or ingredients..'
 				type='text'
 				oninput=${(evt)=>handleText(evt.target.value)}
 				value=${search}></input>
 		</div>
 
+		<select onchange=${handleChef}>
+			${[
+				x`<option selected=${filterChef==''} value=''>All Chefs</option>`,
+				...chefs.map(chef=>{
+
+					return x`<option selected=${filterChef==chef} value=${chef}>${chef}</option>`
+				})
+			]}
+		</select>
+
 
 		<div class='typeSelector'>
 			${Types.map(type=>{
 				return x`<div
-					onclick=${()=>toggle(type)}
+					onclick=${()=>toggleType(type)}
 					class=${cx('type', {selected : filterTypes.includes(type)})}>
 
 					<img src=${Icons[type]}></img>

@@ -11,7 +11,7 @@ const Aliases = {
 
 
 module.exports = (raw)=>{
-	let metadata = {servings : 2, desc:'',type:'food'};
+	let metadata = {servings : 2, desc:'', title:'', type:'food'};
 	let content = raw;
 
 	//Title
