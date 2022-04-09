@@ -41,7 +41,7 @@ const IngredientControl = comp(function(ingredient, initServings=1){
 
 	const qty = convert(ingredient, unit, servings/this.refs.baseServings);
 	return x`<span class='ingredientControl'>
-		${!!qty && qty}
+		${!!qty && qty.toLocaleString("en-US")}
 		${unit && x`<div class='unit'>
 			${unit}
 			<select value=${unit} onchange=${(evt)=>setUnit(evt.target.value)}>

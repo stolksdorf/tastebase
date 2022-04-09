@@ -11,64 +11,138 @@ global.css.recipe_page = css`
 		padding-top: 2em;
 		padding-bottom: 8em;
 
-		&.showNotes{
-			.chef_note{
-				display: block !important;
-			}
-		}
-
-		.controls{
-			position: absolute;
-			top : 30px;
-			right: 10px;
+		&.showNotes .chef_note{
+			display: block !important;
 		}
 
 		.top{
-			h1{
-				font-size: 3em;
-				margin: 0px;
-			}
-
-			blockquote{
-				margin-left: 0px;
-				border-left: 3px solid var(--grey);
-				padding-left: 5px;
-				font-size: 1.3em;
-			}
-
-			.info{
-				label{
-					display: inline-block;
-					font-weight: bold;
-					width : 100px;
+			display: flex;
+			justify-content: space-between;
+			.meta{
+				h1{
+					font-size: 3em;
+					margin: 0px;
 				}
-			}
+				small{
+					font-size: 1em;
+					font-weight: 800;
+				}
 
-			img{
-				height : 200px;
-			}
-		}
+				blockquote{
+					margin-left: 0px;
+					border-left: 3px solid var(--grey);
+					padding-left: 10px;
+					line-height : 1.5em;
+					font-size: 1.3em;
+					//max-width : 70%;
+				}
 
-		h3{
-			font-size: 1.8em;
-			margin: 0px;
-		}
+				.types{
+						margin-top: 10px;
+					.type{
+						font-size: 1em;
+						display: inline-block;
+						user-select: none;
 
-		.ingredients{
-			font-size: 1.3em;
+						border-radius: 1em;
 
-			h3{
-				.servings{
-					display: inline-block;
-					font-size: 1.1rem;
-					float: right;
-					span{
-						font-size: 1.5em;
+						border: 1px solid black;
+						padding : 5px 10px;
+						//background-color: #f0dfaf7a;
+
+						img{
+							height : 1em;
+							vertical-align: middle;
+							margin-right : 0.25em;
+						}
+
 					}
 				}
 			}
-		}
 
+			.controls{
+				display: block;
+				border: 1px solid var(--grey);
+				border-radius: 5px;
+				padding : 10px;
+				width: 200px;
+
+
+
+				a.editRecipe, a.recipeRef, .showChefNotes{
+					width: 170px;
+					display: inline-block;
+					text-decoration: none;
+					cursor: pointer;
+					user-select: none;
+					//font-size: 1.4em;
+					border: 1px solid rgba(0,0,0,0.2);
+					padding : 5px 10px;
+
+					margin: 3px 0px;
+
+					color: black;
+
+					border-radius: 1em;
+					vertical-align: baseline;
+
+					background-color: transparent;
+
+					transition: all 0.25s;
+
+					i{
+						vertical-align: middle;
+					}
+
+					&:hover{
+						background-color: white;
+						border-color: black;
+
+					}
+				}
+
+
+				.servings{
+					text-align: center;
+					margin-top: 10px;
+					.control{
+						display: inline-flex;
+						//height : 100px;
+						align-items: center;
+						user-select: none;
+						font-size:0.6em;
+
+						.amount{
+							//height: 100%;
+							font-size: 5em;
+							vertical-align:middle;
+							min-width: 0.6em;
+							text-align: center;
+						}
+
+						.left, .right{
+							//height: 100%;
+							cursor: pointer;
+							//background-color: red;
+							font-size: 3em;
+							padding: 0px 10px;
+							vertical-align:middle;
+							&:hover{
+								background-color: rgba(0,0,0,0.1);
+							}
+						}
+					}
+				}
+
+
+			}
+
+			img.recipeImg{
+				position: absolute;
+				display: none;
+				//height : 200px;
+			}
+		}
 	}
 `;
 
@@ -89,46 +163,28 @@ global.css.instruction_section = css`
 		}
 
 		ul.ingredientList{
-			margin-left : 15px;
+			margin-left : 8px;
+			padding-left: 30px;
 			border-left : 2px solid #cf664063;
 			li{
-				font-size: 0.8em;
-				margin: 5px;
+				font-size: 1em;
+				margin: 3px;
 			}
 		}
 
-
 		.temperature{
 			small{
-				display: none;
-			}
-			&:hover{
-				small{
-					display: inherit;
-				}
+				margin-left: 0.3em;
+				font-weight: 800;
+				font-size: 0.7em;
 			}
 		}
 
 		.chef_note{
-			display: none;
-			//border: var(--green) 1px solid;
-			//border-radius: 3px;
 			font-style: italic;
-			//border-left: 2px solid black;
-			padding-left: 5px;
-			font-size: 0.8em;
-			color: var(--grey);
-
-		}
-
-		textarea{
-			font-family: inherit;
-			width : 100%;
-			background-color: transparent;
-			//border: none;
-			resize: none;
-			font-size: 1em;
-			min-height: 800px;
+			border: 2px solid var(--green);
+			padding: 10px;
+			border-radius: 15px;
 		}
 	}
 `
@@ -139,61 +195,21 @@ const IngredientControl = require('./ingredient.control.js');
 const ServingsEmitter = require('../servings.emitter.js');
 
 
-
-//TODO: replace with fav control.js
-
-// global.css.fav_control = css`
-// 	i.fav{
-// 		font-size: 2em;
-// 		cursor: pointer;
-// 		user-select: none;
-// 		&.fa-heart{
-// 			color : red;
-// 		}
-// 	}
-// `;
-// const FavControl = comp(function(id){
-// 	const hasFav = (id)=>!!localStorage.getItem(`fav__${id}`);
-// 	const toggleFav = (id)=>{
-// 		hasFav(id)
-// 			? window.localStorage.removeItem(`fav__${id}`)
-// 			: window.localStorage.setItem(`fav__${id}`, true);
-// 		return hasFav(id);
-// 	};
-
-// 	const [isFav, setIsFav] = this.useState(hasFav(id));
-
-// 	return x`<i class=${cx('fav fa fa-fw', {'fa-heart': isFav, 'fa-heart-o': !isFav})} onclick=${()=>setIsFav(toggleFav(id))}></i>`;
-// });
-
-const FavControl = require('../fav.js').FavControl;
+const Icons = require('../assets/icons');
+const Types = Object.keys(Icons);
 
 
+const Store = require('../recipe.store.js');
 
-const RecipePage = comp(function(initRecipe){
-	if(!initRecipe) return x`<section class='Recipe'><div class='notFound'>Oops, recipe not found</div></section>`;
+const RecipePage = comp(function(recipeId){
+	const recipe = Store.getRecipe(recipeId);
 
+	if(!recipe) return x`<section class='Recipe'><div class='notFound'>Oops, recipe not found</div></section>`;
 
-	const [content, setContent] = this.useState(initRecipe.content);
-
-	const getRecipe = ()=>{
-		const {id, github, chef} = initRecipe;
-		return {id, github, chef, ...parseRecipe(content)};
-	};
-
-	const [recipe, setRecipe] = this.useState(getRecipe);
 
 	const [servings, setServings] = this.useState(recipe.servings);
 	const [showNotes, setShowNotes] = this.useState(false);
 
-	const [editMode, setEditMode] = this.useState(false);
-
-
-	const applyEditChanges = ()=>{
-		setRecipe(getRecipe());
-		setEditMode(false);
-		setTimeout(createIngredientControls, 5);
-	};
 
 	const createIngredientControls = ()=>{
 		[...document.querySelectorAll('.ingredient')].map((el)=>{
@@ -209,71 +225,84 @@ const RecipePage = comp(function(initRecipe){
 
 
 	this.useEffect(()=>{
-		console.log('RUNNING')
 		ServingsEmitter.emit('servingsChange', servings)
 	},[servings]);
 
 	this.useEffect(()=>{
 		document.title = `${recipe.title} - Tastebase`;
 		window.scrollTo(0, 0);
-		window.onbeforeunload = (evt)=>{
-			if(initRecipe.content !== content){
-				evt.preventDefault();
-				evt.returnValue = 'test';
-
-				return confirm("You have made changes to this form. Do you want to continue without saving these changes?");
-			}
-		};
-
 		createIngredientControls();
+		return Store.on(()=>this.forceUpdate());
 	}, []);
 
+	//console.log({recipe})
 
 	return x`<section class=${cx('Recipe', {showNotes})}>
-		<div class='controls'>
-			<a href=${recipe.github} target='_blank'>Edit this Recipe <i class='fa fa-pencil'></i></a>
-			${FavControl(recipe.id)}
-
-		</div>
 
 		<div class='top'>
-			<h1>${recipe.title}</h1>
-			<div class='info'>
-				<div><label>Chef:</label> <a href=${`?search=chef:${recipe.chef}`}>${recipe.chef}</a></div>
-				<div><label>Recipe Type:</label> <a href=${`?search=type:${recipe.type}`}>${recipe.type}</a></div>
+			${recipe.img && x`<img class='recipeImg' src=${recipe.img}></img>`}
+
+			<div class='meta'>
+				<h1>${recipe.title}</h1>
+				<small>By: Chef ${recipe.chef.charAt(0).toUpperCase() + recipe.chef.slice(1)}</small>
+				<div class='types'>
+					${recipe.type.map(type=>{
+						return x`<div class='type'>
+							<img src=${Icons[type]}></img>
+							${type}
+						</div>`;
+					})}
+				</div>
+
+				${recipe.desc && x`<blockquote>${recipe.desc}</blockquote>`}
 			</div>
-			${recipe.desc && x`<blockquote>${recipe.desc}</blockquote>`}
-			${recipe.img && x`<img src=${recipe.img}></img>`}
+
+
+			<div class='controls'>
+
+				<a
+					class='editRecipe'
+					href=${`https://gist.github.com/stolksdorf/${recipe.gist_id}/edit`}
+					target='_blank'
+					>
+					<i class='fa fa-fw fa-pencil'></i>
+					Edit this Recipe
+				</a>
+
+				${recipe.ref &&
+					x`<a class='recipeRef' href=${recipe.ref} target='_blank'>
+						<i class='fa fa-fw fa-external-link'></i> Recipe Reference
+					</a>`
+				}
+
+				${recipe.hasChefNotes &&
+					x`<a class='showChefNotes' onclick=${()=>setShowNotes(!showNotes)}>
+						<i class=${cx('fa fa-fw', {
+							'fa-check-square-o' : showNotes,
+							'fa-square-o' : !showNotes
+						})}></i>
+						Show Chef Notes
+					</a>`
+				}
+
+				<div class='servings'>
+					<div>Num of Servings:</div>
+					<div class='control'>
+						<div class='left' onclick=${()=>setServings(servings-1)} ><</div>
+						<div class='amount'>${servings}</div>
+						<div class='right' onclick=${()=>setServings(servings+1)}>></div>
+					</div>
+				</div>
+
+			</div>
+
 		</div>
-
-
-		<hr />
-
-		<div class='servings'>
-			<label>Number of Servings:</label>
-			<span>${servings}</span>
-			<button onclick=${()=>setServings(servings+1)}>+</button>
-			<button onclick=${()=>setServings(servings-1)}>-</button>
-		</div>
-
-		${recipe.hasChefNotes && x`<label class='showChefNotes'>
-			<input type='checkbox' checked=${showNotes} onclick=${()=>setShowNotes(!showNotes)}></input>
-			Show Chef Notes
-		</label>`}
-
-		${!editMode && x`<i class='fa fa-pencil' onclick=${()=>setEditMode(true)}></i>`}
-		${editMode && x`<i class='fa fa-times' onclick=${()=>applyEditChanges()}></i>`}
-
-
 
 
 		<hr />
 
 		<div class='instructions'>
-
-			${editMode && x`<textarea value=${content} oninput=${(evt)=>setContent(evt.target.value)}></textarea>`}
-			${!editMode && x(`<div>${recipe.html}</div>`)}
-
+			${x(`<div>${recipe.html}</div>`)}
 		</div>
 		<hr />
 	</section>`

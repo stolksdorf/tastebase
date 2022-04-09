@@ -76,16 +76,13 @@ global.css.sneakpeek = css`
 `;
 
 
-const {FavControl} = require('../fav.js');
 
 const RecipeCard = (recipe)=>{
-	const hasFav = (typeof localStorage !== 'undefined') && !!localStorage.getItem(`fav__${recipe.id}`)
 
 
 	return x`<a href=${`#recipe=${recipe.id}`} class='RecipeCard'>
 
 		${Icons[recipe.type] && x`<img class='icon' src=${Icons[recipe.type]}></img>`}
-		${FavControl(recipe.id)}
 
 		<h3>${recipe.title}</h3>
 

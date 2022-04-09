@@ -9,29 +9,58 @@ const {parseIngredient} = require('../../utils/parse.ingredient.js');
 global.css.conversion_page = css`
 	.ConversionPage{
 		min-height: 500px;
+
+		h2{
+			margin-top: 0px;
+			font-size: 2em;
+			text-align: center;
+		}
+
+		.content{
+			display: flex;
+
+			.results{
+				flex-grow:1;
+			}
+
+		}
+
 		.searchBox{
 			text-align: center;
 
-			input{
+			textarea{
 				text-align: left;
-				font-size: 3em;
+				font-size: 2em;
 				border: none;
 				font-family: inherit;
 				color: #854E3A;
 				background-color: transparent;
-				border-left: 3px solid #854E3A;
+				border-left: 1px solid #854E3A;
+				border-bottom: 1px solid #854E3A;
+				height: 200px;
+				outline: none;
 			}
 		}
 
 		.results{
+			//background-color:blue;
 			margin: 0 auto;
 			max-width: 500px;
 			font-size: 2em;
-			ul{
-				//font-size: 2em;
-			}
-			.temperature{
-
+			display: flex;
+			justify-content: space-evenly;
+			.result{
+				min-width: 130px;
+				margin: 0px 10px;
+				h4{
+					margin-top: 0px;
+					margin-bottom: 0px;
+				}
+				ul{
+					margin-top: 10px;
+					margin-left: -16px;
+					font-size: 0.8em;
+				}
 			}
 		}
 
@@ -46,7 +75,7 @@ const ConversionPage = comp(function(){
 
 
 	this.useEffect(()=>{
-		this.el.querySelector('input').focus();
+		this.el.querySelector('textarea').focus();
 		document.title = `Convert Units - Tastebase`;
 		window.scrollTo(0, 0);
 	},[]);
@@ -54,10 +83,10 @@ const ConversionPage = comp(function(){
 
 
 	const tryIngredientUnits = (str)=>{
-		const ingredient = parseIngredient(query);
+		const ingredient = parseIngredient(str);
 		if(!ingredient.unit) return [];
 		return getCompatibleUnits(ingredient).map(unit=>{
-			return `${convert(ingredient, unit)} ${unit}`;
+			return `${convert(ingredient, unit).toLocaleString("en-US")} ${unit}`;
 		});
 	};
 
@@ -68,40 +97,47 @@ const ConversionPage = comp(function(){
 		unit = unit.toLowerCase();
 
 
-		if(unit.includes('f')) return (val*1.8 + 32).toFixed(1) +'°C';
-		if(unit.includes('c')) return (val*1.8 + 32).toFixed(1) +'°F';
+		if(unit.includes('f')) return ((val-32)*5/9).toFixed(1) +'°C';
+		if(unit.includes('c')) return (val*9/5 + 32).toFixed(1) +'°F';
 	}
 
-	const units = tryIngredientUnits(query);
+	const makeResult = (query)=>{
+		query = query.trim();
+		if(!query) return;
 
-	const temperature = tryTemperature(query);
+		const units = tryIngredientUnits(query);
+		const temperature = tryTemperature(query);
 
+		let list = [];
+		if(temperature){
+			list = list.concat(temperature);
+		}else{
+			list = list.concat(units);
+		}
 
-
-
+		return x`<div class='result'>
+			<h4>${query}</h4>
+			<ul>${list.map(item=>x`<li>${item}</li>`)}</ul>
+		</div>`
+	}
 
 
 	return x`<section class='ConversionPage'>
 		<h2>Ye Olde Conversion Tool</h2>
 
-		<div class='searchBox'>
-			<input type='text'
-				value=${query}
-				oninput=${(evt)=>setQuery(evt.target.value)}
-				placeholder='3 1/4 cups of butter, 45C, ...'></input>
-		</div>
+		<div class='content'>
+			<div class='searchBox'>
+				<textarea
+					value=${query}
+					oninput=${(evt)=>setQuery(evt.target.value)}
+					placeholder='3 1/4 cups of butter \n45C\n...'
+				></textarea>
+			</div>
 
-		<hr>
 
-		<div class='results'>
-
-			${units.length!==0 && x`<ul>
-				${units.map(unit=>x`<li><strong>${unit}<strong></li>`)}
-				</ul>`
-			}
-
-			${!!temperature && x`<div class='temperature'>${temperature}</div>`}
-
+			<div class='results'>
+				${query.split('\n').map(line=>makeResult(line))}
+			</div>
 		</div>
 
 	</section>`
