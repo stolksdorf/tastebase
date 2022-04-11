@@ -87,6 +87,7 @@ global.css.navbar = css`
 	}
 `;
 
+
 const Navbar = ()=>{
 	return x`<nav>
 		<a href='#'>Tastebase</a>
@@ -98,7 +99,7 @@ const Navbar = ()=>{
 				</a>
 			</li>
 			<li>
-				<a href='https://github.com/stolksdorf/tastebase/recipe_instructions.md' target='_blank'>
+				<a href='https://github.com/stolksdorf/tastebase/blob/master/recipe_instructions.md' target='_blank'>
 					Recipe Help
 				</a>
 			</li>

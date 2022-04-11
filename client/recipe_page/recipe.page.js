@@ -262,7 +262,7 @@ const RecipePage = comp(function(recipeId){
 
 				<a
 					class='editRecipe'
-					href=${`https://gist.github.com/${recipe.chef}/${recipe.gist_id}/edit`}
+					href=${`https://gist.github.com/${recipe.chef}/${recipe.gist_id}`}
 					target='_blank'
 					>
 					<i class='fa fa-fw fa-pencil'></i>

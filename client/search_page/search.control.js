@@ -14,6 +14,8 @@ const useLocalState = (scope, key, init)=>{
 	}];
 };
 
+const Store = require('../recipe.store.js');
+
 
 global.css.search_control = css`
 	.SearchControl{
@@ -136,6 +138,7 @@ const SearchControl = comp(function(chefs, onUpdate){
 
 	this.useEffect(()=>{
 		update();
+		return Store.on(()=>update());
 	}, []);
 
 	return x`<div class='SearchControl'>

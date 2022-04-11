@@ -513,7 +513,7 @@ section.Recipe .instructions .chef_note{
 				</a>
 			</li>
 			<li>
-				<a href='https://github.com/stolksdorf/tastebase/recipe_instructions.md' target='_blank'>
+				<a href='https://github.com/stolksdorf/tastebase/blob/master/recipe_instructions.md' target='_blank'>
 					Recipe Help
 				</a>
 			</li>
@@ -1819,118 +1819,6 @@ module.exports = {
 	isFetching : ()=>fetching,
 };
 },deps:{"./fetch.recipes.js":"ndi2ae"},fn:'client/recipe.store.js',dn:'client', root:'..'};
-global.__Modules["-1knvkhj"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
-const css = require('../libs/pico-css.js');
-
-
-const timeAgo = (ts1, ts2=Date.now())=>{
-	let delta = ts2 - ts1;
-
-	const min = 60 * 1000;
-	const hr = 60 * min;
-	const day = 24 * hr;
-	const mth = 30 * day;
-
-
-	if(delta/mth > 1.9) return `${Math.floor(delta/mth)} months`;
-	if(delta/mth > 0.9) return `about 1 month`;
-
-	if(delta/day > 1.9) return `${Math.floor(delta/day)} days`;
-	if(delta/day > 0.9) return `about 1 day`;
-
-
-	if(delta/hr > 1.9) return `${Math.floor(delta/hr)} hrs`;
-	if(delta/hr > 0.9) return `about 1 hr`;
-
-
-	if(delta/min > 1.9) return `${Math.floor(delta/min)} min`;
-	//if(delta/min > 0.9) return `about 1 minute`;
-
-	return `about 1 min`;
-};
-
-
-
-const Store = require('./recipe.store.js');
-
-
-
-global.css.fetchbutton = css`
-	a.FetchButton{
-		text-align: center;
-		small{
-			display: block;
-			font-size: 0.6em;
-		}
-	}
-`;
-
-const FetchButton = comp(function(){
-	const [fetching, setFetching] = this.useState(false);
-	const [lastUpdate, setLastUpdate] = this.useState(null);
-
-
-	this.useEffect(()=>{
-		return Store.on(()=>{
-			setFetching(Store.isFetching());
-			setLastUpdate(Store.getLastUpdated());
-		})
-	}, [])
-
-	const handleClick = ()=>{
-		if(fetching) return;
-		Store.fetchAll();
-	};
-
-	return x`<a class='FetchButton' onclick=${handleClick}>
-		${fetching && 'Fetching...'}
-		${!fetching && `Update Recipes`}
-		${!fetching && x`<small>Last updated ${timeAgo(lastUpdate)} ago</small>`}
-	</a>`;
-})
-
-
-
-
-
-global.css.navbar = css`
-	nav{
-		&>a{
-			font-style: italic;
-			color: black;
-			&:visited{ color: black; }
-		}
-
-		ul{
-
-		}
-
-	}
-`;
-
-const Navbar = ()=>{
-	return x`<nav>
-		<a href='#'>Tastebase</a>
-		<ul>
-			<li><a href='#conversion'>Convert</a></li>
-			<li>
-				<a class='add' href='https://gist.github.com/' target='_blank'>
-					Add Recipe
-				</a>
-			</li>
-			<li>
-				<a href='https://github.com/stolksdorf/tastebase/recipe_instructions.md' target='_blank'>
-					Recipe Help
-				</a>
-			</li>
-			<li>${FetchButton()}</li>
-		</ul>
-	</nav>`;
-}
-
-
-module.exports = Navbar;
-},deps:{"../libs/xo.js":"-1pvg4m","../libs/pico-css.js":"1hqukto","./recipe.store.js":"-4hneic"},fn:'client/nav.js',dn:'client', root:'..'};
 global.__Modules["1q757m3"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtMTMxLjYgMTc5LjJjLTExLjE5OSAxMS4xOTktMTEuMTk5IDI4IDAgMzkuMTk5IDExLjE5OSAxMS4xOTkgMjggMTEuMTk5IDM5LjE5OSAwIDMzLjYwMi0zMy42MDIgMzMuNjAyLTg2LjgwMSAwLTExNy42LTExLjE5OS0xMS4xOTktMTEuMTk5LTI4IDAtMzkuMTk5IDExLjE5OS0xMS4xOTkgMTEuMTk5LTI4IDAtMzkuMTk5LTExLjE5OS0xMS4xOTktMjgtMTEuMTk5LTM5LjE5OSAwLTMzLjYwMiAzMy42MDItMzMuNjAyIDg2LjgwMSAwIDExNy42IDExLjE5OSAxMS4xOTkgMTEuMTk5IDMwLjgwMSAwIDM5LjE5OXoiLz4KICA8cGF0aCBkPSJtMjcxLjYgMjA3LjJjLTExLjE5OSAxMS4xOTktMTEuMTk5IDI4IDAgMzkuMTk5IDExLjE5OSAxMS4xOTkgMjggMTEuMTk5IDM5LjE5OSAwIDMzLjYwMi0zMy42MDIgMzMuNjAyLTg2LjgwMSAwLTExNy42LTExLjE5OS0xMS4xOTktMTEuMTk5LTI4IDAtMzkuMTk5IDExLjE5OS0xMS4xOTkgMTEuMTk5LTI4IDAtMzkuMTk5LTExLjE5OS0xMS4xOTktMjgtMTEuMTk5LTM5LjE5OSAwLTMzLjYwMiAzMy42MDItMzMuNjAyIDg2LjgwMSAwIDExNy42IDExLjE5OSAxMS4xOTkgMTEuMTk5IDMwLjgwMSAwIDM5LjE5OXoiLz4KICA8cGF0aCBkPSJtNjAyIDM1MGgtMjA3LjJsMTkzLjItMTE0LjhjMTQtOC4zOTg0IDE2LjgwMS0yNS4xOTkgMTEuMTk5LTM5LjE5OS04LjM5ODQtMTQtMjUuMTk5LTE2LjgwMS0zOS4xOTktOC4zOTg0bC0yNzQuNCAxNjUuMmgtMTg3LjZjLTIyLjM5OCAwLTM2LjM5OCAyNS4xOTktMjUuMTk5IDQybDg0IDE0MGM1LjYwMTYgOC4zOTg0IDE0IDE0IDI1LjE5OSAxNGgzMzZjMTEuMTk5IDAgMTkuNjAyLTUuNjAxNiAyNS4xOTktMTRsODQtMTQwYzExLjE5OS0xOS42MDItMi44MDA4LTQ0LjgwMS0yNS4xOTktNDQuODAxem0tMTAwLjggMTQwaC0zMDIuNGwtNTAuMzk4LTg0aDQwNnoiLz4KIDwvZz4KPC9zdmc+Cg==';
 },deps:{},fn:'client/assets/icons/bowl.svg',dn:'client/assets/icons', root:'../../..'};
 global.__Modules["-nu9i7r"]={func:function(module, exports, global, __filename, __dirname, __root, require){module.exports='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzAwcHQiIGhlaWdodD0iNzAwcHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtMjM1LjIgMzg5LjJjMTYuODAxIDIuODAwOCAzMC44MDEtNS42MDE2IDMzLjYwMi0xOS42MDIgMTEuMTk5LTM2LjM5OCA0NC44MDEtNjEuNTk4IDgxLjE5OS02MS41OTggMTYuODAxIDAgMjgtMTEuMTk5IDI4LTI4cy0xMS4xOTktMjgtMjgtMjhjLTY3LjE5OSAwLTEyMC40IDQ0LjgwMS0xMzQuNCAxMDMuNi01LjYwMTYgMTYuNzk3IDIuNzk2OSAzMC43OTcgMTkuNTk4IDMzLjU5OHoiLz4KICA8cGF0aCBkPSJtNjAyIDQ0OGgtNS42MDE2YzUuNjAxNi0xOS42MDIgNS42MDE2LTM2LjM5OCA1LjYwMTYtNTYgMC05OC01My4xOTktMTgyLTE0MC0yMjQgMC02MS42MDItNTAuMzk4LTExMi0xMTItMTEycy0xMTIgNTAuMzk4LTExMiAxMTJjLTg2LjgwMSA0Mi0xNDAgMTI4LjgtMTQwIDIyNCAwIDE5LjYwMiAyLjgwMDggMzYuMzk4IDUuNjAxNiA1NmgtNS42MDE2Yy0xNi44MDEgMC0yOCAxMS4xOTktMjggMjhzMTEuMTk5IDI4IDI4IDI4aDUwNGMxNi44MDEgMCAyOC0xMS4xOTkgMjgtMjhzLTExLjE5OS0yOC0yOC0yOHptLTI1Mi0zMzZjMjIuMzk4IDAgNDIgMTQgNTAuMzk4IDMzLjYwMi01LjYwMTYtMi44MDA4LTIyLjM5OC0yLjgwMDgtMzMuNjAyLTUuNjAxNi0yMi4zOTggMC00Ny41OTggMC02Ny4xOTUgNS42MDE2IDguMzk4NC0xOS42MDIgMjgtMzMuNjAyIDUwLjM5OC0zMy42MDJ6bTAgODRjMTA2LjQgMCAxOTYgODYuODAxIDE5NiAxOTYgMCAxOS42MDItMi44MDA4IDM2LjM5OC04LjM5ODQgNTZoLTM3NS4yYy01LjU5NzctMTkuNjAyLTguMzk4NC0zNi4zOTgtOC4zOTg0LTU2IDAtMTA5LjIgODkuNjAyLTE5NiAxOTYtMTk2eiIvPgogPC9nPgo8L3N2Zz4K';
@@ -2080,6 +1968,8 @@ const useLocalState = (scope, key, init)=>{
 	}];
 };
 
+const Store = require('../recipe.store.js');
+
 
 global.css.search_control = css`
 	.SearchControl{
@@ -2202,6 +2092,7 @@ const SearchControl = comp(function(chefs, onUpdate){
 
 	this.useEffect(()=>{
 		update();
+		return Store.on(()=>update());
 	}, []);
 
 	return x`<div class='SearchControl'>
@@ -2245,7 +2136,80 @@ const SearchControl = comp(function(chefs, onUpdate){
 
 
 module.exports = SearchControl;
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../assets/icons":"-17h0hps"},fn:'client/search_page/search.control.js',dn:'client/search_page', root:'../..'};
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../recipe.store.js":"-4hneic","../assets/icons":"-17h0hps"},fn:'client/search_page/search.control.js',dn:'client/search_page', root:'../..'};
+global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
+const {x, comp, cx} = require('../../libs/xo.js');
+const css = require('../../libs/pico-css.js');
+
+const RecipeCard = require('./recipe.card.js');
+
+
+
+global.css.search_page = css`
+	.Search{
+		min-height: 100vh;
+
+		hr{
+			margin: 20px 0px;
+		}
+
+		.results{
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			gap : 10px;
+			.RecipeCard + .RecipeCard{
+				//border-color:red;
+			}
+
+			.RecipeCard{
+				min-width : 300px;
+				width     : 50%;
+			}
+		}
+	}
+`
+
+const SearchControl = require('./search.control.js');
+
+
+const Store = require('../recipe.store.js');
+
+
+
+const SearchPage = comp(function(allRecipes){
+	const [recipeIds, setRecipeIds] = this.useState([]);
+
+	this.useEffect(()=>{
+		document.title = `Tastebase - Search`;
+		window.scrollTo(0, 0);
+
+		return Store.on(()=>this.forceUpdate());
+	},[]);
+
+
+	const handleSearch = (queryObj)=>{
+		setRecipeIds(Store.searchRecipes(queryObj))
+	};
+
+
+	return x`<section class='Search'>
+
+		<div class='top'>
+			${SearchControl(Store.getChefs(), handleSearch)}
+		</div>
+
+		<hr />
+
+		<div class='results'>
+			${Object.fromEntries(recipeIds.map(id=>[id, RecipeCard(Store.getRecipe(id))]))}
+		</div>
+	</section>`
+});
+
+module.exports = SearchPage;
+
+},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./search.control.js":"qumug0","../recipe.store.js":"-4hneic"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
 global.__Modules["-1vuptfe"]={func:function(module, exports, global, __filename, __dirname, __root, require){const Emitter=()=>{
 	let cache={};
 	return {
@@ -2828,79 +2792,119 @@ const ConversionPage = comp(function(){
 
 module.exports = ConversionPage;
 },deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","../../utils/units.js":"17f12jj","../../utils/convert.units.js":"4rq84c","../../utils/parse.ingredient.js":"1i32h7a"},fn:'client/conversion_page/conversion.page.js',dn:'client/conversion_page', root:'../..'};
-global.__Modules["12s55an"]={func:function(module, exports, global, __filename, __dirname, __root, require){
-const {x, comp, cx} = require('../../libs/xo.js');
-const css = require('../../libs/pico-css.js');
-
-const RecipeCard = require('./recipe.card.js');
+global.__Modules["-1knvkhj"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
+const css = require('../libs/pico-css.js');
 
 
+const timeAgo = (ts1, ts2=Date.now())=>{
+	let delta = ts2 - ts1;
 
-global.css.search_page = css`
-	.Search{
-		min-height: 100vh;
+	const min = 60 * 1000;
+	const hr = 60 * min;
+	const day = 24 * hr;
+	const mth = 30 * day;
 
-		hr{
-			margin: 20px 0px;
-		}
 
-		.results{
-			display: flex;
-			justify-content: space-around;
-			flex-wrap: wrap;
-			gap : 10px;
-			.RecipeCard + .RecipeCard{
-				//border-color:red;
-			}
+	if(delta/mth > 1.9) return `${Math.floor(delta/mth)} months`;
+	if(delta/mth > 0.9) return `about 1 month`;
 
-			.RecipeCard{
-				min-width : 300px;
-				width     : 50%;
-			}
+	if(delta/day > 1.9) return `${Math.floor(delta/day)} days`;
+	if(delta/day > 0.9) return `about 1 day`;
+
+
+	if(delta/hr > 1.9) return `${Math.floor(delta/hr)} hrs`;
+	if(delta/hr > 0.9) return `about 1 hr`;
+
+
+	if(delta/min > 1.9) return `${Math.floor(delta/min)} min`;
+	//if(delta/min > 0.9) return `about 1 minute`;
+
+	return `about 1 min`;
+};
+
+
+
+const Store = require('./recipe.store.js');
+
+
+
+global.css.fetchbutton = css`
+	a.FetchButton{
+		text-align: center;
+		small{
+			display: block;
+			font-size: 0.6em;
 		}
 	}
-`
+`;
 
-const SearchControl = require('./search.control.js');
+const FetchButton = comp(function(){
+	const [fetching, setFetching] = this.useState(false);
+	const [lastUpdate, setLastUpdate] = this.useState(null);
 
-
-const Store = require('../recipe.store.js');
-
-
-
-const SearchPage = comp(function(allRecipes){
-	const [recipeIds, setRecipeIds] = this.useState([]);
 
 	this.useEffect(()=>{
-		document.title = `Tastebase - Search`;
-		window.scrollTo(0, 0);
+		return Store.on(()=>{
+			setFetching(Store.isFetching());
+			setLastUpdate(Store.getLastUpdated());
+		})
+	}, [])
 
-		return Store.on(()=>this.forceUpdate());
-	},[]);
-
-
-	const handleSearch = (queryObj)=>{
-		setRecipeIds(Store.searchRecipes(queryObj))
+	const handleClick = ()=>{
+		if(fetching) return;
+		Store.fetchAll();
 	};
 
+	return x`<a class='FetchButton' onclick=${handleClick}>
+		${fetching && 'Fetching...'}
+		${!fetching && `Update Recipes`}
+		${!fetching && x`<small>Last updated ${timeAgo(lastUpdate)} ago</small>`}
+	</a>`;
+})
 
-	return x`<section class='Search'>
 
-		<div class='top'>
-			${SearchControl(Store.getChefs(), handleSearch)}
-		</div>
 
-		<hr />
 
-		<div class='results'>
-			${Object.fromEntries(recipeIds.map(id=>[id, RecipeCard(Store.getRecipe(id))]))}
-		</div>
-	</section>`
-});
 
-module.exports = SearchPage;
+global.css.navbar = css`
+	nav{
+		&>a{
+			font-style: italic;
+			color: black;
+			&:visited{ color: black; }
+		}
 
-},deps:{"../../libs/xo.js":"-1pvg4m","../../libs/pico-css.js":"1hqukto","./recipe.card.js":"14uqikj","./search.control.js":"qumug0","../recipe.store.js":"-4hneic"},fn:'client/search_page/search.page.js',dn:'client/search_page', root:'../..'};
+		ul{
+
+		}
+
+	}
+`;
+
+
+const Navbar = ()=>{
+	return x`<nav>
+		<a href='#'>Tastebase</a>
+		<ul>
+			<li><a href='#conversion'>Convert</a></li>
+			<li>
+				<a class='add' href='https://gist.github.com/' target='_blank'>
+					Add Recipe
+				</a>
+			</li>
+			<li>
+				<a href='https://github.com/stolksdorf/tastebase/blob/master/recipe_instructions.md' target='_blank'>
+					Recipe Help
+				</a>
+			</li>
+			<li>${FetchButton()}</li>
+		</ul>
+	</nav>`;
+}
+
+
+module.exports = Navbar;
+},deps:{"../libs/xo.js":"-1pvg4m","../libs/pico-css.js":"1hqukto","./recipe.store.js":"-4hneic"},fn:'client/nav.js',dn:'client', root:'..'};
 global.__Modules["1k4rf0b"]={func:function(module, exports, global, __filename, __dirname, __root, require){const {x, comp, cx} = require('../libs/xo.js');
 const css = require('../libs/pico-css.js');
 
